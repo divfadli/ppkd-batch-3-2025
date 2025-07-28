@@ -1,0 +1,209 @@
+/* Reset & Base */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  background-color: #fefefe;
+  color: #333;
+}
+
+/* Navigation */
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  background-color: burlywood;
+  padding: 15px 10px;
+  gap: 15px;
+}
+
+nav a {
+  color: chocolate;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 8px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+nav a:hover {
+  background-color: chocolate;
+  color: white;
+}
+
+/* Container */
+.container {
+  width: 90%;
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #fff7f0;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Profile Section */
+.profile-head {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.img-profile {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.profile-head h1 {
+  margin-top: 15px;
+  font-size: 28px;
+}
+
+/* Overview */
+.overview {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.overview h3 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+/* Cards (Skill & Pengalaman) */
+.container-box {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.box {
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 300px;
+  padding: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.box h3 {
+  text-align: center;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 8px;
+}
+
+.box ul {
+  list-style: disc inside;
+}
+
+/* Contact Form */
+.contact-form {
+  margin-top: 20px;
+}
+
+.contact-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contact-form label {
+  font-weight: bold;
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 10px;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.contact-form button {
+  background-color: chocolate;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 150px;
+  transition: background-color 0.3s;
+}
+
+.contact-form button:hover {
+  background-color: darkorange;
+}
+
+/* About Me */
+.about h2 {
+  margin-bottom: 15px;
+}
+
+.about iframe {
+  height: auto;
+  aspect-ratio: 16 / 9;
+  border-radius: 10px;
+  border: none;
+  margin-top: 15px;
+}
+
+/* Footer */
+footer {
+  background-color: burlywood;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  margin-top: 50px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.gallery {    
+   display: flex;
+   align-items: center;
+   flex-wrap: wrap;
+   justify-content: space-evenly;
+}
+
+.photo{
+    gap: 5px;
+}
+
+.photo img {
+    padding: 20 0px;
+    width: 200px;
+    height: 150px;
+    object-fit:contain;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .img-profile {
+    width: 100px;
+    height: 100px;
+  }
+
+  .box {
+    width: 90%;
+  }
+  .about iframe{
+    width: 70%;
+  }
+
+  nav {
+    flex-direction: column;
+    align-items: center;
+  }
+}
