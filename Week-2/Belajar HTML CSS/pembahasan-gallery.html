@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="./js-burger-menu.js"></script>
+    <style>
+        .gallery-box{
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .gallery-box img{
+            width: 200px;
+            height: 150px;
+            border-radius: 20%;
+            object-fit: contain;
+        }
+        .burger{
+            display: none;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        @media (max-width: 600px){
+            .gallery-box{
+                margin-bottom: 50px;
+            }
+            .gallery-box img {
+                width: 50%;
+                height: auto;
+            }
+            nav{
+                flex-direction: column;
+            }
+            nav .burger{
+                display: block;
+                margin-bottom: 10px;
+            }
+            nav a{
+                display: none;
+            }
+            nav.show a{
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav id="menu">
+        <div class="burger" onclick="toogleMenu()">☰</div>
+
+        <a href="./homepage.html">Home</a>
+        <a href="./pembahasan-gallery.html">Gallery</a>
+        <a href="./contact.html">Contact</a>
+        <a href="./about.html">About Me</a>
+    </nav>
+    <div class="container">
+        <div class="gallery-box">
+            <img src="./assets/img/arrow.png" alt="">
+            <img src="./assets/img/balloons.png" alt="">
+            <img src="./assets/img/bug.png" alt="">
+            <img src="./assets/img/command.png" alt="">
+            <img src="./assets/img/fish.png" alt="">
+            <img src="./assets/img/heart-balloon-ferris.png" alt="">
+            <img src="./assets/img/present.png" alt="">
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Fadlilah Divy</p>
+    </footer>
+
+
+</body>
+</html>

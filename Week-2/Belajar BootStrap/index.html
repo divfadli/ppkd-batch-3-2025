@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./assets/bootstrap/css/bootstrap.min.css" />
+    <script script src="./assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script> -->
+
+    <style>
+      @media (max-width: 600px) {
+        .address p {
+          font-size: 10px;
+        }
+        .address h1 {
+          font-size: 15px;
+        }
+      }
+    </style>
+    <!-- <style>
+        .address h1{
+            font-size: 1.5rem;
+        }
+        @media (min-width:768px) {
+            .address h1{
+                font-size: 2rem;
+            }
+        }
+        @media (min-width:992px) {
+            .address h1{
+                font-size: 2.5rem;
+            }
+        }
+    </style> -->
+  </head>
+<body class="m-0">
+  <!-- Membuat Grid (Pembagi Layout) -->
+  <div class="container" style="background-color: rgb(243, 220, 189);">
+      <!-- Baris -->
+    <div class="row mt-3 text-center">
+        <!-- Kolom -->
+          <div class="col-2">
+            <img class="img-fluid" src="./assets/img/logo_ppkd.jpg" alt="" width="118">  
+          </div>
+          <div class="address col-8">
+            <!-- <h1 class="fs-4 fs-md-3 fs-lg-2">PPKD JAKARTA PUSAT</h1>
+            <p class="fs-6 fs-md-5">Jl. Karet Pasar Baru Barat, Karet Tengsin, Kecamatan Tanah Abang, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10250</p> -->
+            <h1 class="fs-3 fs-md-6 fs-lg-1">PPKD JAKARTA PUSAT</h1>
+            <p class="fs-6">Jl. Karet Pasar Baru Barat, Karet Tengsin, Kecamatan Tanah Abang, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10250</p>
+        </div>
+          <div class="col-2">
+            <img class="img-fluid" src="./assets/img/logo_dki.jpg" alt="" width="118">
+          </div>
+    </div>
+    <nav class="navbar navbar-expand-lg bg-success mt-2">
+      <div class="container-fluid">
+        <a class="navbar-brand text-light" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active text-white" aria-current="page" href="home.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active text-white" aria-current="page" href="index.html">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" aria-current="page" href="#">Register</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Text Berjalan -->
+    <marquee behavior="" direction="right">Selamat datang di PPKD - JAKARTA PUSAT</marquee>
+    
+  <div class="row mt-3 justify-content-center">
+      <div class="col-7">
+        <div class="card">
+          <div class="card-header text-center">
+            <h1>Login</h1>
+          </div>
+          <div class="card-body">
+            <form action="" method="post">
+              <label class="fw-bold form-label" for="email">Email</label>
+                <input class="form-control" type="email" name="email" id="email" placeholder="Masukkan Email" required>
+
+              <label class="fw-bold form-label" for="password">Password</label>
+              <input class="form-control" type="password" name="password" id="password" placeholder="Masukkan Password" required>
+
+              <button class="btn btn-primary mt-3 float-end" type="submit">Login</button>
+            </form>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <footer class="bg-success fixed-bottom" style="min-height: 60px;">
+    <div class="row text-light">
+      <div class="col-6">
+        <p class="ps-3 pt-3">Copyright &copy; PPKD - JAKARTA PUSAT</p>
+      </div>
+      <div class="col-6 d-flex justify-content-end">
+        <p class="pe-3 pt-3">Privacy Policy</p>
+      </div>
+    </div>
+  </footer>
+</body>
+  </html>
