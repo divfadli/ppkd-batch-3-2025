@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous" />
+  <style>
+    .carousel-container {
+        display: flex;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+        max-width: 100%;
+        margin: auto;
+      }
+
+      .carousel-track {
+        display: flex;
+        transition: transform 0.4s ease-in-out;
+      }
+
+      .carousel-track img {
+        width: 25%; /* 4 per baris default nya */
+        flex-shrink: 0;
+        object-fit: cover;
+        border-radius: 8px;
+        padding: 5px;
+      }
+
+      .carousel-btn {
+        background-color: #333;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        cursor: pointer;
+        font-size: 24px;
+        z-index: 2;
+      }
+
+      .left {
+        position: absolute;
+        left: 0;
+      }
+
+      .right {
+        position: absolute;
+        right: 0;
+      }
+
+  </style>  
+</head>
+<body>
+
+    <div class="container">
+        <div class="row justify-content-center">
+        <div class="col-11">
+          <div class="carousel-container">
+            <button class="carousel-btn left" onclick="slideCarousel(-1)">&#8249;</button>
+
+            <div class="carousel-track" id="carouselTrack">
+              <img src="https://www.placehold.co/200x150" alt="" />
+              <img src="https://www.placehold.co/200x150" alt="" />
+              <img src="https://www.placehold.co/200x150" alt="" />
+              <img src="https://www.placehold.co/200x150" alt="" />
+              <img src="https://www.placehold.co/200x150" alt="" />
+              <img src="https://www.placehold.co/200x150" alt="" />
+              <img src="https://www.placehold.co/200x150" alt="" />
+              <img src="https://www.placehold.co/200x150" alt="" />
+              <img src="https://www.placehold.co/200x150" alt="" />
+            </div>
+
+            <button class="carousel-btn right" onclick="slideCarousel(1)">&#8250;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+     <script>
+      const track = document.getElementById("carouselTrack");
+      const images = track.querySelectorAll("img");
+      const totalItems = images.length;
+      let currentIndex = 0;
+
+      function getItemsPerSlide() {
+        return window.innerWidth <= 600 ? 1 : 4;
+      }
+
+      function slideCarousel(direction) {
+        const itemsPerSlide = getItemsPerSlide();
+        const maxIndex = Math.ceil(totalItems / itemsPerSlide) - 1;
+
+        currentIndex += direction;
+        if (currentIndex < 0) currentIndex = 0;
+        if (currentIndex > maxIndex) currentIndex = maxIndex;
+
+        const slideWidth = 100 / itemsPerSlide; // ini dalam percen ya
+        const offset = currentIndex * 100;
+
+        track.style.transform = `translateX(-${offset}%)`;
+      }
+
+      window.addEventListener("resize", () => {
+        currentIndex = 0;
+        track.style.transform = "translateX(0%)";
+      });
+    </script>
+</body>
+</html>
