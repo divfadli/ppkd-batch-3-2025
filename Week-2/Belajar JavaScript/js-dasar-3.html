@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let nilai = 3;
+
+      if (nilai > 0) {
+        console.log("Bilangan Positif");
+      } else if (nilai < 0) {
+        console.log("Bilangan Negatif");
+      } else {
+        console.log("Nol");
+      }
+
+      if (nilai % 2 == 0) {
+        console.log("Bilangan Genap");
+      } else {
+        console.log("Bilangan Ganjil");
+      }
+
+      // array
+      const cars = ["Saab", "Volvo", "BMW"];
+      console.log(cars);
+      for (let index = 0; index < cars.length; index++) {
+        console.log(cars[index]);
+      }
+
+      const fruits = [
+        ["Apple", "Grape"],
+        ["Banana", "Avocado"],
+      ];
+      console.log(fruits[1][0]);
+    </script>
+  </body>
+</html>

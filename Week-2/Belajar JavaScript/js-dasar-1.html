@@ -1,0 +1,31 @@
+<!-- Osi layer -->
+<!-- Application -> sisi server -->
+<!-- Presentation -> sisi client -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form action="" method="post">
+      <input type="text" name="nama" id="nama" />
+      <button type="button" onclick="buttonClick()">Tess</button>
+    </form>
+    <p id="write"></p>
+    <script>
+      function buttonClick() {
+        let name = document.getElementById("nama");
+        document.querySelector("#write").innerHTML = name;
+        // console.log(inputNama);
+      }
+      // console.log(5 + "5");
+      //   alert(5+'5');
+      // document.write("tesss"); versi lama
+      //   let write = document.getElementById("write");
+      //   write.innerHTML = "Hallo";
+    </script>
+  </body>
+</html>

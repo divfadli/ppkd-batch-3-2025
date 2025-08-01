@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form action="" method="post" onsubmit="return false">
+      <label for="">Nilai 1</label> <br />
+      <input type="number" name="" id="nilai_1" /> <br />
+      <label for="">Nilai 2</label> <br />
+      <input type="number" name="" id="nilai_2" /> <br />
+      <br />
+      <select name="" id="operatorKey">
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
+      </select>
+      <br />
+      <br />
+      <button type="submit" onclick="hitung()">Hitung</button>
+      <!-- <button type="submit" onclick="tambah()">Tambah</button>
+      <button type="submit" onclick="kurang()">Kurang</button>
+      <button type="submit" onclick="kali()">Kali</button>
+      <button type="submit" onclick="bagi()">Bagi</button> -->
+      <button type="reset">Ulang</button> <br />
+      <br />
+      <label for="">Hasil:</label>
+      <input type="text" name="" id="hasil_nilai" disabled />
+    </form>
+    <p id="hasil"></p>
+    <script>
+      // let nilai_1, nilai_2, hitung;
+      // function deklarasi() {
+      //   nilai_1 = parseFloat(document.querySelector("#nilai_1").value) || 0;
+      //   nilai_2 = parseFloat(document.querySelector("#nilai_2").value) || 0;
+      // }
+      function output(value) {
+        // document.querySelector("#hasil").innerHTML = "Hasil: " + value;
+        document.querySelector("#hasil_nilai").value = value;
+      }
+      // function tambah() {
+      //   deklarasi();
+      //   hitung = nilai_1 + nilai_2;
+      //   output(hitung);
+      // }
+      // function kurang() {
+      //   deklarasi();
+      //   hitung = nilai_1 - nilai_2;
+      //   output(hitung);
+      // }
+      // function kali() {
+      //   deklarasi();
+      //   hitung = nilai_1 * nilai_2;
+      //   output(hitung);
+      // }
+      // function bagi() {
+      //   deklarasi();
+      //   hitung = nilai_1 / nilai_2;
+      //   // isFinite for check number is not Infinity, - Infinity, and NaN
+      //   if (isNaN(hitung)) {
+      //     alert("Tak Terdefinisi");
+      //   } else if (hitung === Infinity) {
+      //     alert("Tak Terhingga Positif");
+      //   } else if (hitung === -Infinity) {
+      //     alert("Tak Terhingga Negatif");
+      //   }
+      //   output(hitung);
+      // }
+    </script>
+
+    <script>
+      function hitung() {
+        let nilai_1 = parseFloat(document.querySelector("#nilai_1").value) || 0;
+        let nilai_2 = parseFloat(document.querySelector("#nilai_2").value) || 0;
+        let hasil;
+        let operator = document.querySelector("#operatorKey").value;
+
+        switch (operator) {
+          case "+":
+            hasil = nilai_1 + nilai_2;
+            break;
+          case "-":
+            hasil = nilai_1 - nilai_2;
+            break;
+          case "*":
+            hasil = nilai_1 * nilai_2;
+            break;
+          case "/":
+            hasil = nilai_1 / nilai_2;
+            if (isNaN(hasil)) {
+              hasil = "Tak Terdefinisi";
+            } else if (hasil === Infinity) {
+              hasil = "Tak Terhingga Positif";
+            } else if (hasil === -Infinity) {
+              hasil = "Tak Terhingga Negatif";
+            }
+            break;
+
+          default:
+            alert("Operator Tidak Valid");
+            break;
+        }
+        output(hasil);
+      }
+    </script>
+  </body>
+</html>
