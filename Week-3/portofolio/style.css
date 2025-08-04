@@ -1,0 +1,78 @@
+/* Variable global di dalam css */
+:root {
+  --primary-color: #007bff;
+  --second-color: #6c757d;
+  --accent-color: #28a745;
+}
+
+/*paralax (scroll kebawah)*/
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  scroll-behavior: smooth;
+}
+
+.navbar-brand {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.hero-section {
+  background-color: var(--primary-color);
+  color: white;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.page-section {
+  min-height: 100vh;
+  padding-top: 80px;
+}
+
+.section-padding {
+  padding: 80px 0;
+}
+
+.lead {
+  font-weight: normal;
+}
+
+.section-tittle {
+  position: relative; /*Tidak bergerak*/
+  margin-bottom: 50px;
+}
+
+.section-tittle::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  width: 80px;
+  height: 3px;
+  background-color: var(--primary-color);
+  transform: translateX(-50%);
+}
+
+.team-member {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.team-avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  font-size: 3rem;
+  color: white;
+}
+
+.fade-in {
+  /* opacity: 0; */
+  transform: translateY(30px);
+  transition: all 0.6s ease;
+}
