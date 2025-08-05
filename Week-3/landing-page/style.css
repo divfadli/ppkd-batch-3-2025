@@ -4,57 +4,150 @@
 
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #ffffff;
   scroll-behavior: smooth;
 }
 
+/* Utility */
+.text-muted {
+  color: #6c757d !important;
+}
+.lead {
+  font-size: 1rem;
+  font-weight: 400;
+}
+.text-justify {
+  text-align: justify;
+}
+
+/* Navbar */
 .navbar-brand {
   font-weight: bold;
   font-size: 1.5rem;
 }
 
+.nav-link {
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.nav-link.active {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+/* Button Custom */
+.custom-btn-bg-primary {
+  background-color: var(--primary-color);
+  color: #fff;
+  transition: background-color 0.3s;
+}
+.custom-btn-bg-primary:hover {
+  background-color: #43a047;
+  color: #fff;
+}
+
+/* Colors */
+.custom-colour-primary {
+  color: var(--primary-color);
+}
+.custom-colour-primary:hover {
+  color: #1e7e34;
+  text-decoration: underline;
+}
+
+/* Hero Section */
 .hero-section {
   background-color: #f5f7fa;
-  min-height: 60vh;
-  display: flex;
-  align-items: center;
+  padding: 100px 0;
+}
+.hero-section h2,
+.hero-section h3 {
+  line-height: 1.2;
+}
+.hero-img {
+  max-width: 550px;
+  width: 100%;
 }
 
-/* Section base styling */
-.page-section {
-  min-height: 100vh;
-  padding-top: 80px;
+/* Responsive Hero Image */
+@media (max-width: 768px) {
+  .hero-img {
+    max-width: 300px;
+    margin-top: 2rem;
+  }
 }
 
+/* Section Padding */
 .section-padding {
   padding: 80px 0;
 }
 
-.card-padding {
-  padding: 20px;
+/* Blog Card */
+.blog-card {
+  position: relative;
+  width: 100%;
+  max-width: 350px;
+  overflow: visible;
+  border-radius: 1.5rem;
+  background-color: transparent;
 }
 
-/* Marquee container — membatasi overflow dan membuat baris nowrap */
+/* Blog Image */
+.blog-card img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 1.5rem;
+  display: block;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Blog Card Content */
+.blog-card-content {
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 75%;
+  background-color: #fff;
+  padding: 1rem;
+  text-align: center;
+  border-radius: 1rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid #eee;
+  z-index: 2;
+}
+
+/* Cards */
+.custom-card-wrapper {
+  max-width: 280px;
+  width: 100%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.hover-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Client Logos - Marquee */
 .marquee-container {
   overflow: hidden;
   white-space: nowrap;
   width: 100%;
-  background: #fff; /* optional */
+  background: #fff;
+  margin-top: 30px;
 }
-
-/* Track yang akan di-animate */
 .marquee-track {
   display: inline-block;
-  animation: marqueeAnim 15s linear infinite;
+  animation: marqueeAnim 20s linear infinite;
 }
-
-/* Item gambar pada marquee */
-.marquee-item {
-  display: inline-block;
-  margin: 0 20px;
-  vertical-align: middle;
-}
-
-/* Animasi marquee — geser dari kiri ke kanan */
 @keyframes marqueeAnim {
   0% {
     transform: translateX(-100%);
@@ -64,43 +157,29 @@ body {
   }
 }
 
-/* Fade-in effect untuk smooth entrance */
+/* Fade-in Animation */
 .fade-in {
   opacity: 0;
   transform: translateY(30px);
-  animation: fadeInAnim 0.6s ease forwards;
+  animation: fadeIn 1s ease forwards;
   animation-delay: 0.3s;
 }
-
-@keyframes fadeInAnim {
+@keyframes fadeIn {
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-/* Tambahan responsif jika diperlukan */
-@media (max-width: 768px) {
-  .marquee-item {
-    margin: 0 10px;
-  }
-}
-
-.lead {
-  font-weight: 400;
-  font-size: 15px;
-}
-
+/* Carousel */
 .carousel-item {
   min-height: 400px;
 }
-
 .carousel-item img {
   max-width: 100%;
   max-height: 300px;
   object-fit: contain;
 }
-
 .carousel-indicators [data-bs-target] {
   width: 10px;
   height: 10px;
@@ -108,28 +187,51 @@ body {
   border-radius: 50%;
 }
 
-.custom-btn-bg-primary {
-  background-color: var(--primary-color);
-  color: white;
-}
-
-.custom-colour-primary {
-  color: var(--primary-color);
-}
-
+/* Image Sizes */
 .custom-img-size-business {
   width: 50px;
-  height: auto;
-  object-fit: contain;
 }
-
 .custom-img-size-community {
   width: 90px;
-  height: auto;
-  object-fit: contain;
 }
 .custom-img-size-client {
   width: 60px;
+}
+.custom-img-size-business,
+.custom-img-size-community,
+.custom-img-size-client {
   height: auto;
   object-fit: contain;
+}
+
+/* Responsive Image Sizes */
+@media (max-width: 992px) {
+  .custom-img-size-business,
+  .custom-img-size-community,
+  .custom-img-size-client {
+    max-width: 80px;
+    margin: 0 auto;
+  }
+}
+@media (max-width: 576px) {
+  .custom-img-size-business {
+    width: 40px;
+  }
+
+  .section-padding {
+    padding: 50px 0;
+  }
+
+  .hero-section h2,
+  .hero-section h3 {
+    font-size: 1.5rem;
+  }
+
+  .display-6 {
+    font-size: 1.25rem;
+  }
+
+  .blog-card {
+    margin-bottom: 4rem; /* memberi ruang antar card */
+  }
 }

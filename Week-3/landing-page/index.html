@@ -3,70 +3,71 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Nexcent Landing Page</title>
+
     <!-- Bootstrap -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr"
       crossorigin="anonymous"
     />
     <!-- Icons -->
     <link
-      rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+      rel="stylesheet"
     />
-
+    <!-- Custom Styles -->
     <link rel="stylesheet" href="style.css" />
   </head>
+
   <body>
     <div class="wrapper">
       <!-- Navbar -->
-      <nav
-        class="navbar navbar-expand-lg navbar-light navbar-gradient bg-light bg-gradient"
-      >
+      <nav class="navbar navbar-expand-lg bg-white shadow-sm py-3 sticky-top">
         <div class="container">
-          <img src="./assets/img/logo.svg" alt="" />
-          <a class="navbar-brand ms-2" href="#">Nexcent</a>
+          <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+            <img
+              src="./assets/img/logo.svg"
+              alt="Logo"
+              width="30"
+              height="30"
+            />
+            <span class="fw-bold">Nexcent</span>
+          </a>
           <button
             class="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
+            data-bs-target="#navbarNav"
           >
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-2">
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul
+              class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center gap-lg-2"
+            >
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#home"
-                  >Home</a
-                >
+                <a class="nav-link px-3" href="#home">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#features">Features</a>
+                <a class="nav-link px-3" href="#features">Features</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#community">Community</a>
+                <a class="nav-link px-3" href="#community">Community</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#blog">Blog</a>
+                <a class="nav-link px-3" href="#blog">Blog</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#pricing">Pricing</a>
+                <a class="nav-link px-3" href="#pricing">Pricing</a>
               </li>
               <li class="nav-item">
                 <a
-                  class="btn custom-btn-bg-primary rounded d-inline-flex align-items-center justify-content-center"
                   href="#register-now"
-                  >Register Now
-                  <i
-                    class="bi bi-arrow-right ms-2"
-                    style="position: relative; top: 1px"
-                  ></i>
+                  class="btn custom-btn-bg-primary d-flex align-items-center justify-content-center px-4 py-2 fw-semibold"
+                >
+                  Register Now
+                  <i class="bi bi-arrow-right ms-2 mt-1"></i>
                 </a>
               </li>
             </ul>
@@ -74,144 +75,124 @@
         </div>
       </nav>
 
-      <!-- Section Home -->
-      <section id="home" class="hero-section">
+      <!-- Hero Section with Carousel -->
+      <section id="home" class="hero-section py-5">
         <div class="container">
-          <div class="row">
-            <div class="col-lg-12">
-              <div class="fade-in">
-                <div
-                  id="carouselExampleCaptions"
-                  class="carousel slide ms-2"
-                  data-bs-ride="carousel"
-                >
-                  <!-- Carousel Indicators -->
-                  <div class="carousel-indicators">
-                    <button
-                      type="button"
-                      data-bs-target="#carouselExampleCaptions"
-                      data-bs-slide-to="0"
-                      class="active"
-                      aria-current="true"
-                      aria-label="Slide 1"
-                    ></button>
-                    <button
-                      type="button"
-                      data-bs-target="#carouselExampleCaptions"
-                      data-bs-slide-to="1"
-                      aria-label="Slide 2"
-                    ></button>
-                    <button
-                      type="button"
-                      data-bs-target="#carouselExampleCaptions"
-                      data-bs-slide-to="2"
-                      aria-label="Slide 3"
-                    ></button>
+          <div
+            id="carouselExampleCaptions"
+            class="carousel slide"
+            data-bs-ride="carousel"
+            data-bs-interval="5000"
+            data-bs-pause="hover"
+          >
+            <!-- Indicators -->
+            <div class="carousel-indicators fade-in">
+              <button
+                type="button"
+                data-bs-target="#carouselExampleCaptions"
+                data-bs-slide-to="0"
+                class="active"
+                aria-current="true"
+              ></button>
+              <button
+                type="button"
+                data-bs-target="#carouselExampleCaptions"
+                data-bs-slide-to="1"
+              ></button>
+              <button
+                type="button"
+                data-bs-target="#carouselExampleCaptions"
+                data-bs-slide-to="2"
+              ></button>
+            </div>
+
+            <!-- Slides -->
+            <div class="carousel-inner fade-in">
+              <!-- Slide 1 -->
+              <div class="carousel-item active">
+                <div class="row align-items-center text-center text-lg-start">
+                  <div class="col-lg-6 mb-4 mb-lg-0">
+                    <h2 class="display-4 fw-bold mb-3">Lessons and insights</h2>
+                    <h3 class="display-5 fw-bold mb-3 custom-colour-primary">
+                      from 8 years
+                    </h3>
+                    <p class="lead text-muted mb-4">
+                      Where to grow your business as a photographer: site or
+                      social media?
+                    </p>
+                    <a
+                      href="#register-now"
+                      class="btn custom-btn-bg-primary px-4 py-2 fw-semibold"
+                      >Register</a
+                    >
                   </div>
+                  <div
+                    class="col-lg-6 d-flex justify-content-center align-items-center"
+                  >
+                    <img
+                      src="./assets/img/Illustration.svg"
+                      alt="Illustration"
+                      class="img-fluid hero-img"
+                    />
+                  </div>
+                </div>
+              </div>
 
-                  <!-- Carousel Items -->
-                  <div class="carousel-inner">
-                    <!-- Item 1 -->
-                    <div class="carousel-item active">
-                      <div class="row align-items-center">
-                        <div class="col-lg-6">
-                          <h2 class="display-4 fw-bold mb-4">
-                            Lessons and insights
-                          </h2>
-                          <h3
-                            class="display-5 fw-bold mb-4 custom-colour-primary"
-                          >
-                            from 8 years
-                          </h3>
-                          <p class="lead text-muted mb-4">
-                            Where to grow your business as a photographer: site
-                            or social media?
-                          </p>
-                          <a
-                            href="#register-now"
-                            class="btn custom-btn-bg-primary rounded btn-lg"
-                            >Register</a
-                          >
-                        </div>
-                        <div
-                          class="col-lg-6 d-flex justify-content-center align-items-center"
-                        >
-                          <img
-                            src="./assets/img/Illustration.svg"
-                            alt="Illustration"
-                            class="img-fluid"
-                          />
-                        </div>
-                      </div>
-                    </div>
+              <!-- Slide 2 -->
+              <div class="carousel-item">
+                <div class="row align-items-center text-center text-lg-start">
+                  <div class="col-lg-6 mb-4 mb-lg-0">
+                    <h2 class="display-4 fw-bold mb-3">More Experience</h2>
+                    <h3 class="display-5 fw-bold mb-3 custom-colour-primary">
+                      Better Results
+                    </h3>
+                    <p class="lead text-muted mb-4">
+                      Learn how strategic planning improves your online
+                      presence.
+                    </p>
+                    <a
+                      href="#register-now"
+                      class="btn custom-btn-bg-primary px-4 py-2 fw-semibold"
+                      >Register</a
+                    >
+                  </div>
+                  <div
+                    class="col-lg-6 d-flex justify-content-center align-items-center"
+                  >
+                    <img
+                      src="./assets/img/Illustration.svg"
+                      alt="Illustration"
+                      class="img-fluid hero-img"
+                    />
+                  </div>
+                </div>
+              </div>
 
-                    <!-- Item 2 -->
-                    <div class="carousel-item">
-                      <div class="row align-items-center">
-                        <div class="col-lg-6">
-                          <h2 class="display-4 fw-bold mb-4">
-                            More Experience
-                          </h2>
-                          <h3
-                            class="display-5 fw-bold mb-4 custom-colour-primary"
-                          >
-                            Better Results
-                          </h3>
-                          <p class="lead text-muted mb-4">
-                            Learn how strategic planning improves your online
-                            presence.
-                          </p>
-                          <a
-                            href="#register-now"
-                            class="btn custom-btn-bg-primary rounded btn-lg"
-                            >Register</a
-                          >
-                        </div>
-                        <div
-                          class="col-lg-6 d-flex justify-content-center align-items-center"
-                        >
-                          <img
-                            src="./assets/img/Illustration.svg"
-                            alt="Illustration"
-                            class="img-fluid"
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- Item 3 -->
-                    <div class="carousel-item">
-                      <div class="row align-items-center">
-                        <div class="col-lg-6">
-                          <h2 class="display-4 fw-bold mb-4">
-                            Grow Your Brand
-                          </h2>
-                          <h3
-                            class="display-5 fw-bold mb-4 custom-colour-primary"
-                          >
-                            With Confidence
-                          </h3>
-                          <p class="lead text-muted mb-4">
-                            Discover proven methods to attract and retain
-                            customers.
-                          </p>
-                          <a
-                            href="#register-now"
-                            class="btn custom-btn-bg-primary rounded btn-lg"
-                            >Register</a
-                          >
-                        </div>
-                        <div
-                          class="col-lg-6 d-flex justify-content-center align-items-center"
-                        >
-                          <img
-                            src="./assets/img/Illustration.svg"
-                            alt="Illustration"
-                            class="img-fluid"
-                          />
-                        </div>
-                      </div>
-                    </div>
+              <!-- Slide 3 -->
+              <div class="carousel-item">
+                <div class="row align-items-center text-center text-lg-start">
+                  <div class="col-lg-6 mb-4 mb-lg-0">
+                    <h2 class="display-4 fw-bold mb-3">Grow Your Brand</h2>
+                    <h3 class="display-5 fw-bold mb-3 custom-colour-primary">
+                      With Confidence
+                    </h3>
+                    <p class="lead text-muted mb-4">
+                      Discover proven methods to attract and retain customers.
+                    </p>
+                    <a
+                      href="#register-now"
+                      class="btn custom-btn-bg-primary px-4 py-2 fw-semibold"
+                      >Register</a
+                    >
+                  </div>
+                  <div
+                    class="col-lg-6 d-flex justify-content-center align-items-center"
+                  >
+                    <img
+                      src="./assets/img/Illustration.svg"
+                      alt="Illustration"
+                      class="img-fluid hero-img"
+                    />
                   </div>
                 </div>
               </div>
@@ -226,7 +207,7 @@
           <!-- Our Clients -->
           <div class="row">
             <div class="col-lg-12 text-center fade-in">
-              <h2 class="section-title">Our Client</h2>
+              <h2 class="section-title">Our Clients</h2>
               <p class="lead text-sm text-muted">
                 We have been working with some Fortune 500+ clients
               </p>
@@ -234,138 +215,140 @@
 
             <!-- Marquee -->
             <div class="marquee-container fade-in">
-              <div class="marquee-track">
-                <div class="marquee-item">
-                  <img
-                    src="./assets/img/clients/client1.svg"
-                    class="img-fluid custom-img-size-client"
-                    alt="Client 1"
-                  />
-                </div>
-                <div class="marquee-item">
-                  <img
-                    src="./assets/img/clients/client2.svg"
-                    class="img-fluid custom-img-size-client"
-                    alt="Client 2"
-                  />
-                </div>
-                <div class="marquee-item">
-                  <img
-                    src="./assets/img/clients/client3.svg"
-                    class="img-fluid custom-img-size-client"
-                    alt="Client 3"
-                  />
-                </div>
-                <div class="marquee-item">
-                  <img
-                    src="./assets/img/clients/client4.svg"
-                    class="img-fluid custom-img-size-client"
-                    alt="Client 4"
-                  />
-                </div>
-                <div class="marquee-item">
-                  <img
-                    src="./assets/img/clients/client5.svg"
-                    class="img-fluid custom-img-size-client"
-                    alt="Client 5"
-                  />
-                </div>
-                <div class="marquee-item">
-                  <img
-                    src="./assets/img/clients/client6.svg"
-                    class="img-fluid custom-img-size-client"
-                    alt="Client 6"
-                  />
-                </div>
-                <div class="marquee-item">
-                  <img
-                    src="./assets/img/clients/client7.svg"
-                    class="img-fluid custom-img-size-client"
-                    alt="Client 7"
-                  />
-                </div>
+              <div
+                class="marquee-track d-flex justify-content-around align-items-center flex-wrap gap-4"
+              >
+                <img
+                  src="./assets/img/clients/client1.svg"
+                  alt="Client 1"
+                  class="img-fluid custom-img-size-client"
+                />
+                <img
+                  src="./assets/img/clients/client2.svg"
+                  alt="Client 2"
+                  class="img-fluid custom-img-size-client"
+                />
+                <img
+                  src="./assets/img/clients/client3.svg"
+                  alt="Client 3"
+                  class="img-fluid custom-img-size-client"
+                />
+                <img
+                  src="./assets/img/clients/client4.svg"
+                  alt="Client 4"
+                  class="img-fluid custom-img-size-client"
+                />
+                <img
+                  src="./assets/img/clients/client5.svg"
+                  alt="Client 5"
+                  class="img-fluid custom-img-size-client"
+                />
+                <img
+                  src="./assets/img/clients/client6.svg"
+                  alt="Client 6"
+                  class="img-fluid custom-img-size-client"
+                />
+                <img
+                  src="./assets/img/clients/client7.svg"
+                  alt="Client 7"
+                  class="img-fluid custom-img-size-client"
+                />
               </div>
             </div>
           </div>
           <!-- END Our Clients -->
 
           <!-- Manage Entire Community -->
-          <div class="row mt-5 fade-in">
-            <div class="col-lg-12 text-center">
+          <!-- Community Section -->
+          <div class="row py-5 fade-in text-center">
+            <div class="col-lg-12">
               <h2 class="section-title">
                 Manage your entire community in a single system
               </h2>
               <p class="lead text-muted">Who is Nextcent suitable for?</p>
             </div>
 
-            <div class="row fade-in">
-              <div class="col-lg-4 mb-3">
-                <div class="card text-center h-100 card-padding">
-                  <div class="card-body">
-                    <img
-                      src="./assets/img/community/community1.svg"
-                      alt="Membership Organisations"
-                      class="img-fluid custom-img-size-community"
-                    />
-                    <h2 class="section-title">Membership Organisations</h2>
-                    <p class="lead text-muted">
-                      Our membership management software provides full
-                      automation of membership renewals and payments
-                    </p>
-                  </div>
+            <div class="d-flex flex-wrap justify-content-center gap-4 mt-4">
+              <!-- Card 1 -->
+              <div
+                class="custom-card-wrapper card text-center border-0 shadow-sm rounded-4 p-4 hover-card"
+              >
+                <div class="card-body">
+                  <img
+                    src="./assets/img/community/community1.svg"
+                    alt="Membership Organisations"
+                    class="img-fluid mb-4 custom-img-size-community"
+                    style="max-height: 80px"
+                  />
+                  <h5 class="fw-semibold mb-2">Membership Organisations</h5>
+                  <p class="text-muted small mb-0">
+                    Our membership management software provides full automation
+                    of membership renewals and payments.
+                  </p>
                 </div>
               </div>
 
-              <div class="col-lg-4 mb-3">
-                <div class="card text-center h-100 card-padding">
-                  <div class="card-body">
-                    <img
-                      src="./assets/img/community/community2.svg"
-                      alt="National Associations"
-                      class="img-fluid custom-img-size-community"
-                    />
-                    <h2 class="section-title">National Associations</h2>
-                    <p class="lead text-muted">
-                      Our membership management software provides full
-                      automation of membership renewals and payments
-                    </p>
-                  </div>
+              <!-- Card 2 -->
+              <div
+                class="custom-card-wrapper card text-center border-0 shadow-sm rounded-4 p-4 hover-card"
+              >
+                <div class="card-body">
+                  <img
+                    src="./assets/img/community/community2.svg"
+                    alt="National Associations"
+                    class="img-fluid mb-4 custom-img-size-community"
+                    style="max-height: 80px"
+                  />
+                  <h5 class="fw-semibold mb-2">National Associations</h5>
+                  <p class="text-muted small mb-0">
+                    Our membership management software provides full automation
+                    of membership renewals and payments.
+                  </p>
                 </div>
               </div>
 
-              <div class="col-lg-4 mb-3">
-                <div class="card text-center h-100 card-padding">
-                  <div class="card-body">
-                    <img
-                      src="./assets/img/community/community3.svg"
-                      alt="Clubs And Groups"
-                      class="img-fluid custom-img-size-community"
-                    />
-                    <h2 class="section-title">Clubs And Groups</h2>
-                    <p class="lead text-muted">
-                      Our membership management software provides full
-                      automation of membership renewals and payments
-                    </p>
-                  </div>
+              <!-- Card 3 -->
+              <div
+                class="custom-card-wrapper card text-center border-0 shadow-sm rounded-4 p-4 hover-card"
+              >
+                <div class="card-body">
+                  <img
+                    src="./assets/img/community/community3.svg"
+                    alt="Clubs And Groups"
+                    class="img-fluid mb-4 custom-img-size-community"
+                    style="max-height: 80px"
+                  />
+                  <h5 class="fw-semibold mb-2">Clubs And Groups</h5>
+                  <p class="text-muted small mb-0">
+                    Our membership management software provides full automation
+                    of membership renewals and payments.
+                  </p>
                 </div>
               </div>
             </div>
           </div>
+
           <!-- END Manage Entire Community -->
 
-          <div class="row mt-5">
-            <div class="col-lg-6 text-center">
+          <div class="row py-5 align-items-start">
+            <!-- Gambar -->
+            <div
+              class="col-lg-5 d-flex justify-content-center justify-content-lg-end mb-4 mb-lg-0"
+            >
               <img
-                class="img-fluid fade-in"
+                class="img-fluid fade-in w-100"
                 src="./assets/img/rafiki.svg"
                 alt="Illustration"
+                style="max-width: 65%; height: auto"
               />
             </div>
-            <div class="col-lg-6">
-              <h4 class="display-6 fade-in fw-semibold">
+
+            <!-- Teks -->
+            <div class="col-lg-6 fade-in">
+              <h4 class="display-6 fw-semibold">
                 The unseen of spending three years at Pixelgrade
               </h4>
-              <p class="lead fade-in">
+              <p class="lead text-justify">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit
                 amet justo ipsum. Sed accumsan quam vitae est varius fringilla.
                 Pellentesque placerat vestibulum lorem sed porta. Nullam mattis
@@ -373,19 +356,18 @@
                 auctor. Etiam quis massa pulvinar, aliquam quam vitae, tempus
                 sem. Donec elementum pulvinar odio.
               </p>
-              <a href="#" class="btn custom-btn-bg-primary fade-in"
-                >Learn More</a
-              >
+              <a href="#" class="btn custom-btn-bg-primary">Learn More</a>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Section -->
+      <!-- Section Helping a local business -->
       <section class="section-padding bg-light">
         <div class="container">
-          <div class="row">
-            <div class="col-lg-6">
+          <div class="row align-items-start gy-5">
+            <!-- Left Text Section -->
+            <div class="col-lg-6 text-center text-lg-start">
               <h5 class="display-6 fw-semibold fade-in">Helping a local</h5>
               <h5 class="display-6 fw-semibold custom-colour-primary fade-in">
                 business reinvent itself
@@ -395,56 +377,67 @@
               </p>
             </div>
 
+            <!-- Right Stats Section -->
             <div class="col-lg-6">
-              <div class="row">
-                <div class="col-lg-6 d-flex align-items-center gap-2 fade-in">
+              <div class="row g-4">
+                <!-- Item 1 -->
+                <div
+                  class="col-6 d-flex flex-column flex-sm-row align-items-center text-center text-sm-start gap-2 fade-in"
+                >
                   <img
                     src="./assets/img/local-business/members.svg"
                     class="img-fluid custom-img-size-business"
+                    style="max-width: 48px"
                     alt="Members"
                   />
                   <div>
-                    <h4 class="display-7 fw-bold mb-0">2,245,341</h4>
-                    <p class="lead text-muted mb-0">Members</p>
+                    <h5 class="fw-bold mb-0">2,245,341</h5>
+                    <p class="text-muted mb-0 small">Members</p>
                   </div>
                 </div>
+                <!-- Item 2 -->
                 <div
-                  class="col-lg-6 d-flex align-items-center gap-2 mt-4 fade-in"
+                  class="col-6 d-flex flex-column flex-sm-row align-items-center text-center text-sm-start gap-2 fade-in"
                 >
                   <img
                     src="./assets/img/local-business/clubs.svg"
                     class="img-fluid custom-img-size-business"
+                    style="max-width: 48px"
                     alt="Clubs"
                   />
                   <div>
-                    <h4 class="display-7 fw-bold mb-0">46,328</h4>
-                    <p class="lead text-muted mb-0">Clubs</p>
+                    <h5 class="fw-bold mb-0">46,328</h5>
+                    <p class="text-muted mb-0 small">Clubs</p>
                   </div>
                 </div>
+                <!-- Item 3 -->
                 <div
-                  class="col-lg-6 d-flex align-items-center gap-2 mt-4 fade-in"
+                  class="col-6 d-flex flex-column flex-sm-row align-items-center text-center text-sm-start gap-2 fade-in"
                 >
                   <img
                     src="./assets/img/local-business/event-booking.svg"
                     class="img-fluid custom-img-size-business"
-                    alt="Event-Bookings"
+                    style="max-width: 48px"
+                    alt="Event Bookings"
                   />
                   <div>
-                    <h4 class="display-7 fw-bold mb-0">828,867</h4>
-                    <p class="lead text-muted mb-0">Event Bookings</p>
+                    <h5 class="fw-bold mb-0">828,867</h5>
+                    <p class="text-muted mb-0 small">Event Bookings</p>
                   </div>
                 </div>
+                <!-- Item 4 -->
                 <div
-                  class="col-lg-6 d-flex align-items-center gap-2 mt-4 fade-in"
+                  class="col-6 d-flex flex-column flex-sm-row align-items-center text-center text-sm-start gap-2 fade-in"
                 >
                   <img
                     src="./assets/img/local-business/payments.svg"
                     class="img-fluid custom-img-size-business"
+                    style="max-width: 48px"
                     alt="Payments"
                   />
                   <div>
-                    <h4 class="display-7 fw-bold mb-0">1,926,436</h4>
-                    <p class="lead text-muted mb-0">Payments</p>
+                    <h5 class="fw-bold mb-0">1,926,436</h5>
+                    <p class="text-muted mb-0 small">Payments</p>
                   </div>
                 </div>
               </div>
@@ -453,22 +446,28 @@
         </div>
       </section>
 
-      <!-- Section -->
+      <!-- Section How to design-->
       <section class="section-padding">
         <div class="container">
-          <div class="row">
-            <div class="col-lg-6 text-center">
+          <div class="row align-items-start">
+            <!-- Gambar -->
+            <div
+              class="col-lg-5 d-flex justify-content-center justify-content-lg-end mb-4 mb-lg-0"
+            >
               <img
-                class="img-fluid fade-in"
                 src="./assets/img/pana.svg"
                 alt="Pana"
+                class="img-fluid fade-in w-100"
+                style="max-width: 65%; height: auto"
               />
             </div>
-            <div class="col-lg-6">
-              <h4 class="display-6 fade-in fw-semibold">
+
+            <!-- Teks -->
+            <div class="col-lg-6 fade-in">
+              <h4 class="display-6 fw-semibold">
                 How to design your site footer like we did
               </h4>
-              <p class="lead fade-in">
+              <p class="lead text-muted text-justify">
                 Donec a eros justo. Fusce egestas tristique ultrices. Nam
                 tempor, augue nec tincidunt molestie, massa nunc varius arcu, at
                 scelerisque elit erat a magna. Donec quis erat at libero
@@ -479,27 +478,31 @@
                 Praesent felis est, finibus et nisi ac, hendrerit venenatis
                 libero. Donec consectetur faucibus ipsum id gravida.
               </p>
-              <a href="#" class="btn custom-btn-bg-primary fade-in"
-                >Learn More</a
-              >
+              <a href="#" class="btn custom-btn-bg-primary">Learn More</a>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Section -->
+      <!-- Section Tesla -->
       <section class="section-padding bg-light">
         <div class="container">
-          <div class="row">
-            <div class="col-lg-6 text-center">
+          <div class="row align-items-start">
+            <!-- Gambar Tesla -->
+            <div
+              class="col-lg-5 d-flex justify-content-center justify-content-lg-end mb-4 mb-lg-0"
+            >
               <img
-                class="img-fluid fade-in"
+                class="img-fluid fade-in w-100"
                 src="./assets/img/tesla.svg"
                 alt="Tesla"
+                style="max-width: 65%; height: auto"
               />
             </div>
-            <div class="col-lg-6">
-              <p class="lead fade-in">
+
+            <!-- Konten Teks -->
+            <div class="col-lg-6 fade-in">
+              <p class="lead text-justify">
                 Maecenas dignissim justo eget nulla rutrum molestie. Maecenas
                 lobortis sem dui, vel rutrum risus tincidunt ullamcorper. Proin
                 eu enim metus. Vivamus sed libero ornare, tristique quam in,
@@ -512,16 +515,16 @@
                 eget efficitur libero condimentum id. Curabitur id nibh id sem
                 dignissim finibus ac sit amet magna.
               </p>
+
               <div>
-                <h6 class="display-8 custom-colour-primary fade-in">
-                  Tim Smith
-                </h6>
-                <p class="lead text-muted fade-in">
+                <h6 class="display-8 custom-colour-primary">Tim Smith</h6>
+                <p class="lead text-muted">
                   British Dragon Boat Racing Association
                 </p>
               </div>
-              <div class="d-inline-flex align-items-center gap-4">
-                <div class="d-inline-flex gap-3 fade-in">
+
+              <div class="d-flex align-items-center gap-4 flex-wrap">
+                <div class="d-flex gap-3 flex-wrap">
                   <img src="./assets/img/clients/client1.svg" alt="Client 1" />
                   <img src="./assets/img/clients/client2.svg" alt="Client 2" />
                   <img src="./assets/img/clients/client3.svg" alt="Client 3" />
@@ -529,10 +532,9 @@
                   <img src="./assets/img/clients/client5.svg" alt="Client 5" />
                   <img src="./assets/img/clients/client6.svg" alt="Client 6" />
                 </div>
-
                 <a
                   href="#"
-                  class="fade-in text-decoration-none custom-colour-primary d-inline-flex align-items-center"
+                  class="text-decoration-none custom-colour-primary d-inline-flex align-items-center"
                 >
                   Meet all customers
                   <i
@@ -545,6 +547,206 @@
           </div>
         </div>
       </section>
+
+      <!-- Section Caring is the new marketing -->
+      <section id="blog" class="section-padding">
+        <div class="container">
+          <!-- Header -->
+          <div class="text-center mb-5">
+            <h4 class="display-6 fw-semibold mb-3">
+              Caring is the new marketing
+            </h4>
+            <div class="row justify-content-center">
+              <div class="col-lg-6 col-md-8">
+                <p class="lead text-muted">
+                  The Nextcent blog is the best place to read about the latest
+                  membership insights, trends and more. See who's joining the
+                  community, read about how our community are increasing their
+                  membership income and lot's more.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Blog Cards -->
+          <div class="d-flex flex-wrap justify-content-center gap-4">
+            <!-- Card 1 -->
+            <div class="blog-card">
+              <img src="./assets/img/blog/blog1.svg" alt="Blog 1" />
+              <div class="blog-card-content">
+                <h6 class="fw-semibold mb-2">
+                  Creating Streamlined Safeguarding Processes with OneRen
+                </h6>
+                <a
+                  href="#"
+                  class="fw-semibold text-decoration-none custom-colour-primary"
+                >
+                  Readmore <i class="bi bi-arrow-right ms-1 mt-1"></i>
+                </a>
+              </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="blog-card">
+              <img src="./assets/img/blog/blog2.svg" alt="Blog 2" />
+              <div class="blog-card-content">
+                <h6 class="fw-semibold mb-2">
+                  What are your safeguarding responsibilities and how can you
+                  manage them?
+                </h6>
+                <a
+                  href="#"
+                  class="fw-semibold text-decoration-none custom-colour-primary"
+                >
+                  Readmore <i class="bi bi-arrow-right ms-1 mt-1"></i>
+                </a>
+              </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="blog-card">
+              <img src="./assets/img/blog/blog3.svg" alt="Blog 3" />
+              <div class="blog-card-content">
+                <h6 class="fw-semibold mb-2">
+                  Revamping the Membership Model with Triathlon Australia
+                </h6>
+                <a
+                  href="#"
+                  class="fw-semibold d-flex align-items-center justify-content-center px-4 py-2 text-decoration-none custom-colour-primary"
+                >
+                  Readmore <i class="bi bi-arrow-right ms-1 mt-1"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section Pellentesque -->
+      <section class="section-padding bg-light">
+        <div class="container">
+          <div class="row justify-content-center text-center">
+            <div class="col-lg-8">
+              <h2 class="display-4 fw-semibold mb-4">
+                Pellentesque suscipit fringilla libero eu.
+              </h2>
+              <a
+                href="#"
+                class="btn custom-btn-bg-primary px-4 py-3 fw-semibold"
+              >
+                Get a Demo
+                <i class="bi bi-arrow-right ms-2 mt-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="bg-dark text-white py-5">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-4 mb-4">
+              <div class="d-flex align-items-center mb-3 gap-2">
+                <img
+                  src="./assets/img/logo.svg"
+                  alt="Logo"
+                  width="48"
+                  height="48"
+                />
+                <span class="fw-bold fs-3">Nexcent</span>
+              </div>
+              <p class="text-muted mb-4">
+                Copyright © 2020 Landify UI Kit.<br />All rights reserved
+              </p>
+              <div class="social-links">
+                <a href="#" class="text-white me-3 text-decoration-none">
+                  <i class="bi bi-instagram"></i>
+                </a>
+                <a href="#" class="text-white me-3 text-decoration-none">
+                  <i class="bi bi-dribbble"></i>
+                </a>
+                <a href="#" class="text-white me-3 text-decoration-none">
+                  <i class="bi bi-twitter"></i>
+                </a>
+                <a href="#" class="text-white text-decoration-none">
+                  <i class="bi bi-youtube"></i>
+                </a>
+              </div>
+            </div>
+
+            <div class="col-lg-2 col-md-6 mb-4">
+              <h6 class="fw-bold mb-3">Company</h6>
+              <ul class="list-unstyled">
+                <li>
+                  <a href="#" class="text-muted text-decoration-none"
+                    >About us</a
+                  >
+                </li>
+                <li>
+                  <a href="#" class="text-muted text-decoration-none">Blog</a>
+                </li>
+                <li>
+                  <a href="#" class="text-muted text-decoration-none"
+                    >Contact us</a
+                  >
+                </li>
+                <li>
+                  <a href="#" class="text-muted text-decoration-none"
+                    >Pricing</a
+                  >
+                </li>
+                <li>
+                  <a href="#" class="text-muted text-decoration-none"
+                    >Testimonials</a
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <div class="col-lg-2 col-md-6 mb-4">
+              <h6 class="fw-bold mb-3">Support</h6>
+              <ul class="list-unstyled">
+                <li>
+                  <a href="#" class="text-muted text-decoration-none"
+                    >Help center</a
+                  >
+                </li>
+                <li>
+                  <a href="#" class="text-muted text-decoration-none"
+                    >Terms of service</a
+                  >
+                </li>
+                <li>
+                  <a href="#" class="text-muted text-decoration-none">Legal</a>
+                </li>
+                <li>
+                  <a href="#" class="text-muted text-decoration-none"
+                    >Privacy policy</a
+                  >
+                </li>
+                <li>
+                  <a href="#" class="text-muted text-decoration-none">Status</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="col-lg-4 mb-4">
+              <h6 class="fw-bold mb-3">Stay up to date</h6>
+              <div class="input-group">
+                <input
+                  type="email"
+                  class="form-control"
+                  placeholder="Your email address"
+                />
+                <button class="btn btn-success" type="button">
+                  <i class="bi bi-send"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
 
     <script
