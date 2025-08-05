@@ -1,0 +1,135 @@
+:root {
+  --primary-color: #4caf4f;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  scroll-behavior: smooth;
+}
+
+.navbar-brand {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.hero-section {
+  background-color: #f5f7fa;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+}
+
+/* Section base styling */
+.page-section {
+  min-height: 100vh;
+  padding-top: 80px;
+}
+
+.section-padding {
+  padding: 80px 0;
+}
+
+.card-padding {
+  padding: 20px;
+}
+
+/* Marquee container — membatasi overflow dan membuat baris nowrap */
+.marquee-container {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+  background: #fff; /* optional */
+}
+
+/* Track yang akan di-animate */
+.marquee-track {
+  display: inline-block;
+  animation: marqueeAnim 15s linear infinite;
+}
+
+/* Item gambar pada marquee */
+.marquee-item {
+  display: inline-block;
+  margin: 0 20px;
+  vertical-align: middle;
+}
+
+/* Animasi marquee — geser dari kiri ke kanan */
+@keyframes marqueeAnim {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Fade-in effect untuk smooth entrance */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInAnim 0.6s ease forwards;
+  animation-delay: 0.3s;
+}
+
+@keyframes fadeInAnim {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Tambahan responsif jika diperlukan */
+@media (max-width: 768px) {
+  .marquee-item {
+    margin: 0 10px;
+  }
+}
+
+.lead {
+  font-weight: 400;
+  font-size: 15px;
+}
+
+.carousel-item {
+  min-height: 400px;
+}
+
+.carousel-item img {
+  max-width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+}
+
+.carousel-indicators [data-bs-target] {
+  width: 10px;
+  height: 10px;
+  background-color: var(--primary-color);
+  border-radius: 50%;
+}
+
+.custom-btn-bg-primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.custom-colour-primary {
+  color: var(--primary-color);
+}
+
+.custom-img-size-business {
+  width: 50px;
+  height: auto;
+  object-fit: contain;
+}
+
+.custom-img-size-community {
+  width: 90px;
+  height: auto;
+  object-fit: contain;
+}
+.custom-img-size-client {
+  width: 60px;
+  height: auto;
+  object-fit: contain;
+}
