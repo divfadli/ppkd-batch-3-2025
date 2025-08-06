@@ -3,11 +3,12 @@
   --primary-color: #4caf4f;
   --white-color: #fff;
   --subtitle-color: #717171;
+  --cmyk-color: #333;
 }
 /* Base Styles */
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #ffffff;
+  background-color: var(--white-color);
   scroll-behavior: smooth;
 }
 
@@ -30,7 +31,7 @@ body {
 }
 
 .nav-link {
-  color: #333;
+  color: var(--cmyk-color);
   transition: color 0.3s ease;
 }
 
@@ -48,13 +49,13 @@ body {
 /* Buttons */
 .custom-btn-bg-primary {
   background-color: var(--primary-color);
-  color: #fff;
+  color: var(--white-color);
   transition: background-color 0.3s;
 }
 
 .custom-btn-bg-primary:hover {
   background-color: #43a047;
-  color: #fff;
+  color: var(--white-color);
 }
 
 .custom-colour-primary {
@@ -64,6 +65,10 @@ body {
 .custom-colour-primary:hover {
   color: #1e7e34;
   text-decoration: underline;
+}
+
+.custom-bg-cmyk {
+  background-color: var(--cmyk-color);
 }
 
 /* Hero Section */
@@ -113,7 +118,7 @@ body {
   left: 50%;
   transform: translateX(-50%);
   width: 85%;
-  background-color: #fff;
+  background-color: var(--white-color);
   padding: 1rem;
   text-align: center;
   border-radius: 0.5rem;
@@ -143,7 +148,7 @@ body {
 .marquee-container {
   overflow: hidden;
   width: 100%;
-  background-color: #fff;
+  background-color: var(--white-color);
   padding: 20px 0;
 }
 
@@ -162,8 +167,8 @@ body {
 }
 
 .client-logo {
-  width: 35px;
-  height: 35px;
+  width: 40px;
+  height: auto;
   flex-shrink: 0;
 }
 
@@ -248,7 +253,7 @@ body {
 footer .social-links a {
   width: 40px;
   height: 40px;
-  background-color: #333;
+  background-color: var(--cmyk-color);
   border-radius: 50%;
   display: inline-flex;
   align-items: center;
@@ -263,13 +268,13 @@ footer .social-links a:hover {
 }
 
 footer .input-group .form-control {
-  background-color: #333;
+  background-color: var(--cmyk-color);
   border: 1px solid #555;
   color: var(--white-color);
 }
 
 footer .input-group .form-control:focus {
-  background-color: #333;
+  background-color: var(--cmyk-color);
   border-color: #28a745;
   box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
   color: var(--white-color);
@@ -310,7 +315,7 @@ footer .input-group .form-control::placeholder {
   }
 
   .client-logo {
-    width: 120px;
+    width: 40px;
   }
 
   .marquee-content {
@@ -342,7 +347,7 @@ footer .input-group .form-control::placeholder {
 /* Extra Small */
 @media (max-width: 480px) {
   .client-logo {
-    width: 90px;
+    width: 40px;
   }
 
   .marquee-content {

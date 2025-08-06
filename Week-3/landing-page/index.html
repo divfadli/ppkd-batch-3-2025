@@ -622,7 +622,7 @@
           <!-- Blog Cards -->
           <div class="d-flex flex-wrap justify-content-center gap-4 fade-in">
             <!-- Card 1 -->
-            <div class="blog-card">
+            <div class="blog-card hover-card">
               <img src="./assets/img/blog/blog1.svg" alt="Blog 1" />
               <div class="blog-card-content bg-light">
                 <h6 class="fw-semibold">
@@ -638,7 +638,7 @@
             </div>
 
             <!-- Card 2 -->
-            <div class="blog-card">
+            <div class="blog-card hover-card">
               <img src="./assets/img/blog/blog2.svg" alt="Blog 2" />
               <div class="blog-card-content bg-light">
                 <h6 class="fw-semibold">
@@ -655,7 +655,7 @@
             </div>
 
             <!-- Card 3 -->
-            <div class="blog-card">
+            <div class="blog-card hover-card">
               <img src="./assets/img/blog/blog3.svg" alt="Blog 3" />
               <div class="blog-card-content bg-light">
                 <h6 class="fw-semibold">
@@ -793,7 +793,7 @@
                   <div class="input-group">
                     <input
                       type="email"
-                      class="form-control bg-dark text-light border border-end-0 rounded-start"
+                      class="form-control custom-bg-cmyk text-light border border-end-0 rounded-start"
                       id="email"
                       name="email"
                       placeholder="Your email address"
@@ -801,7 +801,7 @@
                     />
                     <button
                       type="submit"
-                      class="btn bg-dark text-light border border-start-0 rounded-end"
+                      class="btn custom-bg-cmyk text-light border border-start-0 rounded-end"
                     >
                       <i class="bi bi-send"></i>
                     </button>
@@ -829,7 +829,7 @@
         track.appendChild(clone);
 
         const contentWidth = content.offsetWidth;
-        const speed = 100; // px per second
+        const speed = 70; // px per second
         const duration = contentWidth / speed;
 
         track.style.animationDuration = `${duration}s`;
