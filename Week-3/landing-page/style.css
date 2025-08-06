@@ -1,5 +1,6 @@
 :root {
   --primary-color: #4caf4f;
+  --white-color: #fff;
 }
 
 body {
@@ -67,6 +68,7 @@ body {
   background-color: #f5f7fa;
   padding: 100px 0;
 }
+
 .hero-section h2,
 .hero-section h3 {
   line-height: 1.2;
@@ -93,7 +95,7 @@ body {
 .blog-card {
   position: relative;
   width: 100%;
-  max-width: 350px;
+  max-width: 300px;
   overflow: visible;
   border-radius: 1.5rem;
   background-color: transparent;
@@ -102,11 +104,11 @@ body {
 /* Blog Image */
 .blog-card img {
   width: 100%;
-  height: 250px;
+  height: auto;
   object-fit: cover;
   border-radius: 1.5rem;
   display: block;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px rgba(15, 230, 147, 0.08);
 }
 
 /* Blog Card Content */
@@ -172,14 +174,27 @@ body {
 }
 
 /* Carousel */
+.carousel {
+  position: relative;
+}
+
 .carousel-item {
   min-height: 400px;
 }
 .carousel-item img {
+  width: 100%;
+  height: auto;
   max-width: 100%;
-  max-height: 300px;
+  max-height: 100%;
   object-fit: contain;
 }
+.carousel-indicators {
+  position: absolute;
+  bottom: -55px;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
 .carousel-indicators [data-bs-target] {
   width: 10px;
   height: 10px;
@@ -204,6 +219,40 @@ body {
   object-fit: contain;
 }
 
+/* Footer */
+footer .social-links a {
+  width: 40px;
+  height: 40px;
+  background-color: #333;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  margin-right: 10px;
+}
+footer .social-links a:hover {
+  background-color: #28a745;
+  transform: translateY(-3px);
+}
+
+footer .input-group .form-control {
+  background-color: #333;
+  border: 1px solid #555;
+  color: var(--white-color);
+}
+
+footer .input-group .form-control:focus {
+  background-color: #333;
+  border-color: #28a745;
+  box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+  color: var(--white-color);
+}
+
+footer .input-group .form-control::placeholder {
+  color: var(--white-color);
+}
+
 /* Responsive Image Sizes */
 @media (max-width: 992px) {
   .custom-img-size-business,
@@ -211,6 +260,22 @@ body {
   .custom-img-size-client {
     max-width: 80px;
     margin: 0 auto;
+  }
+
+  .col-lg-5 img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  /* Buat teks lebih nyaman dibaca di mobile */
+  .col-lg-7 p.lead {
+    font-size: 1rem; /* default lebih kecil */
+    text-align: justify;
+  }
+
+  /* Atur jarak antar logo klien agar tidak terlalu rapat */
+  .d-flex.flex-wrap.gap-5 {
+    gap: 1rem !important;
   }
 }
 @media (max-width: 576px) {
@@ -232,6 +297,6 @@ body {
   }
 
   .blog-card {
-    margin-bottom: 4rem; /* memberi ruang antar card */
+    margin-bottom: 4rem;
   }
 }

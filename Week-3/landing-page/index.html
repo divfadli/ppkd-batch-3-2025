@@ -47,7 +47,7 @@
               class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center gap-lg-2"
             >
               <li class="nav-item">
-                <a class="nav-link px-3" href="#home">Home</a>
+                <a class="nav-link px-3" href="#">Home</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link px-3" href="#features">Features</a>
@@ -76,11 +76,12 @@
       </nav>
 
       <!-- Hero Section with Carousel -->
-      <section id="home" class="hero-section py-5">
+      <section class="hero-section py-5">
         <div class="container">
           <div
             id="carouselExampleCaptions"
             class="carousel slide"
+            data-bs-slide-to="0"
             data-bs-ride="carousel"
             data-bs-interval="5000"
             data-bs-pause="hover"
@@ -344,7 +345,7 @@
             </div>
 
             <!-- Teks -->
-            <div class="col-lg-6 fade-in">
+            <div class="col-lg-7 fade-in">
               <h4 class="display-6 fw-semibold">
                 The unseen of spending three years at Pixelgrade
               </h4>
@@ -463,7 +464,7 @@
             </div>
 
             <!-- Teks -->
-            <div class="col-lg-6 fade-in">
+            <div class="col-lg-7 fade-in">
               <h4 class="display-6 fw-semibold">
                 How to design your site footer like we did
               </h4>
@@ -501,7 +502,7 @@
             </div>
 
             <!-- Konten Teks -->
-            <div class="col-lg-6 fade-in">
+            <div class="col-lg-7 fade-in">
               <p class="lead text-justify">
                 Maecenas dignissim justo eget nulla rutrum molestie. Maecenas
                 lobortis sem dui, vel rutrum risus tincidunt ullamcorper. Proin
@@ -523,26 +524,55 @@
                 </p>
               </div>
 
-              <div class="d-flex align-items-center gap-4 flex-wrap">
-                <div class="d-flex gap-3 flex-wrap">
-                  <img src="./assets/img/clients/client1.svg" alt="Client 1" />
-                  <img src="./assets/img/clients/client2.svg" alt="Client 2" />
-                  <img src="./assets/img/clients/client3.svg" alt="Client 3" />
-                  <img src="./assets/img/clients/client4.svg" alt="Client 4" />
-                  <img src="./assets/img/clients/client5.svg" alt="Client 5" />
-                  <img src="./assets/img/clients/client6.svg" alt="Client 6" />
+              <!-- Client Logos + Link -->
+              <div class="row mt-4">
+                <div class="col-12">
+                  <div
+                    class="d-flex justify-content-between align-items-center flex-wrap gap-2"
+                  >
+                    <!-- Client Logos -->
+                    <div class="d-flex flex-wrap gap-5">
+                      <img
+                        src="./assets/img/clients/client1.svg"
+                        alt="Client 1"
+                      />
+                      <img
+                        src="./assets/img/clients/client2.svg"
+                        alt="Client 2"
+                      />
+                      <img
+                        src="./assets/img/clients/client3.svg"
+                        alt="Client 3"
+                      />
+                      <img
+                        src="./assets/img/clients/client4.svg"
+                        alt="Client 4"
+                      />
+                      <img
+                        src="./assets/img/clients/client5.svg"
+                        alt="Client 5"
+                      />
+                      <img
+                        src="./assets/img/clients/client6.svg"
+                        alt="Client 6"
+                      />
+                    </div>
+
+                    <!-- Meet All Customers Link -->
+                    <a
+                      href="#"
+                      class="text-decoration-none custom-colour-primary d-inline-flex align-items-center"
+                    >
+                      Meet all customers
+                      <i
+                        class="bi bi-arrow-right ms-2"
+                        style="position: relative; top: 1px"
+                      ></i>
+                    </a>
+                  </div>
                 </div>
-                <a
-                  href="#"
-                  class="text-decoration-none custom-colour-primary d-inline-flex align-items-center"
-                >
-                  Meet all customers
-                  <i
-                    class="bi bi-arrow-right ms-2"
-                    style="position: relative; top: 1px"
-                  ></i>
-                </a>
               </div>
+              <!-- End Client Logos + Link -->
             </div>
           </div>
         </div>
@@ -552,11 +582,11 @@
       <section id="blog" class="section-padding">
         <div class="container">
           <!-- Header -->
-          <div class="text-center mb-5">
+          <div class="text-center mb-5 fade-in">
             <h4 class="display-6 fw-semibold mb-3">
               Caring is the new marketing
             </h4>
-            <div class="row justify-content-center">
+            <div class="row justify-content-center fade-in">
               <div class="col-lg-6 col-md-8">
                 <p class="lead text-muted">
                   The Nextcent blog is the best place to read about the latest
@@ -569,12 +599,12 @@
           </div>
 
           <!-- Blog Cards -->
-          <div class="d-flex flex-wrap justify-content-center gap-4">
+          <div class="d-flex flex-wrap justify-content-center gap-4 fade-in">
             <!-- Card 1 -->
             <div class="blog-card">
               <img src="./assets/img/blog/blog1.svg" alt="Blog 1" />
-              <div class="blog-card-content">
-                <h6 class="fw-semibold mb-2">
+              <div class="blog-card-content bg-light">
+                <h6 class="fw-semibold mb-3">
                   Creating Streamlined Safeguarding Processes with OneRen
                 </h6>
                 <a
@@ -589,8 +619,8 @@
             <!-- Card 2 -->
             <div class="blog-card">
               <img src="./assets/img/blog/blog2.svg" alt="Blog 2" />
-              <div class="blog-card-content">
-                <h6 class="fw-semibold mb-2">
+              <div class="blog-card-content bg-light">
+                <h6 class="fw-semibold mb-3">
                   What are your safeguarding responsibilities and how can you
                   manage them?
                 </h6>
@@ -606,8 +636,8 @@
             <!-- Card 3 -->
             <div class="blog-card">
               <img src="./assets/img/blog/blog3.svg" alt="Blog 3" />
-              <div class="blog-card-content">
-                <h6 class="fw-semibold mb-2">
+              <div class="blog-card-content bg-light">
+                <h6 class="fw-semibold mb-3">
                   Revamping the Membership Model with Triathlon Australia
                 </h6>
                 <a
@@ -625,18 +655,18 @@
       <!-- Section Pellentesque -->
       <section class="section-padding bg-light">
         <div class="container">
-          <div class="row justify-content-center text-center">
+          <div class="row justify-content-center text-center fade-in">
             <div class="col-lg-8">
               <h2 class="display-4 fw-semibold mb-4">
                 Pellentesque suscipit fringilla libero eu.
               </h2>
-              <a
-                href="#"
-                class="btn custom-btn-bg-primary px-4 py-3 fw-semibold"
-              >
-                Get a Demo
-                <i class="bi bi-arrow-right ms-2 mt-1"></i>
-              </a>
+              <div class="d-flex align-items-center justify-content-center">
+                <a
+                  href=""
+                  class="btn custom-btn-bg-primary px-4 py-3 d-flex align-items-center justify-content-center fw-semibold"
+                  >Get a Demo <i class="bi bi-arrow-right ms-2 mt-1"></i
+                ></a>
+              </div>
             </div>
           </div>
         </div>
@@ -645,7 +675,8 @@
       <!-- Footer -->
       <footer class="bg-dark text-white py-5">
         <div class="container">
-          <div class="row">
+          <div class="row fade-in">
+            <!-- Logo & Social -->
             <div class="col-lg-4 mb-4">
               <div class="d-flex align-items-center mb-3 gap-2">
                 <img
@@ -656,27 +687,28 @@
                 />
                 <span class="fw-bold fs-3">Nexcent</span>
               </div>
-              <p class="text-muted mb-4">
+              <p class="text-muted mb-4 fs-5">
                 Copyright © 2020 Landify UI Kit.<br />All rights reserved
               </p>
               <div class="social-links">
                 <a href="#" class="text-white me-3 text-decoration-none">
-                  <i class="bi bi-instagram"></i>
+                  <i class="bi bi-instagram fs-4"></i>
                 </a>
                 <a href="#" class="text-white me-3 text-decoration-none">
-                  <i class="bi bi-dribbble"></i>
+                  <i class="bi bi-dribbble fs-4"></i>
                 </a>
                 <a href="#" class="text-white me-3 text-decoration-none">
-                  <i class="bi bi-twitter"></i>
+                  <i class="bi bi-twitter fs-4"></i>
                 </a>
                 <a href="#" class="text-white text-decoration-none">
-                  <i class="bi bi-youtube"></i>
+                  <i class="bi bi-youtube fs-4"></i>
                 </a>
               </div>
             </div>
 
-            <div class="col-lg-2 col-md-6 mb-4">
-              <h6 class="fw-bold mb-3">Company</h6>
+            <!-- Company -->
+            <div class="col-lg-2 offset-lg-1 col-md-6 mb-4 fs-5">
+              <h3 class="fw-bold mb-3 display-8">Company</h3>
               <ul class="list-unstyled">
                 <li>
                   <a href="#" class="text-muted text-decoration-none"
@@ -704,8 +736,9 @@
               </ul>
             </div>
 
-            <div class="col-lg-2 col-md-6 mb-4">
-              <h6 class="fw-bold mb-3">Support</h6>
+            <!-- Support -->
+            <div class="col-lg-2 col-md-6 mb-4 fs-5">
+              <h3 class="fw-bold mb-3 display-8">Support</h3>
               <ul class="list-unstyled">
                 <li>
                   <a href="#" class="text-muted text-decoration-none"
@@ -731,17 +764,19 @@
               </ul>
             </div>
 
-            <div class="col-lg-4 mb-4">
-              <h6 class="fw-bold mb-3">Stay up to date</h6>
-              <div class="input-group">
+            <!-- Stay up to date -->
+            <div class="col-lg-3 mb-4">
+              <h3 class="fw-bold mb-3 display-8">Stay up to date</h3>
+              <div class="position-relative input-group">
                 <input
                   type="email"
-                  class="form-control"
+                  class="input_email form-control rounded-start rounded-end pe-5"
                   placeholder="Your email address"
                 />
-                <button class="btn btn-success" type="button">
-                  <i class="bi bi-send"></i>
-                </button>
+                <i
+                  class="bi bi-send position-absolute top-50 end-0 translate-middle-y me-3 text-muted"
+                  style="pointer-events: none"
+                ></i>
               </div>
             </div>
           </div>
