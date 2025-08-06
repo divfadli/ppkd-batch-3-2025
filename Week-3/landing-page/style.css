@@ -1,6 +1,7 @@
 :root {
   --primary-color: #4caf4f;
   --white-color: #fff;
+  --subtitle-color: #717171;
 }
 
 body {
@@ -106,7 +107,7 @@ body {
   width: 100%;
   height: auto;
   object-fit: cover;
-  border-radius: 1.5rem;
+  border-radius: 0.5rem;
   display: block;
   box-shadow: 0 4px 12px rgba(15, 230, 147, 0.08);
 }
@@ -117,14 +118,18 @@ body {
   bottom: -40px;
   left: 50%;
   transform: translateX(-50%);
-  width: 75%;
+  width: 85%;
   background-color: #fff;
   padding: 1rem;
   text-align: center;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
   border: 1px solid #eee;
   z-index: 2;
+}
+.blog-card-content h6 {
+  color: var(--subtitle-color);
+  margin-bottom: 25px;
 }
 
 /* Cards */
@@ -203,8 +208,15 @@ body {
 }
 
 /* Image Sizes */
-.custom-img-size-business {
-  width: 50px;
+/* Default image size */
+.stat-img {
+  width: 60px;
+  max-width: 100%;
+}
+
+/* Add margin between image and content */
+.stat-content {
+  margin-top: 10px;
 }
 .custom-img-size-community {
   width: 90px;
@@ -212,7 +224,7 @@ body {
 .custom-img-size-client {
   width: 60px;
 }
-.custom-img-size-business,
+
 .custom-img-size-community,
 .custom-img-size-client {
   height: auto;
@@ -255,7 +267,6 @@ footer .input-group .form-control::placeholder {
 
 /* Responsive Image Sizes */
 @media (max-width: 992px) {
-  .custom-img-size-business,
   .custom-img-size-community,
   .custom-img-size-client {
     max-width: 80px;
@@ -279,7 +290,7 @@ footer .input-group .form-control::placeholder {
   }
 }
 @media (max-width: 576px) {
-  .custom-img-size-business {
+  .stat-img {
     width: 40px;
   }
 
@@ -298,5 +309,14 @@ footer .input-group .form-control::placeholder {
 
   .blog-card {
     margin-bottom: 4rem;
+  }
+}
+@media (min-width: 576px) {
+  .stat-card {
+    gap: 15px;
+  }
+
+  .stat-content {
+    margin-top: 0;
   }
 }
