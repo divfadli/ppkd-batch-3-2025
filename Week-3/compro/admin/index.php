@@ -1,32 +1,34 @@
 <?php
 session_start();
-include 'koneksi.php';
-// jika email dan password terisi maka
-// tampilkan atau pilih semua data dari table users dimana emailnya adalah
-// email yang diambil dari user input email
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
-  $email = $_POST['email'];
-  $password = $_POST['password'];
+include 'koneksi.php'; // Tetap menggunakan koneksi dari luar folder admin
 
-  $query = mysqli_query($koneksi, "SELECT * FROM users WHERE email ='$email'");
-  // jika emailnya bernilai/atau ada
-  if (mysqli_num_rows($query) == 1) {
-    $row = mysqli_fetch_assoc($query);
-    if ($password == $row['password']) {
-      $_SESSION['ID_USER'] = $row['id'];
-      $_SESSION['NAME'] = $row['name'];
-      header("location:home.php");
-      echo "Login berhasil";
-      die;
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $_POST['email'] ?? '';
+    $password = $_POST['password'] ?? '';
+
+    $query = mysqli_query($koneksi, "SELECT * FROM users WHERE email = '$email'");
+    
+    if (mysqli_num_rows($query) === 1) {
+        $row = mysqli_fetch_assoc($query);
+        
+        // Gantilah dengan password_hash() & password_verify() untuk keamanan
+        if ($password === $row['password']) {
+            $_SESSION['ID_USER'] = $row['id'];
+            $_SESSION['NAME'] = $row['name'];
+            header("Location: /admin/home.php");
+            exit;
+        } else {
+            // echo '<script>window.location.href="/admin?error=password";</script>';
+            // header("Location: admin/index.php?error=password");
+            header("Location: /admin?error=password");
+            exit;
+        }
     } else {
-    //   header("location:index.php?error=password");
-      header("location:./?error=password");
+        // echo '<script>window.location.href="/admin?error=email";</script>';
+        // header("Location: admin/index.php?error=email");
+        header("Location: /admin?error=email");
+        exit;
     }
-  } else {
-    // header("location:index.php?error=email");
-    header("location:./?error=email");
-    die;
-  }
 }
 ?>
 
@@ -37,27 +39,17 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Pages / Login - NiceAdmin Bootstrap Template</title>
+    <title>Login Admin - NiceAdmin</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
     <!-- CSS -->
-    <?php include '../admin/inc/css.php' ?>
-
-    <!-- =======================================================
-  * Template Name: NiceAdmin
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Updated: Apr 20 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+    <?php include 'inc/css.php'; ?>
 </head>
 
 <body>
-
     <main>
         <div class="container">
-
             <section
                 class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
                 <div class="container">
@@ -66,36 +58,37 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
                             <div class="d-flex justify-content-center py-4">
                                 <a href="#" class="logo d-flex align-items-center w-auto">
-                                    <img src="../admin/assets/img/logo.png" alt="">
+                                    <img src="/admin/assets/img/logo.png" alt="">
                                     <span class="d-none d-lg-block">Login Admin</span>
                                 </a>
-                            </div><!-- End Logo -->
+                            </div>
 
                             <div class="card mb-3">
-
                                 <div class="card-body">
 
                                     <div class="pt-4 pb-2">
                                         <h5 class="card-title text-center pb-0 fs-4">Login to Your Account</h5>
                                         <p class="text-center small">Enter your email & password to login</p>
                                     </div>
-                                    <?php
-                                        if (isset($_GET['error'])) {
-                                            if ($_GET['error'] == 'password') {
-                                            echo '<div class="alert alert-danger">Password salah!!</div>';
-                                            } elseif ($_GET['error'] == 'email') {
-                                            echo '<div class="alert alert-danger">Email tidak ditemukan!!</div>';
+
+                                    <?php if (isset($_GET['error'])): ?>
+                                    <div class="alert alert-danger">
+                                        <?php
+                                            if ($_GET['error'] === 'password') {
+                                                echo "Password salah!";
+                                            } elseif ($_GET['error'] === 'email') {
+                                                echo "Email tidak ditemukan!";
                                             }
-                                        }
-                                    ?>
+                                            ?>
+                                    </div>
+                                    <?php endif; ?>
 
-                                    <form method="post" class="row g-3 needs-validation" novalidate>
-
+                                    <form method="POST" action="" class="row g-3 needs-validation" novalidate>
                                         <div class="col-12">
-                                            <label for="yourUsername" class="form-label">Email</label>
+                                            <label for="yourEmail" class="form-label">Email</label>
                                             <div class="input-group has-validation">
                                                 <span class="input-group-text" id="inputGroupPrepend">@</span>
-                                                <input type="email" name="email" class="form-control" id="yourUsername"
+                                                <input type="email" name="email" class="form-control" id="yourEmail"
                                                     required>
                                                 <div class="invalid-feedback">Please enter your email.</div>
                                             </div>
@@ -115,12 +108,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                                                 <label class="form-check-label" for="rememberMe">Remember me</label>
                                             </div>
                                         </div>
+
                                         <div class="col-12">
                                             <button class="btn btn-primary w-100" type="submit">Login</button>
                                         </div>
+
                                         <div class="col-12">
-                                            <p class="small mb-0">Don't have account? <a
-                                                    href="pages-register.html">Create an account</a></p>
+                                            <p class="small mb-0">Don't have account? <a href="#">Create an account</a>
+                                            </p>
                                         </div>
                                     </form>
 
@@ -128,28 +123,22 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                             </div>
 
                             <div class="credits">
-                                <!-- All the links in the footer should remain intact. -->
-                                <!-- You can delete the links only if you purchased the pro version. -->
-                                <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
                                 Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
                             </div>
 
                         </div>
                     </div>
                 </div>
-
             </section>
-
         </div>
-    </main><!-- End #main -->
+    </main>
 
-    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-            class="bi bi-arrow-up-short"></i></a>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center">
+        <i class="bi bi-arrow-up-short"></i>
+    </a>
 
-    <!-- JavaScript -->
-    <?php include '../admin/inc/js.php'?>
-
+    <!-- JS -->
+    <?php include 'inc/js.php'; ?>
 </body>
 
 </html>

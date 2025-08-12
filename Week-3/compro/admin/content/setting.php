@@ -1,6 +1,10 @@
 <?php 
 // jika data setting sudah ada maka update data tersebut
 // selain itu jika belum ada maka insert data
+
+$querySetting = mysqli_query($koneksi, "SELECT * FROM settings LIMIT 1");
+$row = mysqli_fetch_assoc($querySetting);
+
 if(isset($_POST['simpan'])){
     $email = $_POST['email'];
     $phone = $_POST['phone'];
@@ -9,32 +13,44 @@ if(isset($_POST['simpan'])){
     $linkedin = $_POST['linkedin'];
     $facebook = $_POST['facebook'];
     $instagram = $_POST['instagram'];
-    // $logo = $_POST['logo'];
-    
-    $querySetting = mysqli_query($koneksi, "SELECT * FROM settings LIMIT 1");
+    $logo_name = $row['logo'] ?? '';
 
-    if(mysqli_num_rows($querySetting) > 0){
+    // Jika gambar terupload
+    if(!empty($_FILES['logo']['name'])){
+        $logo = $_FILES['logo']['name'];
+        $path = "uploads/";
+        if(!is_dir($path)) mkdir($path);
+
+        $logo_name = time() .  "-" . basename($logo);
+        $target_files = $path . $logo_name;
+        if(move_uploaded_file($_FILES['logo']['tmp_name'], $target_files)){
+            // jika gambar ada maka gambar sebelumnya akan diganti oleh gambar baru
+            if(!empty($row['logo'])){
+                // Mengganti gambar sebelum dengan gambar baru
+                unlink($path . $row['logo']);
+            }
+        }
+    }
+    
+    if($row){
         // update
-        $row = mysqli_fetch_assoc($querySetting);
         $id_setting = $row['id'];
         
         $update = mysqli_query($koneksi, "UPDATE settings SET
-            email='$email', phone='$phone', address='$address', twitter='$twitter', linkedin='$linkedin', facebook='$facebook', instagram='$instagram' WHERE id='$id_setting'");
+            email='$email', phone='$phone', address='$address', twitter='$twitter', linkedin='$linkedin', facebook='$facebook', instagram='$instagram', logo='$logo_name' WHERE id='$id_setting'");
         if($update){
-            header("location?page=setting&ubah=berhasil");
+            header("location:?page=setting&ubah=berhasil");
+            exit;
         }
     }else{
         // insert
-        $insert = mysqli_query($koneksi, "INSERT INTO settings (email, phone, address, twitter, linkedin, facebook, instagram) VALUES ('$email', '$phone', '$address', '$twitter', '$linkedin', '$facebok', '$instagram')");
+        $insert = mysqli_query($koneksi, "INSERT INTO settings (email, phone, address, twitter, linkedin, facebook, instagram, logo) VALUES ('$email', '$phone', '$address', '$twitter', '$linkedin', '$facebok', '$instagram', '$logo_name')");
         if($insert){
-            header("location?page=setting&tambah=berhasil");
+            header("location:?page=setting&tambah=berhasil");
+            exit;
         }
     }
 }
-
-$querySetting = mysqli_query($koneksi, "SELECT * FROM settings LIMIT 1");
-$row = mysqli_fetch_assoc($querySetting);
-
 ?>
 
 <div class="pagetitle">
@@ -130,6 +146,8 @@ $row = mysqli_fetch_assoc($querySetting);
                             </div>
                             <div class="col-sm-6">
                                 <input type="file" name="logo" id="" class="form-control">
+                                <img class="mt-3" src="uploads/<?php echo isset($row['logo']) ? $row['logo'] : null ?>"
+                                    alt="" width="250">
                             </div>
                         </div>
 
