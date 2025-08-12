@@ -72,7 +72,7 @@ if(isset($_POST['simpan'])){
                             <label for="">Password</label>
                             <input type="password" class="form-control" name="password" id=""
                                 placeholder="Masukkan password anda" <?php echo (!$id) ? 'required' : null?>>
-                            <small>* Isi password jika ingin mengubah password</small>
+                            <small>)* Isi password jika ingin mengubah password</small>
                         </div>
                         <div class="mb-3">
                             <button class="btn btn-primary" type="submit" name="simpan">Simpan</button>
