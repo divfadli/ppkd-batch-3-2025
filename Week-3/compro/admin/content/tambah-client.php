@@ -2,31 +2,31 @@
 $id = isset($_GET['edit']) ? $_GET['edit'] : null;
 
 if(isset($_GET['edit'])){
-    $query = mysqli_query($koneksi, "SELECT * FROM sliders WHERE id = '$id'");
+    $query = mysqli_query($koneksi, "SELECT * FROM clients WHERE id = '$id'");
     $rowEdit = mysqli_fetch_assoc($query);
     
-    $title = "Edit Slider";
+    $title = "Edit Tentang Kami";
 }else{
-    $title = "Tambah Slider";
+    $title = "Tambah Tentang Kami";
 }
 
 if(isset($_GET['delete'])){
     $id = $_GET['delete'];
-    $queryGambar = mysqli_query($koneksi, "SELECT id, image FROM sliders WHERE id='$id'");
+    $queryGambar = mysqli_query($koneksi, "SELECT id, image FROM clients WHERE id='$id'");
     $rowGambar = mysqli_fetch_assoc($queryGambar);
     $image_name = $rowGambar['image'];
     unlink("uploads/" . $image_name);
-    $delete = mysqli_query($koneksi, "DELETE FROM sliders WHERE id='$id'");
+    $delete = mysqli_query($koneksi, "DELETE FROM clients WHERE id='$id'");
 
     if($delete){
-        header("location:?page=slider&hapus=berhasil");
+        header("location:?page=client&hapus=berhasil");
     }
 }
 
 if(isset($_POST['simpan'])){
-    $title = $_POST['title'];
-    $description = $_POST['description'];
+    $name = $_POST['name'];
     $image_name = $rowEdit['image'] ?? '';
+    $is_active = $_POST['is_active'];
 
     if(!empty($_FILES['image']['name'])){
         $image = $_FILES['image']['name'];
@@ -42,11 +42,9 @@ if(isset($_POST['simpan'])){
             $target_files = $path . $image_name;
             if(move_uploaded_file($_FILES['image']['tmp_name'], $target_files)){
                 // jika gambar ada maka gambar sebelumnya akan diganti oleh gambar baru
-                if(!empty($row['image'])){ 
-                    print_r("A");
-                    die;
+                if(!empty($rowEdit['image'])){ 
                     // Mengganti gambar sebelum dengan gambar baru
-                    unlink($path . $row['image']);
+                    unlink($path . $rowEdit['image']);
                 }
             }
 
@@ -58,15 +56,15 @@ if(isset($_POST['simpan'])){
 
     if($id){
         // Update
-        $update = mysqli_query($koneksi, "UPDATE sliders SET title='$title',description='$description',image='$image_name' WHERE id='$id'");
+        $update = mysqli_query($koneksi, "UPDATE clients SET name='$name', is_active='$is_active', image='$image_name' WHERE id='$id'");
         if($update){
-            header("location:?page=slider&ubah=berhasil");
+            header("location:?page=client&ubah=berhasil");
         }
     }else{
         // Create
-        $insert = mysqli_query($koneksi, "INSERT INTO sliders (title, description, image) VALUES ('$title','$description','$image_name')");
+        $insert = mysqli_query($koneksi, "INSERT INTO clients (name, image, is_active) VALUES ('$name','$image_name','$is_active')");
         if($insert){
-            header("location:?page=slider&tambah=berhasil");
+            header("location:?page=client&tambah=berhasil");
             exit();
         }
     }
@@ -94,19 +92,25 @@ if(isset($_POST['simpan'])){
                                 width="250">
                         </div>
                         <div class="mb-3">
-                            <label for="" class="form-label">Judul</label>
-                            <input type="text" class="form-control" name="title" id=""
-                                placeholder="Masukkan judul slider" required
-                                value="<?php echo ($id) ? $rowEdit['title'] : null ?>">
+                            <label for="" class="form-label">Nama Client</label>
+                            <input type="text" class="form-control" name="name" id="" placeholder="Masukkan Nama Client"
+                                required value="<?php echo ($id) ? $rowEdit['name'] : null ?>">
                         </div>
                         <div class="mb-3">
-                            <label for="" class="form-label">Isi</label>
-                            <textarea name="description" id="" rows="5"
-                                class='form-control'><?php echo ($id) ? $rowEdit['description'] : null?></textarea>
+                            <label for="" class="form-label">Is Active</label>
+                            <select name="is_active" id="" class="form-control">
+                                <option <?php echo ($id) ? $rowEdit['is_active'] == 1 ? 'selected' : null : null?>
+                                    value="1">
+                                    Publish
+                                </option>
+                                <option <?php echo ($id) ? $rowEdit['is_active'] == 0 ? 'selected' : null : null?>
+                                    value="0">Draft
+                                </option>
+                            </select>
                         </div>
                         <div class="mb-3">
                             <button class="btn btn-primary" type="submit" name="simpan">Simpan</button>
-                            <a href="?page=slider" class="text-muted btn btn-secondary">Kembali</a>
+                            <a href="?page=client" class="text-muted btn btn-secondary">Kembali</a>
                         </div>
                     </form>
                 </div>
