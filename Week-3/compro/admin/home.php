@@ -35,6 +35,13 @@
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
     <!-- END Summernote BootStrap-lite -->
+
+    <!-- InputTags JQuery -->
+    <!-- <link rel="stylesheet" type="text/css" href="assets/css/jquery.tagsinput.min.css" />
+    <script src="assets/js/jquery.tagsinput.min.js"></script> -->
+    <script src="assets/js/tagify/tagify.js"></script>
+    <link rel="stylesheet" href="assets/js/tagify/tagify.css">
+    <!-- END InputTags JQuery -->
 </head>
 
 <body>
@@ -88,6 +95,10 @@
             ['view', ['fullscreen', 'codeview', 'help']]
         ],
     });
+
+    // $('#tags').tagsInput();
+    let input = document.querySelector('#tags');
+    var tagify = new Tagify(input)
     </script>
 
 </body>

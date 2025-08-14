@@ -27,12 +27,13 @@ if(isset($_GET['delete'])){
 }
 
 if(isset($_POST['simpan'])){
-    $title = $_POST['title'];
-    $content = $_POST['content'];
+    $title = mysqli_real_escape_string($koneksi, $_POST['title']);
+    $content = mysqli_real_escape_string($koneksi, $_POST['content']);
     $image_name = $rowEdit['image'] ?? '';
     $is_active = $_POST['is_active'];
-    $penulis = $_SESSION['name'];
+    $penulis = $_SESSION['NAME'];
     $category_id = $_POST['category_id'];
+    $tags = $_POST['tags'];
 
     if(!empty($_FILES['image']['name'])){
         $image = $_FILES['image']['name'];
@@ -62,13 +63,13 @@ if(isset($_POST['simpan'])){
 
     if($id){
         // Update
-        $update = mysqli_query($koneksi, "UPDATE blogs SET title='$title',content='$content', is_active='$is_active', image='$image_name', penulis='$penulis' WHERE id='$id'");
+        $update = mysqli_query($koneksi, "UPDATE blogs SET title='$title',content='$content', is_active='$is_active', image='$image_name', penulis='$penulis', category_id = '$category_id', tags = '$tags' WHERE id='$id'");
         if($update){
             header("location:?page=blog&ubah=berhasil");
         }
     }else{
         // Create
-        $insert = mysqli_query($koneksi, "INSERT INTO blogs (title, content, image, is_active, penulis) VALUES ('$title','$content','$image_name','$is_active', '$penulis')");
+        $insert = mysqli_query($koneksi, "INSERT INTO blogs (title, content, image, is_active, penulis, category_id, tags) VALUES ('$title','$content','$image_name','$is_active', '$penulis', '$category_id', '$tags')");
         if($insert){
             header("location:?page=blog&tambah=berhasil");
             exit();
@@ -98,10 +99,13 @@ if(isset($_POST['simpan'])){
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Kategori</label>
-                            <select name="category_id" id="" class="form-control">
+                            <select name="category_id" id="" class="form-control" required>
                                 <option value="" disabled selected hidden>Pilih Kategori</option>
                                 <?php foreach ($rowCategories as $val): ?>
-                                <option value="<?= $val['id']; ?>"><?= $val['name']; ?></option>
+                                <option value="<?= $val['id']; ?>"
+                                    <?= ($id && $rowEdit['category_id'] == $val['id']) ? 'selected' : '' ?>>
+                                    <?= $val['name']; ?>
+                                </option>
                                 <?php endforeach; ?>
                             </select>
 
@@ -116,6 +120,12 @@ if(isset($_POST['simpan'])){
                             <label for="" class="form-label">Isi</label>
                             <textarea name="content" id="summernote" rows="5"
                                 class='form-control'><?php echo ($id) ? $rowEdit['content'] : null?></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">Tags</label>
+                            <input type="text" name="tags" id="tags" class="form-control" autofocus
+                                placeholder="Masukkan tags, pisahkan dengan koma (,)"
+                                value='<?php echo ($id && !empty($rowEdit["tags"])) ? json_encode(json_decode($rowEdit["tags"])) : "" ?>'>
                         </div>
                     </div>
                 </div>

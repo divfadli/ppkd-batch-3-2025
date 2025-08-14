@@ -31,7 +31,7 @@
                         <a href="?page=tambah-blog" class="btn btn-primary">Tambah</a>
                     </div>
                     <!-- Listing Data -->
-                    <table class="table table-bordered">
+                    <table class="table table-bordered text-center">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -49,15 +49,15 @@
                                 <td><img class="img-fluid align-items-center" src="uploads/<?php echo $row['image']?>"
                                         alt="" width="100"></td>
                                 <td><?php echo $row['name']?></td>
-                                <td><?php echo $row['content']?></td>
+                                <td><?php echo $row['title']?></td>
                                 <td><?php echo changeIsActive($row['is_active']) ?>
                                 </td>
                                 <td>
                                     <a href="?page=tambah-blog&edit=<?php echo $row['id']?>"
-                                        class="btn btn-sm btn-success">Edit</a>
+                                        class="btn btn-sm btn-success"><i class="bi bi-pencil-square"></i></a>
                                     <a onclick="return confirm('Apakah anda yakin akan menghapus data ini??')"
                                         href="?page=tambah-blog&delete=<?php echo $row['id']?>"
-                                        class="btn btn-sm btn-danger">Delete</a>
+                                        class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></a>
                                 </td>
                             </tr>
                             <?php endforeach ?>
