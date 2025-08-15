@@ -1,5 +1,5 @@
 <?php
-// Array
+// Array (Variabel yg menyimpan banyak data)
 // $foods = array("Burger", "Nasi Padang", "Gado-Gado"); // Penulisan Array Versi lama
 $foods = ['Burger', "Nasi Padang", "Gado-Gado", "Nasi Goreng"];
 var_dump($foods[2]);
