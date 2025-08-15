@@ -1,5 +1,5 @@
 <?php
-    $queryBlogsCategories = mysqli_query($koneksi, "SELECT categories.name as category_name, blogs.* FROM blogs JOIN categories ON categories.id = blogs.category_id ORDER BY blogs.id DESC");
+    $queryBlogsCategories = mysqli_query($koneksi, "SELECT categories.name as category_name, blogs.* FROM blogs JOIN categories ON categories.id = blogs.category_id WHERE is_active = 1 ORDER BY blogs.id DESC");
     // All (Data lebih dari satu)
     $rowBlogsCategories = mysqli_fetch_all($queryBlogsCategories, MYSQLI_ASSOC);
 

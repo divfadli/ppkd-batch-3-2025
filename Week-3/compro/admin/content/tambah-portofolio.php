@@ -1,46 +1,47 @@
 <?php
 $id = isset($_GET['edit']) ? $_GET['edit'] : null;
 
-$queryCategories = mysqli_query($koneksi, "SELECT * FROM categories WHERE type='blog' ORDER BY id DESC");
+$queryCategories = mysqli_query($koneksi, "SELECT * FROM categories WHERE type='portofolio' ORDER BY id DESC");
 $rowCategories = mysqli_fetch_all($queryCategories, MYSQLI_ASSOC);
 
 if(isset($_GET['edit'])){
-    $query = mysqli_query($koneksi, "SELECT * FROM blogs WHERE id = '$id'");
+    $query = mysqli_query($koneksi, "SELECT * FROM portofolio WHERE id = '$id'");
     $rowEdit = mysqli_fetch_assoc($query);
     
-    $title = "Edit Blog";
+    $title = "Edit portofolio";
 }else{
-    $title = "Tambah Blog";
+    $title = "Tambah portofolio";
 }
 
 if(isset($_GET['delete'])){
     $id = $_GET['delete'];
-    $queryGambar = mysqli_query($koneksi, "SELECT id, image FROM blogs WHERE id='$id'");
+    $queryGambar = mysqli_query($koneksi, "SELECT id, image FROM portofolio WHERE id='$id'");
     $rowGambar = mysqli_fetch_assoc($queryGambar);
     $image_name = $rowGambar['image'];
     unlink("uploads/" . $image_name);
-    $delete = mysqli_query($koneksi, "DELETE FROM blogs WHERE id='$id'");
+    $delete = mysqli_query($koneksi, "DELETE FROM portofolio WHERE id='$id'");
 
     if($delete){
-        header("location:?page=blog&hapus=berhasil");
+        header("location:?page=portofolio&hapus=berhasil");
     }
 }
 
 if(isset($_POST['simpan'])){
     $title = mysqli_real_escape_string($koneksi, $_POST['title']);
     $content = mysqli_real_escape_string($koneksi, $_POST['content']);
+    $client_name = $_POST['client_name'];
+    $project_date = $_POST['project_date'];
+    $project_url = $_POST['project_url'];
     $image_name = $rowEdit['image'] ?? '';
     $is_active = $_POST['is_active'];
-    $penulis = $_SESSION['NAME'];
     $category_id = $_POST['category_id'];
-    $tags = $_POST['tags'];
 
     if(!empty($_FILES['image']['name'])){
         $image = $_FILES['image']['name'];
         $tmp_name = $_FILES['image']['tmp_name'];
         $type = mime_content_type($tmp_name);
         
-        $ext_allowed = ['image/png', 'image/jpg','image/jpeg', 'image/webp'];
+        $ext_allowed = ['image/png', 'image/jpg','image/jpeg', 'image/webp', 'image/jfif'];
         if(in_array($type, $ext_allowed)){
             $path = "uploads/";
             if(!is_dir($path)) mkdir($path);
@@ -63,15 +64,15 @@ if(isset($_POST['simpan'])){
 
     if($id){
         // Update
-        $update = mysqli_query($koneksi, "UPDATE blogs SET title='$title',content='$content', is_active='$is_active', image='$image_name', penulis='$penulis', category_id = '$category_id', tags = '$tags' WHERE id='$id'");
+        $update = mysqli_query($koneksi, "UPDATE portofolio SET title='$title',content='$content', is_active='$is_active', image='$image_name', category_id = '$category_id', client_name='$client_name', project_date='$project_date', project_url='$project_url' WHERE id='$id'");
         if($update){
-            header("location:?page=blog&ubah=berhasil");
+            header("location:?page=portofolio&ubah=berhasil");
         }
     }else{
         // Create
-        $insert = mysqli_query($koneksi, "INSERT INTO blogs (title, content, image, is_active, penulis, category_id, tags) VALUES ('$title','$content','$image_name','$is_active', '$penulis', '$category_id', '$tags')");
+        $insert = mysqli_query($koneksi, "INSERT INTO portofolio (title, content, image, is_active, category_id, client_name, project_date, project_url) VALUES ('$title','$content','$image_name','$is_active', '$category_id', '$client_name', '$project_date', '$project_url')");
         if($insert){
-            header("location:?page=blog&tambah=berhasil");
+            header("location:?page=portofolio&tambah=berhasil");
             exit();
         }
     }
@@ -113,7 +114,7 @@ if(isset($_POST['simpan'])){
                         <div class="mb-3">
                             <label for="" class="form-label">Judul</label>
                             <input type="text" class="form-control" name="title" id=""
-                                placeholder="Masukkan Judul Blogs" required
+                                placeholder="Masukkan Judul Portofolio" required
                                 value="<?php echo ($id) ? $rowEdit['title'] : null ?>">
                         </div>
                         <div class="mb-3">
@@ -122,10 +123,22 @@ if(isset($_POST['simpan'])){
                                 class='form-control'><?php echo ($id) ? $rowEdit['content'] : null?></textarea>
                         </div>
                         <div class="mb-3">
-                            <label for="" class="form-label">Tags</label>
-                            <input type="text" name="tags" id="tags" class="form-control" autofocus
-                                placeholder="Masukkan tags, pisahkan dengan koma (,)"
-                                value='<?php echo ($id && !empty($rowEdit["tags"])) ? json_encode(json_decode($rowEdit["tags"])) : "" ?>'>
+                            <label for="" class="form-label">Nama Client</label>
+                            <input type="text" class="form-control" name="client_name" id=""
+                                placeholder="Masukkan Nama Client" required
+                                value="<?php echo ($id) ? $rowEdit['client_name'] : null ?>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">Tanggal Project</label>
+                            <input type="date" class="form-control" name="project_date" id=""
+                                placeholder="Masukkan Tanggal Project" required
+                                value="<?php echo ($id) ? $rowEdit['project_date'] : null ?>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">Url Project</label>
+                            <input type="url" class="form-control" name="project_url" id=""
+                                placeholder="Masukkan Url Project" required
+                                value="<?php echo ($id) ? $rowEdit['project_url'] : null ?>">
                         </div>
                     </div>
                 </div>
@@ -150,7 +163,7 @@ if(isset($_POST['simpan'])){
 
                         <div class="mb-3">
                             <button class="btn btn-primary" type="submit" name="simpan">Simpan</button>
-                            <a href="?page=blog" class="text-muted btn btn-secondary">Kembali</a>
+                            <a href="?page=portofolio" class="text-muted btn btn-secondary">Kembali</a>
                         </div>
                     </div>
                 </div>

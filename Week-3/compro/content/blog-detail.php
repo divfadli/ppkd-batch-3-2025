@@ -11,7 +11,7 @@
 
     $tagsJson = $rowBlogDetail['tags']; // JSON string
     $tagsArray = json_decode($tagsJson, true); // Decode ke array asosiatif
-    $tagValues = array_column($tagsArray, 'value'); // Ambil hanya kolom 'value'
+    // $tagValues = array_column($tagsArray, 'value'); // Ambil hanya kolom 'value'
 ?>
 <?php 
     function FormattedDate($date_blog){
@@ -72,12 +72,20 @@
                             <ul class="cats">
                                 <li><a href="#"><?= $rowBlogDetail['category_name']?></a></li>
                             </ul>
+                            <?php
+                                $tags = json_decode($rowBlogDetail['tags']);
+                            ?>
 
                             <i class="bi bi-tags"></i>
                             <ul class="tags">
-                                <li><a href="#">Creative</a></li>
-                                <li><a href="#">Tips</a></li>
-                                <li><a href="#">Marketing</a></li>
+                                <!-- Array Object -->
+                                <?php if (!empty($tags) && (is_array($tags) || is_object($tags))): ?>
+                                <?php foreach($tags as $tag): ?>
+                                <li><a href="#"><?= $tag->value?></a></li>
+                                <?php endforeach ?>
+                                <?php else: ?>
+                                <li><em>Tag tidak tersedia</em></li>
+                                <?php endif; ?>
                             </ul>
                         </div><!-- End meta bottom -->
 
@@ -120,11 +128,19 @@
 
                 <!-- Tags Widget -->
                 <div class="tags-widget widget-item">
+                    <?php 
+                    ?>
 
                     <h3 class="widget-title">Tags</h3>
                     <ul>
-                        <?php foreach($tagValues as $val): ?>
-                        <li><a href="#"><?= $val ?></a></li>
+                        <!-- Assosiatif Array -->
+                        <?php foreach($rowRecentBlogs as $tagsRecent):
+                            $tags = json_decode($tagsRecent['tags'],true);
+                            if (!is_array($tags)) continue; 
+                        ?>
+                        <?php foreach($tags as $tag): ?>
+                        <li><a href="#"><?= $tag['value'] ?></a></li>
+                        <?php endforeach ?>
                         <?php endforeach ?>
                     </ul>
 
