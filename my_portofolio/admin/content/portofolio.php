@@ -54,9 +54,14 @@ $qProjects = mysqli_query($koneksi, "
                                 }
                             }
 
-                            foreach($techs as $t): ?>
+                            // tampilkan maksimal 3 badge
+                            foreach(array_slice($techs, 0, 3) as $t): ?>
                                 <span class="badge bg-info me-1"><?= htmlspecialchars($t); ?></span>
                             <?php endforeach; ?>
+
+                            <?php if(count($techs) > 3): ?>
+                                <span class="badge bg-secondary">+<?= count($techs) - 3; ?></span>
+                            <?php endif; ?>
                         </td>
                         <td>
                             <span class="badge <?= $row['is_active'] ? 'bg-success' : 'bg-secondary'; ?>">

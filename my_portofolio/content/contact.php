@@ -1,5 +1,5 @@
 <?php 
-include 'inc/helpers.php';
+include 'inc/helpers.php'; // pastikan $koneksi ada di sini
 
 // Inisialisasi form
 $name = $email = $subject = $messageText = '';
@@ -20,9 +20,25 @@ if ($_POST) {
         $message = 'Format email tidak valid!';
         $messageType = 'danger';
     } else {
-        $message = 'Pesan berhasil dikirim! Terima kasih telah menghubungi saya. Saya akan merespon dalam 24 jam.';
-        $messageType = 'success';
-        $name = $email = $subject = $messageText = '';
+        // Simpan ke database pakai mysqli
+        $safe_name = mysqli_real_escape_string($koneksi, $name);
+        $safe_email = mysqli_real_escape_string($koneksi, $email);
+        $safe_subject = mysqli_real_escape_string($koneksi, $subject);
+        $safe_message = mysqli_real_escape_string($koneksi, $messageText);
+
+        $qInsert = mysqli_query($koneksi, "
+            INSERT INTO messages (name, email, subject, message, created_at)
+            VALUES ('$safe_name','$safe_email','$safe_subject','$safe_message', NOW())
+        ");
+
+        if ($qInsert) {
+            $message = 'Pesan berhasil dikirim! Terima kasih telah menghubungi saya. Saya akan merespon dalam 24 jam.';
+            $messageType = 'success';
+            $name = $email = $subject = $messageText = '';
+        } else {
+            $message = 'Terjadi kesalahan saat menyimpan pesan. Silakan coba lagi.';
+            $messageType = 'danger';
+        }
     }
 }
 ?>
@@ -121,111 +137,111 @@ if ($_POST) {
     </div>
 </section>
 
-    <!-- FAQ Section -->
-    <section class="section-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center mb-5">
-                    <h2 class="section-title">Frequently Asked Questions</h2>
-                    <p class="section-subtitle">Pertanyaan yang sering diajukan tentang layanan saya</p>
-                </div>
+<!-- FAQ Section -->
+<section class="section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center mb-5">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <p class="section-subtitle">Pertanyaan yang sering diajukan tentang layanan saya</p>
             </div>
-            <div class="row">
-                <div class="col-lg-8 mx-auto">
-                    <div class="accordion" id="faqAccordion">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="faq1">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1">
-                                    Berapa lama waktu pengerjaan project?
-                                </button>
-                            </h2>
-                            <div id="collapse1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
-                                <div class="accordion-body">
-                                    Waktu pengerjaan bervariasi tergantung kompleksitas project. Website sederhana biasanya 2-4 minggu, 
-                                    aplikasi web kompleks 2-3 bulan, dan aplikasi mobile 3-6 bulan. Saya akan memberikan timeline 
-                                    yang detail setelah diskusi requirement.
-                                </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="faq1">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1">
+                                Berapa lama waktu pengerjaan project?
+                            </button>
+                        </h2>
+                        <div id="collapse1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Waktu pengerjaan bervariasi tergantung kompleksitas project. Website sederhana biasanya 2-4 minggu, 
+                                aplikasi web kompleks 2-3 bulan, dan aplikasi mobile 3-6 bulan. Saya akan memberikan timeline 
+                                yang detail setelah diskusi requirement.
                             </div>
                         </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="faq2">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2">
-                                    Apakah menyediakan maintenance setelah project selesai?
-                                </button>
-                            </h2>
-                            <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                <div class="accordion-body">
-                                    Ya, saya menyediakan layanan maintenance dan support. Termasuk bug fixes, security updates, 
-                                    dan minor improvements. Paket maintenance dapat disesuaikan dengan kebutuhan dan budget Anda.
-                                </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="faq2">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2">
+                                Apakah menyediakan maintenance setelah project selesai?
+                            </button>
+                        </h2>
+                        <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Ya, saya menyediakan layanan maintenance dan support. Termasuk bug fixes, security updates, 
+                                dan minor improvements. Paket maintenance dapat disesuaikan dengan kebutuhan dan budget Anda.
                             </div>
                         </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="faq3">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3">
-                                    Bagaimana sistem pembayaran?
-                                </button>
-                            </h2>
-                            <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                <div class="accordion-body">
-                                    Sistem pembayaran fleksibel: 50% di awal sebagai down payment, 50% setelah project selesai. 
-                                    Untuk project besar, bisa dibagi dalam beberapa milestone. Pembayaran dapat melalui transfer bank 
-                                    atau e-wallet.
-                                </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="faq3">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3">
+                                Bagaimana sistem pembayaran?
+                            </button>
+                        </h2>
+                        <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Sistem pembayaran fleksibel: 50% di awal sebagai down payment, 50% setelah project selesai. 
+                                Untuk project besar, bisa dibagi dalam beberapa milestone. Pembayaran dapat melalui transfer bank 
+                                atau e-wallet.
                             </div>
                         </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="faq4">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4">
-                                    Apakah bisa bekerja remote?
-                                </button>
-                            </h2>
-                            <div id="collapse4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                <div class="accordion-body">
-                                    Tentu saja! Saya berpengalaman bekerja remote dengan klien dari berbagai kota. 
-                                    Komunikasi dilakukan melalui video call, chat, dan project management tools. 
-                                    Progress report diberikan secara berkala.
-                                </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="faq4">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4">
+                                Apakah bisa bekerja remote?
+                            </button>
+                        </h2>
+                        <div id="collapse4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Tentu saja! Saya berpengalaman bekerja remote dengan klien dari berbagai kota. 
+                                Komunikasi dilakukan melalui video call, chat, dan project management tools. 
+                                Progress report diberikan secara berkala.
                             </div>
                         </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="faq5">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5">
-                                    Teknologi apa saja yang dikuasai?
-                                </button>
-                            </h2>
-                            <div id="collapse5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                <div class="accordion-body">
-                                    Saya menguasai berbagai teknologi modern: Frontend (React, Vue, Angular), 
-                                    Backend (Node.js, PHP, Laravel), Database (MySQL, MongoDB), Mobile (React Native, Flutter), 
-                                    dan Cloud (AWS, Google Cloud). Lihat halaman Skills untuk detail lengkap.
-                                </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="faq5">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5">
+                                Teknologi apa saja yang dikuasai?
+                            </button>
+                        </h2>
+                        <div id="collapse5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Saya menguasai berbagai teknologi modern: Frontend (React, Vue, Angular), 
+                                Backend (Node.js, PHP, Laravel), Database (MySQL, MongoDB), Mobile (React Native, Flutter), 
+                                dan Cloud (AWS, Google Cloud). Lihat halaman Skills untuk detail lengkap.
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 mx-auto text-center">
-                    <h2 class="cta-title">Siap Memulai Project Bersama?</h2>
-                    <p class="cta-description">
-                        Jangan ragu untuk menghubungi saya. Mari diskusikan ide Anda dan wujudkan solusi digital yang tepat.
-                    </p>
-                    <div class="cta-buttons">
-                        <a href="https://wa.me/<?= $rowSetting['phone']?>" class="btn btn-success btn-lg me-3" target="_blank">
-                            <i class="fab fa-whatsapp me-2"></i>WhatsApp
-                        </a>
-                        <a href="mailto:<?= $rowSetting['email']?>" class="btn btn-outline-light btn-lg">
-                            <i class="fas fa-envelope me-2"></i>Email
-                        </a>
-                    </div>
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="cta-title">Siap Memulai Project Bersama?</h2>
+                <p class="cta-description">
+                    Jangan ragu untuk menghubungi saya. Mari diskusikan ide Anda dan wujudkan solusi digital yang tepat.
+                </p>
+                <div class="cta-buttons">
+                    <a href="https://wa.me/<?= $rowSetting['phone']?>" class="btn btn-success btn-lg me-3" target="_blank">
+                        <i class="fab fa-whatsapp me-2"></i>WhatsApp
+                    </a>
+                    <a href="mailto:<?= $rowSetting['email']?>" class="btn btn-outline-light btn-lg">
+                        <i class="fas fa-envelope me-2"></i>Email
+                    </a>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>

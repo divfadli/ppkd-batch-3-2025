@@ -8,12 +8,11 @@ $qProjects = mysqli_query($koneksi, "
     ORDER BY p.created_at DESC
 ");
 
-// Simpan semua data projects ke array biar bisa dipakai ulang
 $projects = [];
 $categories = [];
-while($row = mysqli_fetch_assoc($qProjects)){
+while ($row = mysqli_fetch_assoc($qProjects)) {
     $projects[] = $row;
-    if(!in_array($row['section_name'], $categories)) {
+    if (!in_array($row['section_name'], $categories)) {
         $categories[] = $row['section_name'];
     }
 }
@@ -32,7 +31,7 @@ while($row = mysqli_fetch_assoc($qProjects)){
     <div class="container">
         <div class="text-center mb-4">
             <button class="btn btn-outline-primary btn-sm me-2 filter-btn active" data-filter="all">Semua</button>
-            <?php foreach($categories as $cat): ?>
+            <?php foreach ($categories as $cat): ?>
                 <button class="btn btn-outline-primary btn-sm me-2 filter-btn" data-filter="<?= htmlspecialchars($cat); ?>">
                     <?= htmlspecialchars($cat); ?>
                 </button>
@@ -40,7 +39,7 @@ while($row = mysqli_fetch_assoc($qProjects)){
         </div>
 
         <div class="row g-4 portfolio-grid">
-            <?php foreach($projects as $project): 
+            <?php foreach ($projects as $project): 
                 // Parse teknologi
                 $techs = [];
                 if (!empty($project['tech'])) {
@@ -55,6 +54,9 @@ while($row = mysqli_fetch_assoc($qProjects)){
                         $techs = array_map('trim', explode(',', $project['tech']));
                     }
                 }
+
+                // Deskripsi singkat max 120 karakter
+                $shortDesc = mb_strimwidth($project['description'], 0, 120, '...');
             ?>
             <div class="col-lg-4 col-md-6 portfolio-item" data-category="<?= htmlspecialchars($project['section_name']); ?>">
                 <div class="card h-100 shadow-sm portfolio-card">
@@ -66,23 +68,34 @@ while($row = mysqli_fetch_assoc($qProjects)){
                             <button class="btn btn-light btn-sm me-2" data-bs-toggle="modal" data-bs-target="#portfolioModal<?= $project['id']; ?>">
                                 <i class="fas fa-eye"></i>
                             </button>
-                            <?php if(!empty($project['link'])): ?>
+                            <?php if (!empty($project['link'])): ?>
                             <a href="<?= htmlspecialchars($project['link']); ?>" target="_blank" class="btn btn-light btn-sm">
                                 <i class="fas fa-external-link-alt"></i>
                             </a>
                             <?php endif; ?>
                         </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body text-center">
                         <h5 class="card-title"><?= htmlspecialchars($project['title']); ?></h5>
                         <small class="text-muted"><?= htmlspecialchars($project['year']); ?> | <?= htmlspecialchars($project['section_name']); ?></small>
-                        <p class="card-text text-truncate mt-2"><?= htmlspecialchars($project['description']); ?></p>
+                        
+                        <p class="card-text portfolio-description mt-2">
+                            <?= htmlspecialchars($shortDesc); ?>
+                            <a href="javascript:void(0)" 
+                            class="read-more-inline" 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#portfolioModal<?= $project['id']; ?>">
+                            Read More
+                            </a>
+                        </p>
+
+                        <!-- Teknologi -->
                         <div class="mt-2">
-                            <?php foreach(array_slice($techs, 0, 3) as $t): ?>
+                            <?php foreach (array_slice($techs, 0, 3) as $t): ?>
                                 <span class="badge bg-info me-1"><?= htmlspecialchars($t); ?></span>
                             <?php endforeach; ?>
-                            <?php if(count($techs) > 3): ?>
-                                <span class="badge bg-secondary">+<?= count($techs)-3; ?></span>
+                            <?php if (count($techs) > 3): ?>
+                                <span class="badge bg-secondary">+<?= count($techs) - 3; ?></span>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -105,19 +118,19 @@ while($row = mysqli_fetch_assoc($qProjects)){
                                     <p><?= nl2br(htmlspecialchars($project['description'])); ?></p>
                                     <h6>Teknologi</h6>
                                     <div class="mb-2">
-                                        <?php foreach($techs as $t): ?>
+                                        <?php foreach ($techs as $t): ?>
                                             <span class="badge bg-info me-2 mb-2"><?= htmlspecialchars($t); ?></span>
                                         <?php endforeach; ?>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <h6>Detail Project</h6>
-                                    <?php if(!empty($project['client'])): ?>
+                                    <?php if (!empty($project['client'])): ?>
                                         <p><strong>Client:</strong> <?= htmlspecialchars($project['client']); ?></p>
                                     <?php endif; ?>
                                     <p><strong>Tahun:</strong> <?= htmlspecialchars($project['year']); ?></p>
                                     <p><strong>Kategori:</strong> <?= htmlspecialchars($project['section_name']); ?></p>
-                                    <?php if(!empty($project['link'])): ?>
+                                    <?php if (!empty($project['link'])): ?>
                                     <a href="<?= htmlspecialchars($project['link']); ?>" target="_blank" class="btn btn-primary w-100 mt-2">
                                         <i class="fas fa-external-link-alt me-2"></i>Lihat Project
                                     </a>
@@ -143,21 +156,15 @@ while($row = mysqli_fetch_assoc($qProjects)){
     </div>
 </section>
 
-<!-- Filter JS -->
-<script>
-document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const filter = btn.dataset.filter;
-        document.querySelectorAll('.portfolio-item').forEach(item => {
-            item.style.display = (filter==='all' || item.dataset.category===filter) ? 'block' : 'none';
-        });
-    });
-});
-</script>
 
 <style>
+.portfolio-grid {
+    justify-content: center; /* grid tengah */
+}
+.portfolio-card .card-body {
+    text-align: center; /* isi card rata tengah */
+}
+
 .portfolio-overlay {
     position: absolute;
     top:0; left:0; width:100%; height:100%;
@@ -166,21 +173,35 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
     opacity:0; transition: .3s;
 }
 .portfolio-card:hover .portfolio-overlay { opacity:1; }
-.text-truncate { display: -webkit-box; -webkit-line-clamp:3; -webkit-box-orient: vertical; overflow:hidden; }
+
 .badge { font-size:.75rem; }
 
-/* Tambahan styling gambar */
+/* Deskripsi dengan Read More inline */
+.portfolio-description {
+    display: inline;
+    white-space: normal;
+}
+
+.read-more-inline {
+    color: #6c63ff; /* warna ungu seperti contoh */
+    font-size: .85rem;
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 4px;
+}
+.read-more-inline:hover { text-decoration: underline; }
+
 .portfolio-img {
     width: 100%;
-    height: 250px;            /* tinggi seragam */
-    object-fit: cover;        /* crop default */
+    height: 250px;
+    object-fit: cover;
     object-position: center;
     border-radius: .5rem;
 }
 
 .img-mobile {
-    object-fit: contain !important; /* biar tidak kepotong */
-    background: #f8f9fa;            /* kasih background netral */
+    object-fit: contain !important;
+    background: #f8f9fa;
     padding: 10px;
 }
 </style>
