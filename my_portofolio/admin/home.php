@@ -31,9 +31,11 @@ if(empty($_SESSION['ID_USER'])){
     <!-- InputTags JQuery -->
     <script src="assets/js/tagify/tagify.js"></script>
     <link rel="stylesheet" href="assets/js/tagify/tagify.css">
-    <script src="https://kit.fontawesome.com/7a57a04210.js" crossorigin="anonymous"></script>
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
-    
+    <!-- <script src="https://kit.fontawesome.com/7a57a04210.js" crossorigin="anonymous"></script> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+        integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
 
 <body>
@@ -85,10 +87,11 @@ if(empty($_SESSION['ID_USER'])){
     });
 
     let input = document.querySelector('#tags');
-    if(input){
-      var tagify = new Tagify(input);
+    if (input) {
+        var tagify = new Tagify(input);
     }
     </script>
 
 </body>
+
 </html>
