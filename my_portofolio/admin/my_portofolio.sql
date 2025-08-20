@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 19 Agu 2025 pada 09.53
+-- Waktu pembuatan: 20 Agu 2025 pada 10.23
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -96,6 +96,32 @@ CREATE TABLE `education` (
 
 INSERT INTO `education` (`id`, `section_id`, `start_year`, `end_year`, `degree`, `school`, `description`) VALUES
 (1, 9, '2020', '2025', 'S1 Ilmu Komputer', 'Universitas Pertamina', 'Menempuh studi S1 Ilmu Komputer di Universitas Pertamina (2020–2025), saya mempelajari algoritma, struktur data, arsitektur komputer, pengembangan web dan mobile, serta bidang modern seperti cloud computing, jaringan, basis data, dan machine learning, membekali saya dengan pemahaman menyeluruh dan keterampilan praktis dalam membangun solusi teknologi.');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `experiences`
+--
+
+CREATE TABLE `experiences` (
+  `id` int(11) NOT NULL,
+  `start_year` varchar(10) NOT NULL,
+  `end_year` varchar(10) NOT NULL,
+  `position` varchar(150) NOT NULL,
+  `company` varchar(150) NOT NULL,
+  `location` varchar(150) NOT NULL,
+  `type` varchar(50) NOT NULL,
+  `description` text DEFAULT NULL,
+  `achievements` text DEFAULT NULL,
+  `technologies` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `experiences`
+--
+
+INSERT INTO `experiences` (`id`, `start_year`, `end_year`, `position`, `company`, `location`, `type`, `description`, `achievements`, `technologies`) VALUES
+(1, '2023', '2024', 'Backend Engineer (Intern)', 'PT Pupuk Indonesia', 'Jakarta, Indonesia', 'Internship', 'Membantu organisasi dalam mengelola dan melacak ketidakhadiran karyawan secara efektif. Sistem ini menyediakan pendekatan terstruktur untuk menangani berbagai jenis cuti, seperti cuti sakit, cuti tahunan, cuti pribadi, maupun permintaan izin lainnya.', '[{\"value\":\"Mempelajari dan menguasai framework Gin dalam 6 bulan\"},{\"value\":\"Berkontribusi dalam pengembangan Absence Management System\"},{\"value\":\"Berkolaborasi dengan tim\"}]', '[{\"value\":\"Gin\"},{\"value\":\"Gorm\"},{\"value\":\"Go\"}]');
 
 -- --------------------------------------------------------
 
@@ -361,6 +387,12 @@ ALTER TABLE `education`
   ADD KEY `section_id` (`section_id`);
 
 --
+-- Indeks untuk tabel `experiences`
+--
+ALTER TABLE `experiences`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeks untuk tabel `projects`
 --
 ALTER TABLE `projects`
@@ -431,6 +463,12 @@ ALTER TABLE `certification`
 -- AUTO_INCREMENT untuk tabel `education`
 --
 ALTER TABLE `education`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT untuk tabel `experiences`
+--
+ALTER TABLE `experiences`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
