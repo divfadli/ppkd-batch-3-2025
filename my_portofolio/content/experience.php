@@ -1,249 +1,199 @@
+<?php
+// ============================
+// Ambil data pengalaman kerja
+// ============================
+$qExp = mysqli_query($koneksi, "SELECT * FROM experiences ORDER BY start_year DESC");
+$experiences = mysqli_fetch_all($qExp, MYSQLI_ASSOC);
 
-    <!-- Page Header -->
-    <section class="page-header">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h1 class="page-title">Pengalaman Kerja</h1>
-                    <p class="page-subtitle">Perjalanan karir dan pencapaian profesional selama 5+ tahun</p>
+// ============================
+// Data statis untuk skill growth
+// ============================
+$skillsGrowth = [
+    [
+        "year" => "2017-2018",
+        "title" => "Foundation",
+        "skills" => ["HTML5", "CSS3", "JavaScript", "PHP", "MySQL"]
+    ],
+    [
+        "year" => "2018-2019",
+        "title" => "Frontend Focus",
+        "skills" => ["React.js", "SASS", "Webpack", "Git", "Bootstrap"]
+    ],
+    [
+        "year" => "2019-2021",
+        "title" => "Full Stack",
+        "skills" => ["Vue.js", "Laravel", "Node.js", "MongoDB", "REST API"]
+    ],
+    [
+        "year" => "2021-Now",
+        "title" => "Advanced & Leadership",
+        "skills" => ["AWS", "Docker", "Microservices", "Team Lead", "DevOps"]
+    ],
+];
+
+// ============================
+// Data statis untuk testimonial
+// ============================
+$testimonials = [
+    [
+        "text" => "John adalah developer yang sangat kompeten dan reliable. Kemampuan problem solving-nya luar biasa.",
+        "img"  => "https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=100",
+        "name" => "Sarah Johnson",
+        "role" => "Project Manager - Tech Solutions Inc."
+    ],
+    [
+        "text" => "Bekerja dengan John sangat menyenangkan. Dia skilled secara teknis, komunikatif, dan team player sejati.",
+        "img"  => "https://images.pexels.com/photos/3785081/pexels-photo-3785081.jpeg?auto=compress&cs=tinysrgb&w=100",
+        "name" => "Mike Chen",
+        "role" => "Senior Developer - Digital Agency Pro"
+    ],
+    [
+        "text" => "John berhasil mengembangkan website kami dengan hasil yang melebihi ekspektasi. Profesional & tepat waktu.",
+        "img"  => "https://images.pexels.com/photos/3785083/pexels-photo-3785083.jpeg?auto=compress&cs=tinysrgb&w=100",
+        "name" => "Lisa Wong",
+        "role" => "CEO - StartUp Innovate"
+    ],
+];
+?>
+
+<!-- ================= Page Header ================= -->
+<section class="page-header text-center py-5 bg-gradient">
+    <div class="container">
+        <h1 class="page-title display-5 fw-bold">Pengalaman Kerja</h1>
+        <p class="page-subtitle text-light">Perjalanan karir & pencapaian profesional selama 5+ tahun</p>
+    </div>
+</section>
+
+<!-- ================= Experience Timeline ================= -->
+<section class="section-padding">
+    <div class="container">
+        <div class="section-heading text-center mb-5" data-aos="fade-up">
+            <h2 class="section-title fw-bold">Pengalaman Kerja</h2>
+            <p class="section-subtitle">Ringkasan pengalaman profesional saya</p>
+        </div>
+
+        <div class="timeline position-relative">
+            <?php if ($experiences): ?>
+            <?php foreach ($experiences as $index => $exp): 
+                $techs = json_decode($exp['technologies'], true);
+                $achievements = json_decode($exp['achievements'], true);
+            ?>
+            <div class="timeline-item <?= $index % 2 == 0 ? 'left' : 'right'; ?>" data-aos="fade-up"
+                data-aos-delay="<?= $index * 100 ?>">
+                <div class="timeline-card card shadow-lg rounded-4 p-4 border-0">
+
+                    <!-- Tahun & Type -->
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="badge bg-primary px-3 py-2">
+                            <?= htmlspecialchars($exp['start_year']) ?> - <?= htmlspecialchars($exp['end_year']) ?>
+                        </span>
+                        <span class="badge bg-dark px-3 py-2"><?= htmlspecialchars($exp['type']) ?></span>
+                    </div>
+
+                    <!-- Position & Company -->
+                    <h4 class="fw-bold"><?= htmlspecialchars($exp['position']) ?></h4>
+                    <p class="text-muted mb-2">
+                        <i class="fas fa-building me-2 text-primary"></i>
+                        <?= htmlspecialchars($exp['company']) ?> · <?= htmlspecialchars($exp['location']) ?>
+                    </p>
+
+                    <!-- Description -->
+                    <p><?= nl2br(htmlspecialchars($exp['description'])) ?></p>
+
+                    <!-- Achievements -->
+                    <?php if ($achievements && is_array($achievements)): ?>
+                    <div class="mt-3">
+                        <h6 class="fw-bold text-success"><i class="fas fa-trophy me-2"></i>Pencapaian Utama</h6>
+                        <ul class="list-unstyled ps-3">
+                            <?php foreach ($achievements as $ach): ?>
+                            <li>✅ <?= htmlspecialchars($ach['value']) ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                    <?php endif; ?>
+
+                    <!-- Technologies -->
+                    <?php if ($techs && is_array($techs)): ?>
+                    <div class="mt-3">
+                        <h6 class="fw-bold text-info"><i class="fas fa-laptop-code me-2"></i>Teknologi</h6>
+                        <?php foreach ($techs as $tech): ?>
+                        <span class="badge bg-light text-dark border me-1 mb-1 px-3 py-2">
+                            <?= htmlspecialchars($tech['value']) ?>
+                        </span>
+                        <?php endforeach; ?>
+                    </div>
+                    <?php endif; ?>
                 </div>
             </div>
+            <?php endforeach; ?>
+            <?php else: ?>
+            <p class="text-center text-muted">Belum ada pengalaman kerja yang ditambahkan.</p>
+            <?php endif; ?>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Experience Timeline -->
-    <section class="section-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="timeline">
-                        <?php
-                        $experiences = [
-                            [
-                                'year' => '2021 - Sekarang',
-                                'position' => 'Senior Full Stack Developer',
-                                'company' => 'Tech Solutions Inc.',
-                                'location' => 'Jakarta, Indonesia',
-                                'type' => 'Full-time',
-                                'description' => 'Memimpin tim pengembangan dalam menciptakan aplikasi web dan mobile yang scalable. Bertanggung jawab dalam arsitektur sistem dan mentoring junior developer.',
-                                'achievements' => [
-                                    'Meningkatkan performa aplikasi hingga 40% melalui optimasi database dan caching',
-                                    'Memimpin tim 8 developer dalam pengembangan platform e-commerce',
-                                    'Mengimplementasikan CI/CD pipeline yang mengurangi deployment time 60%',
-                                    'Mentoring 5 junior developer dan meningkatkan skill tim secara keseluruhan'
-                                ],
-                                'technologies' => ['React.js', 'Node.js', 'AWS', 'Docker', 'PostgreSQL']
-                            ],
-                            [
-                                'year' => '2019 - 2021',
-                                'position' => 'Full Stack Developer',
-                                'company' => 'Digital Agency Pro',
-                                'location' => 'Jakarta, Indonesia',
-                                'type' => 'Full-time',
-                                'description' => 'Mengembangkan berbagai aplikasi web untuk klien dari berbagai industri. Fokus pada pengembangan frontend dan backend menggunakan teknologi modern.',
-                                'achievements' => [
-                                    'Berhasil menyelesaikan 25+ project web application dengan tingkat kepuasan klien 95%',
-                                    'Mengembangkan CMS custom yang digunakan oleh 10+ klien perusahaan',
-                                    'Meningkatkan SEO score rata-rata website klien dari 60 menjadi 85',
-                                    'Mengimplementasikan responsive design yang meningkatkan mobile traffic 50%'
-                                ],
-                                'technologies' => ['Vue.js', 'Laravel', 'MySQL', 'Bootstrap', 'jQuery']
-                            ],
-                            [
-                                'year' => '2018 - 2019',
-                                'position' => 'Frontend Developer',
-                                'company' => 'StartUp Innovate',
-                                'location' => 'Jakarta, Indonesia',
-                                'type' => 'Full-time',
-                                'description' => 'Mengembangkan interface pengguna yang responsif dan user-friendly. Berkolaborasi dengan tim design untuk mengimplementasikan mockup menjadi kode.',
-                                'achievements' => [
-                                    'Mengembangkan dashboard admin yang meningkatkan efisiensi operasional 30%',
-                                    'Mengimplementasikan design system yang mempercepat development 25%',
-                                    'Berkolaborasi dengan UX designer untuk meningkatkan user engagement 40%',
-                                    'Mengoptimalkan loading time website dari 5 detik menjadi 2 detik'
-                                ],
-                                'technologies' => ['React.js', 'JavaScript', 'SASS', 'Webpack', 'Git']
-                            ],
-                            [
-                                'year' => '2017 - 2018',
-                                'position' => 'Junior Web Developer',
-                                'company' => 'Web Studio Creative',
-                                'location' => 'Jakarta, Indonesia',
-                                'type' => 'Full-time',
-                                'description' => 'Memulai karir sebagai web developer dengan fokus pada pengembangan website menggunakan HTML, CSS, JavaScript, dan PHP.',
-                                'achievements' => [
-                                    'Menyelesaikan 15+ website company profile dengan kualitas tinggi',
-                                    'Mempelajari dan menguasai framework Laravel dalam 3 bulan',
-                                    'Berkontribusi dalam pengembangan sistem inventory management',
-                                    'Mendapat promosi menjadi Frontend Developer dalam 1 tahun'
-                                ],
-                                'technologies' => ['HTML5', 'CSS3', 'JavaScript', 'PHP', 'MySQL']
-                            ]
-                        ];
-
-                        foreach($experiences as $index => $exp): ?>
-                        <div class="timeline-item <?php echo $index % 2 == 0 ? 'left' : 'right'; ?>">
-                            <div class="timeline-content">
-                                <div class="timeline-header">
-                                    <div class="timeline-year"><?php echo $exp['year']; ?></div>
-                                    <div class="timeline-type"><?php echo $exp['type']; ?></div>
-                                </div>
-                                <h4 class="timeline-position"><?php echo $exp['position']; ?></h4>
-                                <h5 class="timeline-company">
-                                    <i class="fas fa-building me-2"></i><?php echo $exp['company']; ?>
-                                </h5>
-                                <p class="timeline-location">
-                                    <i class="fas fa-map-marker-alt me-2"></i><?php echo $exp['location']; ?>
-                                </p>
-                                <p class="timeline-description"><?php echo $exp['description']; ?></p>
-                                
-                                <div class="timeline-achievements">
-                                    <h6><i class="fas fa-trophy me-2"></i>Key Achievements:</h6>
-                                    <ul>
-                                        <?php foreach($exp['achievements'] as $achievement): ?>
-                                        <li><?php echo $achievement; ?></li>
-                                        <?php endforeach; ?>
-                                    </ul>
-                                </div>
-                                
-                                <div class="timeline-technologies">
-                                    <h6><i class="fas fa-code me-2"></i>Technologies Used:</h6>
-                                    <div class="tech-tags">
-                                        <?php foreach($exp['technologies'] as $tech): ?>
-                                        <span class="tech-tag"><?php echo $tech; ?></span>
-                                        <?php endforeach; ?>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+<!-- ================= Skills Growth ================= -->
+<section class="section-padding bg-light">
+    <div class="container">
+        <div class="section-heading text-center mb-5" data-aos="zoom-in">
+            <h2 class="section-title fw-bold">Perkembangan Keahlian</h2>
+            <p class="section-subtitle">Evolusi teknologi yang saya kuasai</p>
+        </div>
+        <div class="row">
+            <?php foreach ($skillsGrowth as $index => $skill): ?>
+            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="<?= $index * 150 ?>">
+                <div class="card shadow-sm border-0 p-4 text-center h-100 rounded-4">
+                    <div class="skill-year text-primary fw-bold mb-2"><?= $skill['year'] ?></div>
+                    <h5 class="mb-3 fw-semibold"><?= $skill['title'] ?></h5>
+                    <div class="d-flex flex-wrap justify-content-center gap-2">
+                        <?php foreach ($skill['skills'] as $s): ?>
+                        <span class="badge bg-dark-subtle text-dark border px-3 py-2"><?= $s ?></span>
                         <?php endforeach; ?>
                     </div>
                 </div>
             </div>
+            <?php endforeach; ?>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Skills Growth -->
-    <section class="section-padding bg-light">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center mb-5">
-                    <h2 class="section-title">Perkembangan Keahlian</h2>
-                    <p class="section-subtitle">Evolusi teknologi yang saya kuasai selama perjalanan karir</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="skill-evolution-card">
-                        <div class="skill-year">2017-2018</div>
-                        <h5>Foundation</h5>
-                        <div class="skill-list">
-                            <span class="skill-badge">HTML5</span>
-                            <span class="skill-badge">CSS3</span>
-                            <span class="skill-badge">JavaScript</span>
-                            <span class="skill-badge">PHP</span>
-                            <span class="skill-badge">MySQL</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="skill-evolution-card">
-                        <div class="skill-year">2018-2019</div>
-                        <h5>Frontend Focus</h5>
-                        <div class="skill-list">
-                            <span class="skill-badge">React.js</span>
-                            <span class="skill-badge">SASS</span>
-                            <span class="skill-badge">Webpack</span>
-                            <span class="skill-badge">Git</span>
-                            <span class="skill-badge">Bootstrap</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="skill-evolution-card">
-                        <div class="skill-year">2019-2021</div>
-                        <h5>Full Stack</h5>
-                        <div class="skill-list">
-                            <span class="skill-badge">Vue.js</span>
-                            <span class="skill-badge">Laravel</span>
-                            <span class="skill-badge">Node.js</span>
-                            <span class="skill-badge">MongoDB</span>
-                            <span class="skill-badge">REST API</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="skill-evolution-card">
-                        <div class="skill-year">2021-Now</div>
-                        <h5>Advanced & Leadership</h5>
-                        <div class="skill-list">
-                            <span class="skill-badge">AWS</span>
-                            <span class="skill-badge">Docker</span>
-                            <span class="skill-badge">Microservices</span>
-                            <span class="skill-badge">Team Lead</span>
-                            <span class="skill-badge">DevOps</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<!-- ================= Testimonials ================= -->
+<section class="section-padding">
+    <div class="container">
+        <div class="section-heading text-center mb-5" data-aos="fade-up">
+            <h2 class="section-title fw-bold">Testimoni</h2>
+            <p class="section-subtitle">Apa kata rekan & klien tentang saya</p>
         </div>
-    </section>
+        <div class="row">
+            <?php foreach ($testimonials as $i => $testi): ?>
+            <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="<?= $i * 200 ?>">
+                <div class="card testimonial-card shadow-lg border-0 rounded-4 h-100 p-4">
+                    <div class="testimonial-content mb-3">
+                        <i class="fas fa-quote-left fa-2x text-primary"></i>
+                        <p class="mt-3 fst-italic">"<?= htmlspecialchars($testi['text']) ?>"</p>
+                    </div>
+                    <div class="d-flex align-items-center mt-auto">
+                        <img src="<?= $testi['img'] ?>" alt="<?= htmlspecialchars($testi['name']) ?>"
+                            class="rounded-circle me-3 border border-2" width="60" height="60">
+                        <div>
+                            <h6 class="mb-0 fw-bold"><?= htmlspecialchars($testi['name']) ?></h6>
+                            <small class="text-muted"><?= htmlspecialchars($testi['role']) ?></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
 
-    <!-- Testimonials -->
-    <section class="section-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center mb-5">
-                    <h2 class="section-title">Testimoni</h2>
-                    <p class="section-subtitle">Apa kata rekan kerja dan klien tentang kinerja saya</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 mb-4">
-                    <div class="testimonial-card">
-                        <div class="testimonial-content">
-                            <i class="fas fa-quote-left"></i>
-                            <p>"John adalah developer yang sangat kompeten dan reliable. Kemampuan problem solving-nya luar biasa dan selalu memberikan solusi yang efisien."</p>
-                        </div>
-                        <div class="testimonial-author">
-                            <img src="https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=100" alt="Sarah Manager">
-                            <div class="author-info">
-                                <h6>Sarah Johnson</h6>
-                                <span>Project Manager - Tech Solutions Inc.</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mb-4">
-                    <div class="testimonial-card">
-                        <div class="testimonial-content">
-                            <i class="fas fa-quote-left"></i>
-                            <p>"Bekerja dengan John sangat menyenangkan. Dia tidak hanya skilled secara teknis, tapi juga excellent dalam komunikasi dan teamwork."</p>
-                        </div>
-                        <div class="testimonial-author">
-                            <img src="https://images.pexels.com/photos/3785081/pexels-photo-3785081.jpeg?auto=compress&cs=tinysrgb&w=100" alt="Mike Developer">
-                            <div class="author-info">
-                                <h6>Mike Chen</h6>
-                                <span>Senior Developer - Digital Agency Pro</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mb-4">
-                    <div class="testimonial-card">
-                        <div class="testimonial-content">
-                            <i class="fas fa-quote-left"></i>
-                            <p>"John berhasil mengembangkan website kami dengan hasil yang melebihi ekspektasi. Profesional dan tepat waktu dalam delivery."</p>
-                        </div>
-                        <div class="testimonial-author">
-                            <img src="https://images.pexels.com/photos/3785083/pexels-photo-3785083.jpeg?auto=compress&cs=tinysrgb&w=100" alt="Lisa Client">
-                            <div class="author-info">
-                                <h6>Lisa Wong</h6>
-                                <span>CEO - StartUp Innovate</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- ================= AOS Animation Init ================= -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script>
+AOS.init({
+    duration: 800,
+    once: true
+});
+</script>

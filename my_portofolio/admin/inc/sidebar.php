@@ -52,6 +52,7 @@ $menu = [
             ]
         ],
         ['title' => 'Portofolio', 'link' => '?page=portofolio'],
+        ['title' => 'Experience', 'link' => '?page=experience'],
     ]],
     ['heading' => 'Pages'],
     ['title' => 'User', 'icon' => 'bi bi-person', 'link' => '?page=user', 'children' => []],
@@ -122,9 +123,9 @@ function renderMenu($items, $currentPage, $currentSectionId, $parentId = '') {
 ?>
 
 <aside id="sidebar" class="sidebar">
-  <ul class="sidebar-nav" id="sidebar-nav">
-    <?php renderMenu($menu, $currentPage, $currentSectionId); ?>
-  </ul>
+    <ul class="sidebar-nav" id="sidebar-nav">
+        <?php renderMenu($menu, $currentPage, $currentSectionId); ?>
+    </ul>
 </aside>
 
 <style>
@@ -137,11 +138,14 @@ function renderMenu($items, $currentPage, $currentSectionId, $parentId = '') {
     border-radius: 8px;
     transition: all 0.2s;
 }
+
 .sidebar .nav-item a.nav-link:hover {
     background: #f0f2f5;
 }
+
 .sidebar .nav-item a.active {
-    background: #0d6efd;  /* biru solid utk menu utama */
+    background: #0d6efd;
+    /* biru solid utk menu utama */
     color: #fff;
     font-weight: 600;
 }
@@ -150,6 +154,7 @@ function renderMenu($items, $currentPage, $currentSectionId, $parentId = '') {
 .sidebar .nav-content {
     padding-left: 15px;
 }
+
 .sidebar .nav-content a {
     display: block;
     padding: 6px 12px;
@@ -158,12 +163,15 @@ function renderMenu($items, $currentPage, $currentSectionId, $parentId = '') {
     border-radius: 6px;
     transition: all 0.2s;
 }
+
 .sidebar .nav-content a:hover {
     background: #f8f9fa;
     color: #0d6efd;
 }
+
 .sidebar .nav-content a.active {
-    background: #e9f2ff;   /* biru muda agar kontras */
+    background: #e9f2ff;
+    /* biru muda agar kontras */
     color: #0d6efd;
     font-weight: 600;
 }
@@ -172,6 +180,7 @@ function renderMenu($items, $currentPage, $currentSectionId, $parentId = '') {
 .sidebar .nav-link i.bi-chevron-down {
     transition: transform 0.3s ease;
 }
+
 .sidebar .nav-link:not(.collapsed) i.bi-chevron-down {
     transform: rotate(180deg);
 }
