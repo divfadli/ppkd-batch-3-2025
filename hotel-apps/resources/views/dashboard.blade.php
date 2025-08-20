@@ -1,14 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
+ @extends('app');
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Belajar Laravel</title>
-</head>
+ <!-- Satu Baris (title) -->
+ @section('title', 'Dashboard')
 
-<body>
-    <h1>Selamat Datang: {{ auth()->user()->name }}</h1>
-</body>
+ <!-- Banyak baris (content) -->
+ @section('content')
+ <div class="row">
+     <div class="col-lg-6">
 
-</html>
+         <div class="card">
+             <div class="card-body">
+                 <h5 class="card-title">Example Card</h5>
+                 <p>This is an examle page with no contrnt. You can use it as a starter for your custom
+                     pages.</p>
+             </div>
+         </div>
+
+     </div>
+
+     <div class="col-lg-6">
+
+         <div class="card">
+             <div class="card-body">
+                 <h5 class="card-title">Example Card</h5>
+                 <p>This is an examle page with no contrnt. You can use it as a starter for your custom
+                     pages.</p>
+             </div>
+         </div>
+
+     </div>
+ </div>
+ @endsection

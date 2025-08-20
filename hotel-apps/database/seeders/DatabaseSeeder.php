@@ -21,6 +21,9 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         // php artisan db:seed --class=UserSeeder (Pemanggilan di terminal, terkhusus class yang diinginkan)
-        $this->call(UserSeeder::class);
+        // $this->call(UserSeeder::class);
+        // $this->call(CategoriesSeeder::class);
+        // php artisan db:seed
+        $this->call([UserSeeder::class, CategoriesSeeder::class]);
     }
 }

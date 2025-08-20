@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\BelajarController;
+use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RoomsController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () { return view('welcome'); }); 
@@ -27,3 +30,12 @@ Route::post('store/{tipe}', [BelajarController::class, 'storeOperasi'])
     // Dashboard
     // Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('dashboard', DashboardController::class);
+
+    // User
+    Route::resource('user', UserController::class);
+
+    // Categories
+    Route::resource('categories',CategoriesController::class);
+
+    // Rooms
+    Route::resource('rooms',RoomsController::class);
