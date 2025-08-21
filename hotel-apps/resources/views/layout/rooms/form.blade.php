@@ -78,8 +78,8 @@
                         <input type="file" name="image_cover" id="image_cover" class="form-control">
                         @if(isset($rooms) && $rooms->image_cover)
                         <div class="mt-2">
-                            <img src="{{ asset('storage/public/rooms/' . $rooms->image_cover) }}" alt="Gambar Kamar"
-                                width="120" class="img-thumbnail">
+                            <img src="{{ asset('storage/'. $rooms->image_cover)}}" alt="Gambar Kamar" width="150"
+                                class="img-thumbnail img-fluid">
                         </div>
                         @endif
                         @error('image_cover')

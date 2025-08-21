@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Categories;
 use App\Models\Rooms;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class RoomsController extends Controller
 {
@@ -45,11 +46,11 @@ class RoomsController extends Controller
 
         // jika gambar sudah ada
         if ($request->hasFile('image_cover')) {
-            $data['image_cover'] = $request->file('image_cover')->store('room', 'public');
+            $data['image_cover'] = $request->file('image_cover')->store('rooms', 'public');
         }
 
         Rooms::create($data);
-        return redirect()->to('rooms')->with('success', 'Data Kategori Kamar Berhasil ditambahkan');
+        return redirect()->to('rooms')->with('success', 'Data Kamar Berhasil ditambahkan');
     }
 
     /**
@@ -76,7 +77,27 @@ class RoomsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $rooms = Rooms::find($id);
+        
+        $data = [
+            'category_id' => $request->category_id,
+            'name' => $request->name,
+            'price' => $request->price,
+            'facility' => $request->facility,
+            'description' =>$request->description
+        ];
+
+        // jika gambar sudah ada
+        if ($request->hasFile('image_cover')) {
+            if($rooms->image_cover && Storage::disk('public')->exists($rooms->image_cover)){
+                Storage::disk('public')->delete($rooms->image_cover);
+            }
+            $data['image_cover'] = $request->file('image_cover')->store('rooms', 'public');
+        }
+
+        $rooms->update($data);
+
+        return redirect()->to('rooms')->with('success', 'Data Kamar Berhasil diperbaharui');    
     }
 
     /**
@@ -84,6 +105,13 @@ class RoomsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $room = Rooms::find($id);
+
+        if($room->image_cover && Storage::disk('public')->exists($room->image_cover)){
+            Storage::disk('public')->delete($room->image_cover);
+        }
+        $room->delete();
+        
+        return redirect()->to('rooms')->with('success', 'Data Kamar Berhasil dihapus');
     }
 }

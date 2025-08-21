@@ -40,7 +40,7 @@
                         @forelse ($datas as $index => $val)
                         <tr>
                             <td>{{ $index + 1 }}</td>
-                            <td>Ini Gambar</td>
+                            <td><img src="{{ asset('storage/'.$val->image_cover) }}" alt="" width="150"></td>
                             <td>{{ $val->category->name }}</td>
                             <td>{{ $val->name }}</td>
                             <td>{{ number_format($val->price)}}</td>
