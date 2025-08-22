@@ -2,7 +2,7 @@
 // ============================
 // Ambil data pengalaman kerja
 // ============================
-$qExp = mysqli_query($koneksi, "SELECT * FROM experiences ORDER BY start_year DESC");
+$qExp = mysqli_query($koneksi, "SELECT * FROM experiences ORDER BY start_year ASC");
 $experiences = mysqli_fetch_all($qExp, MYSQLI_ASSOC);
 
 // ============================
@@ -10,22 +10,26 @@ $experiences = mysqli_fetch_all($qExp, MYSQLI_ASSOC);
 // ============================
 $skillsGrowth = [
     [
-        "year" => "2017-2018",
+        "start_year" => "2017",
+        "end_year" => "2018",
         "title" => "Foundation",
         "skills" => ["HTML5", "CSS3", "JavaScript", "PHP", "MySQL"]
     ],
     [
-        "year" => "2018-2019",
+        "start_year" => "2018",
+        "end_year" => "2019",
         "title" => "Frontend Focus",
         "skills" => ["React.js", "SASS", "Webpack", "Git", "Bootstrap"]
     ],
     [
-        "year" => "2019-2021",
+        "start_year" => "2019",
+        "end_year" => "2021",
         "title" => "Full Stack",
         "skills" => ["Vue.js", "Laravel", "Node.js", "MongoDB", "REST API"]
     ],
     [
-        "year" => "2021-Now",
+        "start_year" => "2021",
+        "end_year" => "Now",
         "title" => "Advanced & Leadership",
         "skills" => ["AWS", "Docker", "Microservices", "Team Lead", "DevOps"]
     ],
@@ -133,27 +137,34 @@ $testimonials = [
     </div>
 </section>
 
-<!-- ================= Skills Growth ================= -->
+<!-- Skills Growth -->
 <section class="section-padding bg-light">
     <div class="container">
-        <div class="section-heading text-center mb-5" data-aos="zoom-in">
-            <h2 class="section-title fw-bold">Perkembangan Keahlian</h2>
-            <p class="section-subtitle">Evolusi teknologi yang saya kuasai</p>
+        <div class="row">
+            <div class="col-lg-12 text-center mb-5">
+                <h2 class="section-title">Perkembangan Keahlian</h2>
+                <p class="section-subtitle">Evolusi teknologi yang saya kuasai selama perjalanan karir</p>
+            </div>
         </div>
         <div class="row">
-            <?php foreach ($skillsGrowth as $index => $skill): ?>
-            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="<?= $index * 150 ?>">
-                <div class="card shadow-sm border-0 p-4 text-center h-100 rounded-4">
-                    <div class="skill-year text-primary fw-bold mb-2"><?= $skill['year'] ?></div>
-                    <h5 class="mb-3 fw-semibold"><?= $skill['title'] ?></h5>
-                    <div class="d-flex flex-wrap justify-content-center gap-2">
-                        <?php foreach ($skill['skills'] as $s): ?>
-                        <span class="badge bg-dark-subtle text-dark border px-3 py-2"><?= $s ?></span>
-                        <?php endforeach; ?>
+            <?php if ($skillsGrowth): ?>
+            <?php foreach ($skillsGrowth as $index => $growth): ?>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="skill-evolution-card">
+                    <div class="skill-year"> <?= htmlspecialchars($growth['start_year']) ?> -
+                        <?= htmlspecialchars($growth['end_year']) ?></div>
+                    <h5><?= $growth['title'] ?></h5>
+                    <div class="skill-list">
+                        <?php foreach($growth['skills'] as $skillIndex => $skill): ?>
+                        <span class="skill-badge"><?= $skill ?></span>
+                        <?php endforeach ?>
                     </div>
                 </div>
             </div>
             <?php endforeach; ?>
+            <?php else: ?>
+            <p class="text-center text-muted">Belum ada perkembangan skill yang ditambahkan.</p>
+            <?php endif; ?>
         </div>
     </div>
 </section>
