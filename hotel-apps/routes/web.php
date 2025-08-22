@@ -3,6 +3,7 @@
 use App\Http\Controllers\BelajarController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GuestController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RoomsController;
 use App\Http\Controllers\UserController;
@@ -39,3 +40,6 @@ Route::post('store/{tipe}', [BelajarController::class, 'storeOperasi'])
 
     // Rooms
     Route::resource('rooms',RoomsController::class);
+
+    // Guest Information
+    Route::resource('guest-information', GuestController::class);

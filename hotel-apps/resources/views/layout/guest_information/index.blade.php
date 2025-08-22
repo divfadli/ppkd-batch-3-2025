@@ -19,9 +19,9 @@
                 @endif
 
                 <div class="card-title d-flex justify-content-between align-items-center mb-3">
-                    <h3>{{ $title ?? 'Kategori Kamar' }}</h3>
-                    <a href="{{ route('categories.create') }}" class="btn btn-primary">
-                        + Tambah Kategori Kamar
+                    <h3>{{ $title ?? 'Data Tamu' }}</h3>
+                    <a href="{{ route('guest-information.create') }}" class="btn btn-primary">
+                        <i class="bi bi-plus"></i> Tambah
                     </a>
                 </div>
 
@@ -29,8 +29,10 @@
                     <thead class="table-light">
                         <tr>
                             <th width="5%">No</th>
-                            <th>Nama</th>
-                            <th>Slug</th>
+                            <th>Nama Tamu</th>
+                            <th>Tanggal Check-in & Check-out</th>
+                            <th>Nomor Kamar</th>
+                            <th>Kontak Tamu</th>
                             <th width="20%" class="text-center">Aksi</th>
                         </tr>
                     </thead>
@@ -38,14 +40,17 @@
                         @forelse ($datas as $index => $val)
                         <tr>
                             <td>{{ $index + 1 }}</td>
-                            <td>{{ $val->name }}</td>
-                            <td>{{ $val->slug }}</td>
+                            <td>{{ $val->name_guest }}</td>
+                            <td>{{ $val->check_in }} s.d {{$val->check_out}}</td>
+                            <td>{{ $val->number_room }}</td>
+                            <td>{{ $val->phone}} / {{ $val->email }}</td>
                             <td class="text-center">
-                                <a href="{{ route('categories.edit', $val->id) }}" class="btn btn-sm btn-success me-1">
+                                <a href="{{ route('guest-information.edit', $val->id) }}"
+                                    class="btn btn-sm btn-success me-1">
                                     Edit
                                 </a>
-                                <form action="{{ route('categories.destroy',$val->id) }}" method="post" class="d-inline"
-                                    onsubmit="return confirm('Yakin ingin menghapus kategori kamar ini?')">
+                                <form action="{{ route('guest-information.destroy',$val->id) }}" method="post"
+                                    class="d-inline" onsubmit="return confirm('Yakin ingin menghapus kamar ini?')">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-sm btn-danger">Delete</button>
@@ -54,8 +59,8 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="4" class="text-center text-muted">
-                                Tidak ada data pengguna
+                            <td colspan="6" class="text-center text-muted">
+                                Tidak ada data tamu
                             </td>
                         </tr>
                         @endforelse

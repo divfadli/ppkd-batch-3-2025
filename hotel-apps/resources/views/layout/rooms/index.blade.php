@@ -49,7 +49,7 @@
                                     Edit
                                 </a>
                                 <form action="{{ route('rooms.destroy',$val->id) }}" method="post" class="d-inline"
-                                    onsubmit="return confirm('Yakin ingin menghapus user ini?')">
+                                    onsubmit="return confirm('Yakin ingin menghapus daftar tamu ini?')">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-sm btn-danger">Delete</button>
