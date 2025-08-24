@@ -19,17 +19,21 @@ while ($row = mysqli_fetch_assoc($qProjects)) {
 ?>
 
 <!-- Page Header -->
-<section class="page-header py-5 bg-light text-center">
+ <section class="page-header">
     <div class="container">
-        <h1 class="page-title">Portfolio</h1>
-        <p class="page-subtitle">Koleksi project terbaik yang telah saya kerjakan</p>
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h1 class="page-title">Portfolio</h1>
+                <p class="page-subtitle">Koleksi project terbaik yang telah saya kerjakan</p>
+            </div>
+        </div>
     </div>
 </section>
 
 <!-- Portfolio Filter -->
 <section class="section-padding">
     <div class="container">
-        <div class="text-center mb-4">
+        <div class="text-center mb-5 portfolio-filters">
             <button class="btn btn-outline-primary btn-sm me-2 filter-btn active" data-filter="all">Semua</button>
             <?php foreach ($categories as $cat): ?>
                 <button class="btn btn-outline-primary btn-sm me-2 filter-btn" data-filter="<?= htmlspecialchars($cat); ?>">
@@ -55,44 +59,49 @@ while ($row = mysqli_fetch_assoc($qProjects)) {
                     }
                 }
 
-                // Deskripsi singkat max 120 karakter
-                $shortDesc = mb_strimwidth($project['description'], 0, 120, '...');
+                // Deskripsi singkat max 130 karakter
+                $shortDesc = mb_strimwidth($project['description'], 0, 130, '...');
             ?>
             <div class="col-lg-4 col-md-6 portfolio-item" data-category="<?= htmlspecialchars($project['section_name']); ?>">
-                <div class="card h-100 shadow-sm portfolio-card">
-                    <div class="position-relative overflow-hidden">
+                <div class="card h-100 shadow-lg border-0 portfolio-card">
+                    <div class="portfolio-image position-relative overflow-hidden rounded-top">
                         <img src="admin/uploads/<?= htmlspecialchars($project['image']); ?>" 
-                             class="card-img-top portfolio-img <?= ($project['section_name'] === 'Mobile Apps') ? 'img-mobile' : ''; ?>" 
-                             alt="<?= htmlspecialchars($project['title']); ?>">
+                             class="portfolio-img <?= ($project['section_name'] === 'Mobile Apps') ? 'img-mobile' : ''; ?>" 
+                             alt="<?= htmlspecialchars($project['title']); ?>"
+                             loading="lazy">
+
                         <div class="portfolio-overlay d-flex justify-content-center align-items-center">
-                            <button class="btn btn-light btn-sm me-2" data-bs-toggle="modal" data-bs-target="#portfolioModal<?= $project['id']; ?>">
+                            <button class="btn btn-light btn-sm rounded-circle shadow me-2" data-bs-toggle="modal" data-bs-target="#portfolioModal<?= $project['id']; ?>">
                                 <i class="fas fa-eye"></i>
                             </button>
                             <?php if (!empty($project['link'])): ?>
-                            <a href="<?= htmlspecialchars($project['link']); ?>" target="_blank" class="btn btn-light btn-sm">
+                            <a href="<?= htmlspecialchars($project['link']); ?>" target="_blank" class="btn btn-light btn-sm rounded-circle shadow">
                                 <i class="fas fa-external-link-alt"></i>
                             </a>
                             <?php endif; ?>
                         </div>
                     </div>
-                    <div class="card-body text-center">
-                        <h5 class="card-title"><?= htmlspecialchars($project['title']); ?></h5>
-                        <small class="text-muted"><?= htmlspecialchars($project['year']); ?> | <?= htmlspecialchars($project['section_name']); ?></small>
+                    <div class="card-body text-center portfolio-content">
+                        <h5 class="card-title fw-semibold portfolio-title"><?= htmlspecialchars($project['title']); ?></h5>
+                        <small class="text-muted d-block mb-2 portfolio-meta">
+                            <span class="portfolio-year"><?= htmlspecialchars($project['year']); ?></span> | 
+                            <?= htmlspecialchars($project['section_name']); ?>
+                        </small>
                         
-                        <p class="card-text portfolio-description mt-2">
+                        <p class="card-text portfolio-description">
                             <?= htmlspecialchars($shortDesc); ?>
                             <a href="javascript:void(0)" 
-                            class="read-more-inline" 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#portfolioModal<?= $project['id']; ?>">
-                            Read More
+                               class="read-more-inline" 
+                               data-bs-toggle="modal" 
+                               data-bs-target="#portfolioModal<?= $project['id']; ?>">
+                               Read More
                             </a>
                         </p>
 
                         <!-- Teknologi -->
-                        <div class="mt-2">
+                        <div class="mt-3">
                             <?php foreach (array_slice($techs, 0, 3) as $t): ?>
-                                <span class="badge bg-info me-1"><?= htmlspecialchars($t); ?></span>
+                                <span class="tech-tag"><?= htmlspecialchars($t); ?></span>
                             <?php endforeach; ?>
                             <?php if (count($techs) > 3): ?>
                                 <span class="badge bg-secondary">+<?= count($techs) - 3; ?></span>
@@ -104,27 +113,27 @@ while ($row = mysqli_fetch_assoc($qProjects)) {
 
             <!-- Modal Detail -->
             <div class="modal fade" id="portfolioModal<?= $project['id']; ?>" tabindex="-1">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content border-0 shadow-lg">
+                        <div class="modal-header bg-primary text-white">
                             <h5 class="modal-title"><?= htmlspecialchars($project['title']); ?></h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                         </div>
                         <div class="modal-body">
-                            <img src="admin/uploads/<?= htmlspecialchars($project['image']); ?>" class="img-fluid mb-3 rounded" alt="<?= htmlspecialchars($project['title']); ?>">
+                            <img src="admin/uploads/<?= htmlspecialchars($project['image']); ?>" class="img-fluid mb-3 rounded shadow-sm" alt="<?= htmlspecialchars($project['title']); ?>" loading="lazy">
                             <div class="row">
                                 <div class="col-md-8">
-                                    <h6>Deskripsi Project</h6>
+                                    <h6 class="fw-bold">Deskripsi Project</h6>
                                     <p><?= nl2br(htmlspecialchars($project['description'])); ?></p>
-                                    <h6>Teknologi</h6>
+                                    <h6 class="fw-bold">Teknologi</h6>
                                     <div class="mb-2">
                                         <?php foreach ($techs as $t): ?>
-                                            <span class="badge bg-info me-2 mb-2"><?= htmlspecialchars($t); ?></span>
+                                            <span class="tech-tag"><?= htmlspecialchars($t); ?></span>
                                         <?php endforeach; ?>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <h6>Detail Project</h6>
+                                    <h6 class="fw-bold">Detail Project</h6>
                                     <?php if (!empty($project['client'])): ?>
                                         <p><strong>Client:</strong> <?= htmlspecialchars($project['client']); ?></p>
                                     <?php endif; ?>
@@ -147,61 +156,19 @@ while ($row = mysqli_fetch_assoc($qProjects)) {
 </section>
 
 <!-- CTA Section -->
-<section class="cta-section py-5 bg-primary text-white text-center">
+<section class="cta-section">
     <div class="container">
-        <h2 class="cta-title">Tertarik dengan Project Saya?</h2>
-        <p class="mb-4">Mari diskusikan bagaimana saya dapat membantu mewujudkan ide digital Anda menjadi kenyataan.</p>
-        <a href="?page=contact" class="btn btn-light btn-lg me-3"><i class="fas fa-envelope me-2"></i>Mulai Project</a>
-        <a href="?page=skills" class="btn btn-outline-light btn-lg"><i class="fas fa-code me-2"></i>Lihat Keahlian</a>
+        <h2 class="cta-title">🚀 Tertarik dengan Project Saya?</h2>
+        <p class="cta-description">
+            Mari wujudkan ide digital Anda menjadi kenyataan dengan solusi modern & profesional.
+        </p>
+        <div class="cta-buttons">
+            <a href="?page=contact" class="btn btn-primary btn-lg me-3 shadow">
+                <i class="fas fa-envelope me-2"></i> Mulai Project
+            </a>
+            <a href="?page=skills" class="btn btn-outline-light btn-lg shadow-sm">
+                <i class="fas fa-code me-2"></i> Lihat Keahlian
+            </a>
+        </div>
     </div>
 </section>
-
-
-<style>
-.portfolio-grid {
-    justify-content: center; /* grid tengah */
-}
-.portfolio-card .card-body {
-    text-align: center; /* isi card rata tengah */
-}
-
-.portfolio-overlay {
-    position: absolute;
-    top:0; left:0; width:100%; height:100%;
-    display:flex; justify-content:center; align-items:center;
-    background: rgba(0,0,0,.5);
-    opacity:0; transition: .3s;
-}
-.portfolio-card:hover .portfolio-overlay { opacity:1; }
-
-.badge { font-size:.75rem; }
-
-/* Deskripsi dengan Read More inline */
-.portfolio-description {
-    display: inline;
-    white-space: normal;
-}
-
-.read-more-inline {
-    color: #6c63ff; /* warna ungu seperti contoh */
-    font-size: .85rem;
-    text-decoration: none;
-    font-weight: 500;
-    margin-left: 4px;
-}
-.read-more-inline:hover { text-decoration: underline; }
-
-.portfolio-img {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-    object-position: center;
-    border-radius: .5rem;
-}
-
-.img-mobile {
-    object-fit: contain !important;
-    background: #f8f9fa;
-    padding: 10px;
-}
-</style>

@@ -85,6 +85,26 @@ if(empty($_SESSION['ID_USER'])){
             ['view', ['fullscreen', 'codeview', 'help']]
         ],
     });
+    $('.summernote').summernote({
+        tabsize: 2,
+        height: 120,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['fontsize', ['fontsize']], 
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ],
+        fontSizes: ['8','9','10','11','12','13','14','15','16','18','20','24','28','32','36','48','72'],
+        callbacks: {
+            onInit: function() {
+            $('.note-editable').css('font-size', '14px'); // ✅ default font-size
+            }
+        }
+    });
 
     let input = document.querySelector('#tags');
     if (input) {

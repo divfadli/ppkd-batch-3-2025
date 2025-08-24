@@ -6,11 +6,12 @@ function h($str) {
     return htmlspecialchars($str ?? '', ENT_QUOTES, 'UTF-8');
 }
 
-// --- Konfigurasi Section ---
+// --- Konfigurasi Section sesuai sidebar.php ---
 $forms = [
-    'services'    => ['title' => 'Service', 'btn' => 'success', 'table' => 'services'],
-    'values'      => ['title' => 'Value', 'btn' => 'primary', 'table' => 'values_section'],
-    'soft-skills' => ['title' => 'Soft Skill', 'btn' => 'warning', 'table' => 'soft_skills'],
+    'values_section' => ['title' => 'Value', 'btn' => 'primary', 'table' => 'values_section'],
+    'soft_skills'    => ['title' => 'Soft Skill', 'btn' => 'warning', 'table' => 'soft_skills'],
+    'services'       => ['title' => 'Service', 'btn' => 'success', 'table' => 'services'],
+    'floating_card'  => ['title' => 'Floating Card', 'btn' => 'info', 'table' => 'floating_card'],
 ];
 
 // --- Ambil data sections ---
@@ -29,7 +30,7 @@ if (isset($_GET['delete'], $_GET['table'])) {
         mysqli_query($koneksi, "DELETE FROM $table WHERE id='$id'");
         $msg = ucfirst(str_replace("_"," ",$table)) . " berhasil dihapus!";
 
-        header("Location: ?page=add-sections&success=" . urlencode($msg));
+        header("Location: ?page=add-sections&type=$table&success=" . urlencode($msg));
         exit;
     }
 }
@@ -49,7 +50,7 @@ if (isset($_GET['edit'], $_GET['table'])) {
 
 // --- Handler Submit ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $form_type = $_POST['form_type'];
+    $form_type = $_POST['form_type'];   // sesuai dengan key di $forms
     $icon      = mysqli_real_escape_string($koneksi, $_POST['icon']);
     $title     = mysqli_real_escape_string($koneksi, $_POST['title']);
     $content   = mysqli_real_escape_string($koneksi, $_POST['content']);
@@ -75,111 +76,122 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         mysqli_query($koneksi, $sql);
 
         // Redirect supaya form kosong kembali
-        header("Location: ?page=add-sections&success=" . urlencode($msg));
+        header("Location: ?page=add-sections&type=$form_type&success=" . urlencode($msg));
         exit;
     }
 }
 
+// --- Ambil form aktif berdasarkan ?type= ---
+$currentType = $_GET['type'] ?? array_key_first($forms);
+$currentForm = $forms[$currentType] ?? null;
+
 // --- Success Redirect Message ---
-if (isset($_GET['success'])) {
-    $msg = $_GET['success'];
-}
+$msg = $_GET['success'] ?? null;
 ?>
 
-<div class="container mt-4">
+<div class="container my-5">
     <?php if (!empty($msg)): ?>
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <?= h($msg) ?>
+        <div class="alert alert-success alert-dismissible fade show shadow-sm rounded" role="alert">
+            ✅ <?= h($msg) ?>
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     <?php endif; ?>
 
-    <div class="row">
-        <?php foreach ($forms as $key => $form): 
-            $table = $form['table'];
+    <div class="row g-4">
+        <?php if ($currentForm): 
+            $table = $currentForm['table'];
             $qData = mysqli_query($koneksi, "SELECT * FROM $table ORDER BY id DESC");
+            $isEdit = ($editData && $editData['table'] === $table);
         ?>
-        <div class="col-md-4">
-            <div class="card shadow-sm border-0 mb-4">
+        <div class="col-md-12">
+            <div class="card border-0 shadow-lg">
                 <div class="card-body">
-                    <h5 class="card-title mb-3">
-                        <?= ($editData && $editData['table']===$table) ? "Edit " . $form['title'] : "Tambah " . $form['title'] ?>
+                    <h5 class="card-title fw-bold mb-3 text-<?= $currentForm['btn'] ?>">
+                        <?= $isEdit ? "✏️ Edit " . $currentForm['title'] : "➕ Tambah " . $currentForm['title'] ?>
                     </h5>
 
                     <!-- Form Input -->
-                    <form method="post" class="mb-3">
-                        <input type="hidden" name="form_type" value="<?= h($key) ?>">
-                        <?php if ($editData && $editData['table']===$table): ?>
+                    <form method="post" class="mb-4">
+                        <input type="hidden" name="form_type" value="<?= h($currentType) ?>">
+                        <?php if ($isEdit): ?>
                             <input type="hidden" name="id" value="<?= h($editData['id']) ?>">
                         <?php endif; ?>
 
                         <div class="mb-3">
                             <label class="form-label">Icon</label>
                             <input type="text" name="icon" class="form-control"
-                                value="<?= ($editData && $editData['table']===$table) ? h($editData['icon']) : '' ?>" required>
+                                placeholder="Contoh: fa-solid fa-star"
+                                value="<?= $isEdit ? h($editData['icon']) : '' ?>" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Judul</label>
                             <input type="text" name="title" class="form-control"
-                                value="<?= ($editData && $editData['table']===$table) ? h($editData['title']) : '' ?>" required>
+                                placeholder="Masukkan judul..."
+                                value="<?= $isEdit ? h($editData['title']) : '' ?>" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Content</label>
-                            <textarea name="content" class="form-control" rows="3" required><?= ($editData && $editData['table']===$table) ? h($editData['content']) : '' ?></textarea>
+                            <textarea name="content" class="form-control" rows="3" placeholder="Tulis deskripsi..." required><?= $isEdit ? h($editData['content']) : '' ?></textarea>
                         </div>
                         <div class="form-check mb-3">
-                            <input type="checkbox" name="is_active" class="form-check-input" id="active-<?= $key ?>"
-                                <?= (!$editData || $editData['is_active']) ? 'checked' : '' ?>>
-                            <label for="active-<?= $key ?>" class="form-check-label">Aktif</label>
+                            <input type="checkbox" name="is_active" class="form-check-input" id="active-<?= $currentType ?>"
+                                <?= (!$isEdit || $editData['is_active']) ? 'checked' : '' ?>>
+                            <label for="active-<?= $currentType ?>" class="form-check-label">Aktif</label>
                         </div>
 
-                        <div class="d-flex gap-2">
-                            <button type="submit" class="btn btn-<?= $form['btn'] ?> w-100">
-                                <?= ($editData && $editData['table']===$table) ? "Update" : "Simpan" ?>
+                        <div class="d-flex">
+                            <button type="submit" class="btn btn-<?= $currentForm['btn'] ?> flex-fill">
+                                <i class='bi bi-save'></i><?= $isEdit ? " Update" : " Simpan" ?>
                             </button>
-                            <?php if ($editData && $editData['table']===$table): ?>
-                                <a href="?page=add-sections" class="btn btn-secondary">Batal</a>
+                            <?php if ($isEdit): ?>
+                                <a href="?page=add-sections&type=<?= $currentType ?>" class="btn btn-outline-secondary">Batal</a>
                             <?php endif; ?>
                         </div>
                     </form>
 
                     <!-- List Data -->
-                    <h6 class="mb-2">Daftar <?= $form['title'] ?></h6>
-                    <div class="table-responsive" style="max-height: 250px; overflow-y:auto;">
-                        <table class="table table-sm table-bordered align-middle">
+                    <h6 class="fw-bold mb-2">📋 Daftar <?= $currentForm['title'] ?></h6>
+                    <div class="table-responsive" style="max-height: 350px; overflow-y:auto;">
+                        <table class="table table-hover table-sm align-middle">
                             <thead class="table-light">
                                 <tr>
                                     <th style="width:20%">Icon</th>
                                     <th>Judul</th>
                                     <th>Status</th>
-                                    <th style="width:70px">Aksi</th>
+                                    <th style="width:80px">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php while ($row = mysqli_fetch_assoc($qData)): ?>
                                 <tr>
-                                    <td><?= h($row['icon']) ?></td>
+                                    <td><i class="<?= h($row['icon']) ?>"></i></td>
                                     <td><?= h($row['title']) ?></td>
                                     <td>
-                                        <span class="badge bg-<?= $row['is_active'] ? 'success' : 'secondary' ?>">
+                                        <span class="badge rounded-pill bg-<?= $row['is_active'] ? 'success' : 'secondary' ?>">
                                             <?= $row['is_active'] ? 'Aktif' : 'Nonaktif' ?>
                                         </span>
                                     </td>
-                                    <td>
-                                        <a href="?page=add-sections&edit=<?= $row['id'] ?>&table=<?= $table ?>" 
-                                           class="btn btn-sm btn-warning">✏️</a>
-                                        <a href="?page=add-sections&delete=<?= $row['id'] ?>&table=<?= $table ?>" 
+                                    <td class="d-flex gap-1">
+                                        <a href="?page=add-sections&type=<?= $currentType ?>&edit=<?= $row['id'] ?>&table=<?= $table ?>" 
+                                           class="btn btn-sm btn-outline-warning"><i class="bi bi-pencil-square"></i></a>
+                                        <a href="?page=add-sections&type=<?= $currentType ?>&delete=<?= $row['id'] ?>&table=<?= $table ?>" 
                                            onclick="return confirm('Yakin hapus data ini?')" 
-                                           class="btn btn-sm btn-danger">🗑</a>
+                                           class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></a>
                                     </td>
                                 </tr>
                                 <?php endwhile; ?>
+                                <?php if (mysqli_num_rows($qData) === 0): ?>
+                                <tr>
+                                    <td colspan="4" class="text-center text-muted">Belum ada data</td>
+                                </tr>
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </div>
+
                 </div>
             </div>
         </div>
-        <?php endforeach; ?>
+        <?php endif; ?>
     </div>
 </div>

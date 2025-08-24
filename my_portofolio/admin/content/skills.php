@@ -1,10 +1,10 @@
 <?php
 include 'inc/helpers.php';
 
-// Ambil section_id dari URL (default: prolanguage)
+// Ambil section_id dari URL (default: 4 = prolanguage)
 $section_id = isset($_GET['section_id']) ? intval($_GET['section_id']) : 4;
 
-// Ambil data section untuk judul
+// Ambil data section
 $qSection = mysqli_query($koneksi, "SELECT * FROM sections WHERE id=$section_id");
 $section = mysqli_fetch_assoc($qSection);
 
@@ -46,7 +46,7 @@ if (isset($_GET['delete'])) {
 }
 
 // ============================
-// EDIT (ambil data lama)
+// EDIT
 // ============================
 $editData = null;
 if (isset($_GET['edit'])) {
@@ -56,44 +56,32 @@ if (isset($_GET['edit'])) {
 }
 
 // ============================
-// READ (list data)
+// READ
 // ============================
 $q = mysqli_query($koneksi, "SELECT * FROM skills_items WHERE section_id=$section_id ORDER BY id DESC");
 $skills = mysqli_fetch_all($q, MYSQLI_ASSOC);
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>CRUD Skills - <?= ucfirst($section['name']); ?></title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .icon-preview {
-            font-size: 20px;
-            margin-right: 8px;
-        }
-    </style>
-</head>
-<body class="bg-light">
 
 <div class="container py-5">
-    <h2 class="mb-4">CRUD Skills - <span class="text-primary"><?= ucfirst($section['name']); ?></span></h2>
+    <h2 class="mb-4 fw-bold">⚡ CRUD Skills - <span class="text-primary"><?= ucfirst($section['name']); ?></span></h2>
 
     <!-- Form Add/Edit -->
-    <div class="card mb-4">
-        <div class="card-header"><?= $editData ? "Edit Skill" : "Tambah Skill"; ?></div>
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white">
+            <i class="bi bi-tools"></i> <?= $editData ? "Edit Skill" : "Tambah Skill"; ?>
+        </div>
         <div class="card-body">
-            <form method="POST">
+            <form method="POST" class="row g-3">
                 <input type="hidden" name="id" value="<?= $editData['id'] ?? ''; ?>">
                 <input type="hidden" name="section_id" value="<?= $section_id; ?>">
 
-                <div class="mb-3">
+                <div class="col-md-6">
                     <label class="form-label">Nama Skill</label>
                     <input type="text" name="name" class="form-control" 
-                           value="<?= $editData['name'] ?? ''; ?>" required>
+                           value="<?= $editData['name'] ?? ''; ?>" placeholder="Contoh: JavaScript" required>
                 </div>
 
-                <div class="mb-3">
+                <div class="col-md-6">
                     <label class="form-label">Persentase (%)</label>
                     <input type="range" name="percentage" class="form-range" min="0" max="100" step="1"
                         value="<?= $editData['percentage'] ?? 50; ?>"
@@ -101,7 +89,7 @@ $skills = mysqli_fetch_all($q, MYSQLI_ASSOC);
                     <div><strong id="percentageValue"><?= $editData['percentage'] ?? 50; ?>%</strong></div>
                 </div>
 
-                <div class="mb-3">
+                <div class="col-md-6">
                     <label class="form-label">Icon (FontAwesome)</label>
                     <input type="text" name="icon" class="form-control" 
                            placeholder="contoh: fab fa-js-square"
@@ -111,55 +99,67 @@ $skills = mysqli_fetch_all($q, MYSQLI_ASSOC);
                     <?php endif; ?>
                 </div>
 
-                <div class="mb-3">
+                <div class="col-md-6">
                     <label class="form-label">Warna (#hex)</label>
-                    <input type="text" name="color" class="form-control" 
-                           placeholder="#f7df1e"
+                    <input type="color" name="color" class="form-control form-control-color" 
                            value="<?= $editData['color'] ?? '#0d6efd'; ?>">
                 </div>
 
-                <button type="submit" class="btn btn-success">
-                    <?= $editData ? "Update" : "Tambah"; ?>
-                </button>
-                <?php if ($editData): ?>
-                    <a href="?page=skills&section_id=<?= $section_id; ?>" class="btn btn-secondary">Batal</a>
-                <?php endif; ?>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-success">
+                        <i class="bi bi-save"></i> <?= $editData ? "Update" : "Tambah"; ?>
+                    </button>
+                    <?php if ($editData): ?>
+                        <a href="?page=skills&section_id=<?= $section_id; ?>" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left-circle"></i> Batal
+                        </a>
+                    <?php endif; ?>
+                </div>
             </form>
         </div>
     </div>
 
     <!-- List Table -->
-    <div class="card">
-        <div class="card-header">Daftar Skills</div>
+    <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white">
+            <i class="bi bi-list-task"></i> Daftar Skills
+        </div>
         <div class="card-body p-0">
-            <table class="table table-striped mb-0">
-                <thead>
+            <table class="table table-hover mb-0 align-middle">
+                <thead class="table-light">
                     <tr>
                         <th width="5%">#</th>
                         <th>Skill</th>
-                        <th>Icon</th>
+                        <th>Preview</th>
                         <th>Color</th>
-                        <th>Persentase</th>
-                        <th width="20%">Aksi</th>
+                        <th>Progress</th>
+                        <th width="20%" class="text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if ($skills): foreach ($skills as $i => $s): ?>
                         <tr>
                             <td><?= $i+1; ?></td>
-                            <td><?= $s['name']; ?></td>
+                            <td class="fw-semibold"><?= $s['name']; ?></td>
                             <td><i class="<?= $s['icon']; ?> icon-preview" style="color:<?= $s['color']; ?>"></i></td>
-                            <td><span class="badge" style="background:<?= $s['color']; ?>"><?= $s['color']; ?></span></td>
-                            <td><?= $s['percentage']; ?>%</td>
+                            <td><span class="badge rounded-pill" style="background:<?= $s['color']; ?>"><?= $s['color']; ?></span></td>
                             <td>
-                                <a href="?page=skills&section_id=<?= $section_id; ?>&edit=<?= $s['id']; ?>" class="btn btn-sm btn-primary">Edit</a>
+                                <div class="progress skill-progress">
+                                    <div class="progress-bar" role="progressbar" style="width: <?= $s['percentage']; ?>%; background:<?= $s['color']; ?>;">
+                                        <?= $s['percentage']; ?>%
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <a href="?page=skills&section_id=<?= $section_id; ?>&edit=<?= $s['id']; ?>" 
+                                   class="btn btn-sm btn-primary me-1"><i class="bi bi-pencil-square"></i></a>
                                 <a href="?page=skills&section_id=<?= $section_id; ?>&delete=<?= $s['id']; ?>" 
                                    class="btn btn-sm btn-danger"
-                                   onclick="return confirm('Yakin hapus skill ini?')">Hapus</a>
+                                   onclick="return confirm('Yakin hapus skill ini?')"><i class="bi bi-trash"></i></a>
                             </td>
                         </tr>
                     <?php endforeach; else: ?>
-                        <tr><td colspan="6" class="text-center">Belum ada data</td></tr>
+                        <tr><td colspan="6" class="text-center py-3">Belum ada data skill</td></tr>
                     <?php endif; ?>
                 </tbody>
             </table>
@@ -167,5 +167,3 @@ $skills = mysqli_fetch_all($q, MYSQLI_ASSOC);
     </div>
 
 </div>
-</body>
-</html>

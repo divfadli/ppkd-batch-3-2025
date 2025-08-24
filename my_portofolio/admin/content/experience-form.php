@@ -15,6 +15,9 @@ $experience = [
     'technologies' => ''
 ];
 
+$currentYear = date("Y");
+$years = range($currentYear + 5, 1980);
+
 // =============================
 // Jika edit → ambil data
 // =============================
@@ -47,12 +50,14 @@ if (!empty($sectionIds)) {
 // =============================
 // Fungsi bantu
 // =============================
-function tagifyToString($jsonStr) {
+function tagifyToString($jsonStr)
+{
     $arr = json_decode($jsonStr, true) ?? [];
     return implode(", ", array_column($arr, 'value'));
 }
 
-function stringToTagify($str) {
+function stringToTagify($str)
+{
     if (empty(trim($str))) return "[]";
     $items = array_map("trim", explode(",", $str));
     return json_encode(array_map(fn($v) => ["value" => $v], $items));
@@ -122,15 +127,28 @@ if (isset($_GET['delete'])) {
         <div class="card-body mt-4">
             <form method="POST">
                 <div class="row mb-3">
-                    <div class="col">
+                    <div class="col-md-6">
                         <label class="form-label">Start Year</label>
-                        <input type="text" name="start_year" class="form-control"
-                            value="<?= htmlspecialchars($experience['start_year']) ?>" required>
+                        <select name="start_year" class="form-select" required>
+                            <option value="">-- Pilih Tahun --</option>
+                            <?php foreach ($years as $y): ?>
+                                <option value="<?= $y ?>" <?= ($experience['start_year'] ?? '') == $y ? 'selected' : '' ?>>
+                                    <?= $y ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
-                    <div class="col">
+                    <div class="col-md-6">
                         <label class="form-label">End Year</label>
-                        <input type="text" name="end_year" class="form-control"
-                            value="<?= htmlspecialchars($experience['end_year']) ?>" required>
+                        <select name="end_year" class="form-select" required>
+                            <option value="">-- Pilih Tahun --</option>
+                            <option value="Present" <?= ($experience['end_year'] ?? '') === 'Present' ? 'selected' : '' ?>>Present</option>
+                            <?php foreach ($years as $y): ?>
+                                <option value="<?= $y ?>" <?= ($experience['end_year'] ?? '') == $y ? 'selected' : '' ?>>
+                                    <?= $y ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
                 </div>
 
@@ -155,21 +173,21 @@ if (isset($_GET['delete'])) {
                 <div class="mb-3">
                     <label class="form-label">Tipe Pekerjaan</label>
                     <div class="d-flex flex-wrap gap-2">
-                        <?php 
-        $types = [
-            "Full-Time" => "bi bi-briefcase-fill",
-            "Part-Time" => "bi bi-clock-history",
-            "Internship" => "bi bi-mortarboard-fill",
-            "Freelance" => "bi bi-laptop",
-            "Contract" => "bi bi-file-earmark-text"
-        ];
-        foreach ($types as $val => $icon): 
-        ?>
-                        <input type="radio" class="btn-check" name="type" id="type-<?= strtolower($val) ?>"
-                            value="<?= $val ?>" <?= $experience['type'] === $val ? 'checked' : '' ?> required>
-                        <label class="btn btn-outline-primary" for="type-<?= strtolower($val) ?>">
-                            <i class="<?= $icon ?>"></i> <?= $val ?>
-                        </label>
+                        <?php
+                        $types = [
+                            "Full-Time" => "bi bi-briefcase-fill",
+                            "Part-Time" => "bi bi-clock-history",
+                            "Internship" => "bi bi-mortarboard-fill",
+                            "Freelance" => "bi bi-laptop",
+                            "Contract" => "bi bi-file-earmark-text"
+                        ];
+                        foreach ($types as $val => $icon):
+                        ?>
+                            <input type="radio" class="btn-check" name="type" id="type-<?= strtolower($val) ?>"
+                                value="<?= $val ?>" <?= $experience['type'] === $val ? 'checked' : '' ?> required>
+                            <label class="btn btn-outline-primary" for="type-<?= strtolower($val) ?>">
+                                <i class="<?= $icon ?>"></i> <?= $val ?>
+                            </label>
                         <?php endforeach; ?>
                     </div>
                 </div>
@@ -207,20 +225,20 @@ if (isset($_GET['delete'])) {
 </div>
 
 <script>
-// Tagify Achievements
-let inputAchievements = document.querySelector('#achievements');
-if (inputAchievements) new Tagify(inputAchievements);
+    // Tagify Achievements
+    let inputAchievements = document.querySelector('#achievements');
+    if (inputAchievements) new Tagify(inputAchievements);
 
-// Tagify Technologies dengan whitelist
-let inputTechnologies = document.querySelector('#technologies');
-if (inputTechnologies) {
-    new Tagify(inputTechnologies, {
-        whitelist: <?= json_encode($whitelistTech) ?>,
-        dropdown: {
-            maxItems: 10,
-            enabled: 0,
-            closeOnSelect: false
-        }
-    });
-}
+    // Tagify Technologies dengan whitelist
+    let inputTechnologies = document.querySelector('#technologies');
+    if (inputTechnologies) {
+        new Tagify(inputTechnologies, {
+            whitelist: <?= json_encode($whitelistTech) ?>,
+            dropdown: {
+                maxItems: 10,
+                enabled: 0,
+                closeOnSelect: false
+            }
+        });
+    }
 </script>

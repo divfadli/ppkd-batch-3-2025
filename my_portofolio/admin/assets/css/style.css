@@ -594,6 +594,73 @@ h6 {
   background-color: #f6f9ff;
 }
 
+/* ===============================
+   Custom Header Enhancement
+================================*/
+.header {
+  height: 64px;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+/* Profile Image */
+.profile-img {
+  width: 38px;
+  height: 38px;
+  object-fit: cover;
+  border: 2px solid #f1f1f1;
+  transition: 0.3s;
+}
+
+.nav-profile:hover .profile-img {
+  border-color: #0d6efd;
+  transform: scale(1.05);
+}
+
+/* Dropdown Styling */
+.dropdown-menu {
+  border-radius: 12px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.dropdown-menu .dropdown-header {
+  background: #f8f9fa;
+  border-bottom: 1px solid #eee;
+}
+
+.dropdown-menu .dropdown-item {
+  border-radius: 6px;
+  margin: 2px 6px;
+  transition: 0.3s;
+}
+
+.dropdown-menu .dropdown-item:hover {
+  background: #eef5ff;
+  color: #0d6efd;
+}
+
+/* Messages */
+.messages .message-item {
+  border-radius: 8px;
+  transition: 0.2s;
+}
+
+.messages .message-item:hover {
+  background: #f8f9fc;
+  transform: translateX(3px);
+}
+
+/* Footer link in dropdown */
+.dropdown-footer a {
+  font-size: 14px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.dropdown-footer a:hover {
+  color: #0d6efd;
+}
+
 /*--------------------------------------------------------------
 # Sidebar
 --------------------------------------------------------------*/
@@ -957,6 +1024,45 @@ h6 {
   border-radius: 5px;
   max-width: 60px;
 }
+
+/*--------------------------------------------------------------
+# Dashboard page NEWS & UPDATES
+--------------------------------------------------------------*/
+.dashboard-card {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    border-radius: 1.25rem;
+  }
+  .dashboard-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  }
+  .icon-box {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem;
+    margin: 0 auto 12px auto;
+    font-size: 2rem;
+  }
+  .gradient-primary { background: linear-gradient(135deg, #0d6efd, #3b8efc); }
+  .gradient-success { background: linear-gradient(135deg, #198754, #34d399); }
+  .gradient-warning { background: linear-gradient(135deg, #ffc107, #fcd34d); }
+  .gradient-info    { background: linear-gradient(135deg, #0dcaf0, #3dd5f3); }
+
+  /* Chart card konsisten */
+  .chart-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 400px; /* semua chart card tinggi sama */
+  }
+  .chart-container {
+    flex: 1;
+    position: relative;
+    min-height: 300px; /* tinggi minimal canvas */
+  }
 
 /*--------------------------------------------------------------
 # Icons list page

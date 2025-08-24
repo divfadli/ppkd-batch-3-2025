@@ -26,15 +26,6 @@
             'image' => 'assets/profil/default.jpg'
         ];
     }
-
-    // Services
-    $queryServices = mysqli_query($koneksi, "SELECT * FROM services WHERE is_active = 1 ORDER BY id ASC");
-    $servicesHome = mysqli_fetch_all($queryServices, MYSQLI_ASSOC);
-
-    // Values Kerja
-    $queryValuesKerja = mysqli_query($koneksi, "SELECT * FROM values_section WHERE is_active = 1 ORDER BY id ASC");
-    $valuesKerja = mysqli_fetch_all($queryValuesKerja, MYSQLI_ASSOC);
-
 ?>
 
 <!DOCTYPE html>

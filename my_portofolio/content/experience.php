@@ -1,210 +1,195 @@
 <?php
 // ============================
-// Ambil data pengalaman kerja
+// Ambil data pengalaman kerja dari database
 // ============================
 $qExp = mysqli_query($koneksi, "SELECT * FROM experiences ORDER BY start_year ASC");
-$experiences = mysqli_fetch_all($qExp, MYSQLI_ASSOC);
+$experiences = [];
+while ($row = mysqli_fetch_assoc($qExp)) {
+    $row['technologies'] = $row['technologies'] ? json_decode($row['technologies'], true) : [];
+    $row['achievements'] = $row['achievements'] ? json_decode($row['achievements'], true) : [];
+    $experiences[] = $row;
+}
 
 // ============================
-// Data statis untuk skill growth
+// Ambil data perkembangan skill
 // ============================
-$skillsGrowth = [
-    [
-        "start_year" => "2017",
-        "end_year" => "2018",
-        "title" => "Foundation",
-        "skills" => ["HTML5", "CSS3", "JavaScript", "PHP", "MySQL"]
-    ],
-    [
-        "start_year" => "2018",
-        "end_year" => "2019",
-        "title" => "Frontend Focus",
-        "skills" => ["React.js", "SASS", "Webpack", "Git", "Bootstrap"]
-    ],
-    [
-        "start_year" => "2019",
-        "end_year" => "2021",
-        "title" => "Full Stack",
-        "skills" => ["Vue.js", "Laravel", "Node.js", "MongoDB", "REST API"]
-    ],
-    [
-        "start_year" => "2021",
-        "end_year" => "Now",
-        "title" => "Advanced & Leadership",
-        "skills" => ["AWS", "Docker", "Microservices", "Team Lead", "DevOps"]
-    ],
-];
+$qSkillsGrowth = mysqli_query($koneksi, "SELECT * FROM skill_growth ORDER BY start_year ASC");
+$skillsGrowth = [];
+while ($row = mysqli_fetch_assoc($qSkillsGrowth)) {
+    $row['skills'] = $row['skills'] ? json_decode($row['skills'], true) : [];
+    $skillsGrowth[] = $row;
+}
 
 // ============================
 // Data statis untuk testimonial
 // ============================
-$testimonials = [
-    [
-        "text" => "John adalah developer yang sangat kompeten dan reliable. Kemampuan problem solving-nya luar biasa.",
-        "img"  => "https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=100",
-        "name" => "Sarah Johnson",
-        "role" => "Project Manager - Tech Solutions Inc."
-    ],
-    [
-        "text" => "Bekerja dengan John sangat menyenangkan. Dia skilled secara teknis, komunikatif, dan team player sejati.",
-        "img"  => "https://images.pexels.com/photos/3785081/pexels-photo-3785081.jpeg?auto=compress&cs=tinysrgb&w=100",
-        "name" => "Mike Chen",
-        "role" => "Senior Developer - Digital Agency Pro"
-    ],
-    [
-        "text" => "John berhasil mengembangkan website kami dengan hasil yang melebihi ekspektasi. Profesional & tepat waktu.",
-        "img"  => "https://images.pexels.com/photos/3785083/pexels-photo-3785083.jpeg?auto=compress&cs=tinysrgb&w=100",
-        "name" => "Lisa Wong",
-        "role" => "CEO - StartUp Innovate"
-    ],
-];
+$qTestimonials = mysqli_query($koneksi, "SELECT * FROM testimonials ORDER BY id DESC");
+$testimonials = mysqli_fetch_all($qTestimonials, MYSQLI_ASSOC);
 ?>
 
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 <!-- ================= Page Header ================= -->
-<section class="page-header text-center py-5 bg-gradient">
+  <section class="page-header">
     <div class="container">
-        <h1 class="page-title display-5 fw-bold">Pengalaman Kerja</h1>
-        <p class="page-subtitle text-light">Perjalanan karir & pencapaian profesional selama 5+ tahun</p>
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h1 class="page-title">Pengalaman & Skill</h1>
+                <p class="page-subtitle">Perjalanan karir, pencapaian, dan evolusi keahlian saya</p>
+            </div>
+        </div>
     </div>
 </section>
 
 <!-- ================= Experience Timeline ================= -->
 <section class="section-padding">
-    <div class="container">
-        <div class="section-heading text-center mb-5" data-aos="fade-up">
-            <h2 class="section-title fw-bold">Pengalaman Kerja</h2>
-            <p class="section-subtitle">Ringkasan pengalaman profesional saya</p>
-        </div>
-
-        <div class="timeline position-relative">
-            <?php if ($experiences): ?>
-            <?php foreach ($experiences as $index => $exp): 
-                $techs = json_decode($exp['technologies'], true);
-                $achievements = json_decode($exp['achievements'], true);
-            ?>
-            <div class="timeline-item <?= $index % 2 == 0 ? 'left' : 'right'; ?>" data-aos="fade-up"
-                data-aos-delay="<?= $index * 100 ?>">
-                <div class="timeline-card card shadow-lg rounded-4 p-4 border-0">
-
-                    <!-- Tahun & Type -->
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="badge bg-primary px-3 py-2">
-                            <?= htmlspecialchars($exp['start_year']) ?> - <?= htmlspecialchars($exp['end_year']) ?>
-                        </span>
-                        <span class="badge bg-dark px-3 py-2"><?= htmlspecialchars($exp['type']) ?></span>
-                    </div>
-
-                    <!-- Position & Company -->
-                    <h4 class="fw-bold"><?= htmlspecialchars($exp['position']) ?></h4>
-                    <p class="text-muted mb-2">
-                        <i class="fas fa-building me-2 text-primary"></i>
-                        <?= htmlspecialchars($exp['company']) ?> · <?= htmlspecialchars($exp['location']) ?>
-                    </p>
-
-                    <!-- Description -->
-                    <p><?= nl2br(htmlspecialchars($exp['description'])) ?></p>
-
-                    <!-- Achievements -->
-                    <?php if ($achievements && is_array($achievements)): ?>
-                    <div class="mt-3">
-                        <h6 class="fw-bold text-success"><i class="fas fa-trophy me-2"></i>Pencapaian Utama</h6>
-                        <ul class="list-unstyled ps-3">
-                            <?php foreach ($achievements as $ach): ?>
-                            <li>✅ <?= htmlspecialchars($ach['value']) ?></li>
-                            <?php endforeach; ?>
-                        </ul>
-                    </div>
-                    <?php endif; ?>
-
-                    <!-- Technologies -->
-                    <?php if ($techs && is_array($techs)): ?>
-                    <div class="mt-3">
-                        <h6 class="fw-bold text-info"><i class="fas fa-laptop-code me-2"></i>Teknologi</h6>
-                        <?php foreach ($techs as $tech): ?>
-                        <span class="badge bg-light text-dark border me-1 mb-1 px-3 py-2">
-                            <?= htmlspecialchars($tech['value']) ?>
-                        </span>
-                        <?php endforeach; ?>
-                    </div>
-                    <?php endif; ?>
-                </div>
-            </div>
-            <?php endforeach; ?>
-            <?php else: ?>
-            <p class="text-center text-muted">Belum ada pengalaman kerja yang ditambahkan.</p>
-            <?php endif; ?>
-        </div>
+  <div class="container">
+    <div class="section-heading text-center mb-5" data-aos="fade-up">
+      <h2 class="fw-bold">Pengalaman Kerja</h2>
+      <p class="text-muted">Ringkasan perjalanan profesional saya</p>
     </div>
+
+    <div class="timeline">
+      <?php foreach ($experiences as $index => $exp): ?>
+      <div class="timeline-item <?= $index % 2 == 0 ? 'left' : 'right'; ?>" data-aos="fade-up" data-aos-delay="<?= $index * 100 ?>">
+        <div class="timeline-card shadow-sm rounded-3 p-4">
+          <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+            <span class="badge bg-gradient text-white px-3 py-2"><?= htmlspecialchars($exp['start_year']) ?> - <?= htmlspecialchars($exp['end_year']) ?></span>
+            <span class="badge bg-dark px-3 py-2"><?= htmlspecialchars($exp['type']) ?></span>
+          </div>
+          <h4 class="fw-bold text-primary mb-1"><?= htmlspecialchars($exp['position']) ?></h4>
+          <p class="text-muted mb-3"><i class="fas fa-building me-2 text-secondary"></i><?= htmlspecialchars($exp['company']) ?> · <?= htmlspecialchars($exp['location']) ?></p>
+          <p><?= nl2br(htmlspecialchars($exp['description'])) ?></p>
+
+          <?php if (!empty($exp['achievements'])): ?>
+            <div class="mt-3">
+              <h6 class="fw-bold text-success mb-2"><i class="fas fa-trophy me-2"></i>Pencapaian</h6>
+              <ul class="list-unstyled ps-3">
+                <?php foreach ($exp['achievements'] as $ach): ?>
+                  <li class="mb-1">✅ <?= htmlspecialchars($ach['value']) ?></li>
+                <?php endforeach; ?>
+              </ul>
+            </div>
+          <?php endif; ?>
+
+          <?php if (!empty($exp['technologies'])): ?>
+            <div class="mt-3">
+              <h6 class="fw-bold text-info mb-2"><i class="fas fa-laptop-code me-2"></i>Teknologi</h6>
+              <div class="d-flex flex-wrap gap-2">
+                <?php foreach ($exp['technologies'] as $tech): ?>
+                  <span class="badge bg-light text-dark border px-3 py-2"> <?= htmlspecialchars($tech['value']) ?> </span>
+                <?php endforeach; ?>
+              </div>
+            </div>
+          <?php endif; ?>
+        </div>
+      </div>
+      <?php endforeach; ?>
+    </div>
+  </div>
 </section>
 
-<!-- Skills Growth -->
+<!-- ================= Skills Growth ================= -->
 <section class="section-padding bg-light">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 text-center mb-5">
-                <h2 class="section-title">Perkembangan Keahlian</h2>
-                <p class="section-subtitle">Evolusi teknologi yang saya kuasai selama perjalanan karir</p>
-            </div>
-        </div>
-        <div class="row">
-            <?php if ($skillsGrowth): ?>
-            <?php foreach ($skillsGrowth as $index => $growth): ?>
-            <div class="col-lg-3 col-md-6 mb-4">
-                <div class="skill-evolution-card">
-                    <div class="skill-year"> <?= htmlspecialchars($growth['start_year']) ?> -
-                        <?= htmlspecialchars($growth['end_year']) ?></div>
-                    <h5><?= $growth['title'] ?></h5>
-                    <div class="skill-list">
-                        <?php foreach($growth['skills'] as $skillIndex => $skill): ?>
-                        <span class="skill-badge"><?= $skill ?></span>
-                        <?php endforeach ?>
-                    </div>
-                </div>
-            </div>
-            <?php endforeach; ?>
-            <?php else: ?>
-            <p class="text-center text-muted">Belum ada perkembangan skill yang ditambahkan.</p>
-            <?php endif; ?>
-        </div>
+  <div class="container">
+    <div class="section-heading text-center mb-5" data-aos="fade-up">
+      <h2 class="fw-bold">Perkembangan Keahlian</h2>
+      <p class="text-muted">Teknologi dan skill yang berkembang seiring waktu</p>
     </div>
+    <div class="row g-4">
+      <?php foreach ($skillsGrowth as $index => $growth): ?>
+      <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="<?= $index * 100 ?>">
+        <div class="skill-evolution-card p-4 bg-white shadow-sm rounded-3 h-100 text-center">
+          <div class="skill-year fw-bold mb-2"><?= htmlspecialchars($growth['start_year']) ?> - <?= htmlspecialchars($growth['end_year']) ?></div>
+          <h5 class="fw-bold mb-3"><?= htmlspecialchars($growth['title']) ?></h5>
+          <div class="skill-list d-flex flex-wrap justify-content-center gap-2">
+            <?php foreach($growth['skills'] as $skill): ?>
+              <span class="badge bg-info text-dark px-3 py-2"><?= htmlspecialchars($skill['value'] ?? $skill) ?></span>
+            <?php endforeach ?>
+          </div>
+        </div>
+      </div>
+      <?php endforeach; ?>
+    </div>
+  </div>
 </section>
 
-<!-- ================= Testimonials ================= -->
-<section class="section-padding">
-    <div class="container">
-        <div class="section-heading text-center mb-5" data-aos="fade-up">
-            <h2 class="section-title fw-bold">Testimoni</h2>
-            <p class="section-subtitle">Apa kata rekan & klien tentang saya</p>
-        </div>
-        <div class="row">
-            <?php foreach ($testimonials as $i => $testi): ?>
-            <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="<?= $i * 200 ?>">
-                <div class="card testimonial-card shadow-lg border-0 rounded-4 h-100 p-4">
-                    <div class="testimonial-content mb-3">
-                        <i class="fas fa-quote-left fa-2x text-primary"></i>
-                        <p class="mt-3 fst-italic">"<?= htmlspecialchars($testi['text']) ?>"</p>
-                    </div>
-                    <div class="d-flex align-items-center mt-auto">
-                        <img src="<?= $testi['img'] ?>" alt="<?= htmlspecialchars($testi['name']) ?>"
-                            class="rounded-circle me-3 border border-2" width="60" height="60">
-                        <div>
-                            <h6 class="mb-0 fw-bold"><?= htmlspecialchars($testi['name']) ?></h6>
-                            <small class="text-muted"><?= htmlspecialchars($testi['role']) ?></small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <?php endforeach; ?>
-        </div>
+<!-- ================= Testimonials (Swiper) ================= -->
+<section class="section-padding bg-light">
+  <div class="container">
+    <div class="section-heading text-center mb-5" data-aos="fade-up">
+      <h2 class="fw-bold">Testimoni</h2>
+      <p class="text-muted">Pendapat rekan & klien tentang saya</p>
     </div>
+
+    <?php if (!empty($testimonials)): ?>
+    <div class="swiper testimonial-slider pb-5">
+      <div class="swiper-wrapper">
+        <?php foreach ($testimonials as $testi): ?>
+        <div class="swiper-slide">
+          <div class="testimonial-card p-4 bg-white shadow-sm rounded-4 h-100 d-flex flex-column position-relative hover-shadow">
+            
+            <!-- Quote -->
+            <div class="testimonial-content mb-4">
+              <i class="fas fa-quote-left fa-2x text-primary opacity-75"></i>
+              <p class="mt-3 fst-italic text-muted">"<?= htmlspecialchars($testi['content']) ?>"</p>
+            </div>
+
+            <!-- Info -->
+            <div class="d-flex align-items-center mt-auto pt-3 border-top">
+              <img src="<?= htmlspecialchars($testi['img']) ?>" 
+                   alt="<?= htmlspecialchars($testi['name']) ?>" 
+                   class="rounded-circle me-3 border border-2 shadow-sm" 
+                   width="60" height="60">
+              <div>
+                <h6 class="mb-1 fw-bold"><?= htmlspecialchars($testi['name']) ?></h6>
+                <small class="text-muted"><?= htmlspecialchars($testi['role']) ?></small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <?php endforeach; ?>
+      </div>
+
+      <!-- Custom Navigation -->
+      <div class="swiper-pagination mt-4"></div>
+      <div class="swiper-button-prev custom-nav"></div>
+      <div class="swiper-button-next custom-nav"></div>
+    </div>
+
+    <?php else: ?>
+    <!-- Empty State -->
+    <div class="text-center py-5">
+      <i class="bi bi-chat-left-quote display-4 text-muted d-block mb-3"></i>
+      <p class="text-muted mb-2">Belum ada testimoni</p>
+      <a href="?page=testimonial-form" class="btn btn-outline-primary btn-sm">
+        <i class="bi bi-plus-circle"></i> Tambahkan Testimoni
+      </a>
+    </div>
+    <?php endif; ?>
+  </div>
 </section>
 
-<!-- ================= AOS Animation Init ================= -->
+<!-- ================= JS ================= -->
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
 <script>
-AOS.init({
-    duration: 800,
-    once: true
-});
+AOS.init({ duration: 900, once: true, offset: 80 });
+
+const slidesCount = document.querySelectorAll('.testimonial-slider .swiper-slide').length;
+if (slidesCount > 0) {
+  new Swiper('.testimonial-slider', {
+    loop: slidesCount > 3,
+    grabCursor: true,
+    spaceBetween: 30,
+    slidesPerView: 1,
+    autoplay: { delay: 4000, disableOnInteraction: false },
+    pagination: { el: '.swiper-pagination', clickable: true },
+    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+    breakpoints: { 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }
+  });
+}
 </script>

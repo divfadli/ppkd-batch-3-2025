@@ -9,10 +9,19 @@ $skillSections = mysqli_fetch_all($qSkillSections, MYSQLI_ASSOC);
 
 // Menu Sidebar
 $menu = [
-    ['title' => 'Dashboard', 'icon' => 'bi bi-grid', 'link' => 'index.php', 'children' => []],
+    ['title' => 'Dashboard', 'icon' => 'bi bi-grid', 'link' => 'dashboard', 'children' => []],
     ['title' => 'Page', 'icon' => 'bi bi-menu-button-wide', 'link' => '#', 'children' => [
         ['title' => 'About', 'link' => '?page=about'],
-        ['title' => 'Section', 'link' => '?page=add-sections'],
+        [
+            'title' => 'Section',
+            'link' => '#',
+            'children' => [
+                ['title' => 'Values', 'link' => '?page=add-sections&type=values_section'],
+                ['title' => 'Soft Skills', 'link' => '?page=add-sections&type=soft_skills'],
+                ['title' => 'Services', 'link' => '?page=add-sections&type=services'],
+                ['title' => 'Floating Card', 'link' => '?page=add-sections&type=floating_card'],
+            ]
+        ],
         [
             'title' => 'Skills',
             'link' => '#',
@@ -41,6 +50,10 @@ $menu = [
                         'link'  => '?page=skills&section_id=' . $s['id']
                     ], array_filter($skillSections, fn($s) => $s['type'] === 'development'))
                 ],
+                [
+                    'title' => 'Skill Growth',
+                    'link' => '?page=skill-growth',
+                ],
             ]
         ],
         [
@@ -53,15 +66,14 @@ $menu = [
         ],
         ['title' => 'Portofolio', 'link' => '?page=portofolio'],
         ['title' => 'Experience', 'link' => '?page=experience'],
+        ['title' => 'Testimonial', 'link' => '?page=testimonial'],
+        ['title' => 'FAQ and Answer', 'link' => '?page=faq'],
     ]],
     ['heading' => 'Pages'],
     ['title' => 'User', 'icon' => 'bi bi-person', 'link' => '?page=user', 'children' => []],
     ['title' => 'Pengaturan', 'icon' => 'bi bi-gear', 'link' => '?page=setting', 'children' => []],
-    ['title' => 'Contact', 'icon' => 'bi bi-envelope', 'link' => 'pages-contact.html', 'children' => []],
-    ['title' => 'Register', 'icon' => 'bi bi-card-list', 'link' => 'pages-register.html', 'children' => []],
-    ['title' => 'Login', 'icon' => 'bi bi-box-arrow-in-right', 'link' => 'pages-login.html', 'children' => []],
-    ['title' => 'Error 404', 'icon' => 'bi bi-dash-circle', 'link' => 'pages-error-404.html', 'children' => []],
-    ['title' => 'Blank', 'icon' => 'bi bi-file-earmark', 'link' => 'pages-blank.html', 'children' => []],
+    ['title' => 'Master Section', 'icon' => 'bi bi-envelope', 'link' => '?page=master-sections', 'children' => []],
+    ['title' => 'Messages', 'icon' => 'bi bi-envelope', 'link' => '?page=messages', 'children' => []],
 ];
 
 // cek recursive apakah ada active child

@@ -22,7 +22,7 @@ if (isset($_GET['delete'])) {
         }
 
         // Hapus CV kalau ada
-        if (!empty($rowFile['cv']) && file_exists("uploads/" . $rowFile['cv'])) {
+        if (!empty($rowFile['cv']) && file_exists("uploads/cv/" . $rowFile['cv'])) {
             @unlink("uploads/cv/" . $rowFile['cv']);
         }
     }
@@ -37,11 +37,12 @@ if (isset($_GET['delete'])) {
 
 // Save (Insert / Update)
 if (isset($_POST['simpan'])) {
-    $judul     = mysqli_real_escape_string($koneksi, $_POST['title']);
-    $lokasi    = mysqli_real_escape_string($koneksi, $_POST['location']);
-    $content   = mysqli_real_escape_string($koneksi, $_POST['content']);
-    $is_active = intval($_POST['is_active']);
-    $freelance = intval($_POST['freelance_status']);
+    $judul      = mysqli_real_escape_string($koneksi, $_POST['title']);
+    $lokasi     = mysqli_real_escape_string($koneksi, $_POST['location']);
+    $short_desc = mysqli_real_escape_string($koneksi, $_POST['short_description']);
+    $content    = mysqli_real_escape_string($koneksi, $_POST['content']);
+    $is_active  = intval($_POST['is_active']);
+    $freelance  = intval($_POST['freelance_status']);
     $created_by = $_SESSION['ID_USER'];
 
     // Upload file
@@ -52,8 +53,8 @@ if (isset($_POST['simpan'])) {
         // Update
         $update = mysqli_query($koneksi, 
             "UPDATE abouts 
-             SET title='$judul', location='$lokasi', content='$content', 
-                 is_active='$is_active', freelance_status='$freelance',
+             SET title='$judul', location='$lokasi', short_description='$short_desc',
+                 content='$content', is_active='$is_active', freelance_status='$freelance',
                  image='$image_name', cv='$cv_name', created_by='$created_by'
              WHERE id='$id'"
         );
@@ -64,8 +65,8 @@ if (isset($_POST['simpan'])) {
     } else {
         // Insert
         $insert = mysqli_query($koneksi, 
-            "INSERT INTO abouts (title, location, content, image, cv, is_active, freelance_status, created_by) 
-             VALUES ('$judul','$lokasi','$content','$image_name','$cv_name','$is_active','$freelance', '$created_by')"
+            "INSERT INTO abouts (title, location, short_description, content, image, cv, is_active, freelance_status, created_by) 
+             VALUES ('$judul','$lokasi','$short_desc','$content','$image_name','$cv_name','$is_active','$freelance', '$created_by')"
         );
         if ($insert) {
             header("location:?page=about&tambah=berhasil");
@@ -116,8 +117,14 @@ if (isset($_POST['simpan'])) {
                         </div>
 
                         <div class="mb-3">
+                            <label class="form-label">Short Description</label>
+                            <textarea name="short_description" class="summernote" rows="5"
+                                class="form-control"><?php echo $id ? htmlspecialchars($rowEdit['short_description']) : ''; ?></textarea>
+                        </div>
+
+                        <div class="mb-3">
                             <label class="form-label">Isi</label>
-                            <textarea name="content" id="summernote" rows="5"
+                            <textarea name="content" class="summernote" rows="5"
                                 class="form-control"><?php echo $id ? htmlspecialchars($rowEdit['content']) : ''; ?></textarea>
                         </div>
 
