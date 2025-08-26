@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ReservationsController;
 use App\Http\Controllers\RoomsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -43,3 +44,7 @@ Route::post('store/{tipe}', [BelajarController::class, 'storeOperasi'])
 
     // Guest Information
     Route::resource('guest-information', GuestController::class);
+
+    // Reservation
+    Route::resource('reservation', ReservationsController::class);
+    Route::get('get-room-by-category/{id}', [ReservationsController::class, 'getRoomByCategory'])->name('get-room-by-category');

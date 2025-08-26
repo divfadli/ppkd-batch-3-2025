@@ -87,6 +87,61 @@
     <!-- Template Main JS File -->
     <script src="{{assert('assets/js/main.js')}}"></script>
     <script>
+    // variable -> let, var, const
+    let category_id = document.getElementById('category_id');
+    let roomId = document.getElementById('room_id');
+
+    category_id.addEventListener('change', async function() {
+        const id_category = this.value;
+
+        roomId.innerHTML = "<option value=''>Pilih Kamar..</option>";
+
+        // fetch() / fetching yaitu ambil data dari backend. Ajax
+        // axios()
+        try {
+            const response = await fetch(`/get-room-by-category/${id_category}`);
+            const data = await response.json();
+
+            data.data.forEach(room => {
+                const opt = document.createElement('option');
+                opt.value = room.id;
+                opt.textContent = `${room.name}`;
+                opt.setAttribute('data-price', room.price);
+                roomId.appendChild(opt);
+            });
+        } catch (error) {
+            console.log("error:", error);
+        }
+    })
+
+    room_id.addEventListener('change', function() {
+        const selectedOption = this.options[this.selectedIndex];
+        const price = selectedOption.getAttribute('data-price') || 0;
+        // const price = this.selectedOption[0]?.getAttribute('data-price') || 0; // ERROR
+
+        // Cara Pertama
+        // const rupiah = new Intl.NumberFormat("id-ID", {
+        //     style: "currency",
+        //     currency: "IDR"
+        // }).format(price)
+
+        // const formatted = Number(price).toLocaleString("id-ID", {
+        //     style: "currency",
+        //     currency: "IDR",
+        //     minimumFractionDigits: 0,
+        //     maximumFractionDigits: 0
+        // });
+
+        document.getElementById('roomRate').textContent = Number(price).toLocaleString("id-ID", {
+            style: "currency",
+            currency: "IDR",
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        });
+
+    })
+    </script>
+    <script>
     // Auto close alert setelah 3 detik (3000 ms)
     setTimeout(() => {
         let alertEl = document.querySelector('.alert');
