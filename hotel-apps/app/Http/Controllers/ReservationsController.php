@@ -35,7 +35,33 @@ class ReservationsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        // Output: RSV-tgl hari ini - 001
+        try {
+            $data = $request->validate([
+                'reservation_number' => 'required',
+                'total_night' => 'required',
+                'guest_name' => 'required',
+                'guest_email' => 'nullable|string',
+                'guest_phone' => 'nullable|string',
+                'guest_qty' => 'required',
+                'guest_note' => 'nullable|string',
+                'room_id' => 'required',
+                'guest_room_number' => 'nullable|string',
+                'guest_check_in' => 'required|date',
+                'guest_check_out' => 'required|date|after:checkin', //after-> kondisi jika id->checkin harus sudah terisi
+                'payment_method' => 'required',
+                'sub_total' => 'required',
+                'tax' => 'required',
+                'total_amount' => 'required',
+            ]);
+            $create = Reservations::create($data);
+            return response()->json(['status'=>'success', "message"=>"Reservasi Create Success", 'data'=>$create], 201);
+        } catch (\Illuminate\Validation\ValidationException $err) {
+            return response()->json(["status"=>"Error","message"=>"Validation Error", "error"=>$err->errors()],422);
+        }catch(\Exception $e){
+            return response()->json(["status"=> "error", "message"=>"Something went wrong", "error"=>$e->getMessage()], 500);
+        }
     }
 
     /**

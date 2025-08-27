@@ -6,7 +6,7 @@
         <div class="card">
             <div class="card-body">
                 <h3 class="card-title">{{ $title ?? '' }}</h3>
-                <form action="{{ route('reservation.store') }}" method="post" enctype="multipart/form-data">
+                <form action="" method="post" enctype="multipart/form-data">
                     @csrf
 
                     <div class="row">
@@ -46,6 +46,11 @@
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                     @endforeach
                                 </select>
+                            </div>
+                            <!-- Check In Kamar -->
+                            <div class="mb-3">
+                                <label for="" class="form-label">Check In *</label>
+                                <input type="date" name="guest_check_in" id="checkin" class="form-control">
                             </div>
 
                             <!-- Payment -->
@@ -96,30 +101,44 @@
                                 <textarea name="guest_note" id="" class="form-control"></textarea>
                             </div>
 
-                            <!--  -->
+                            <!-- Check Out Kamar -->
+                            <div class="mb-3">
+                                <label for="" class="form-label">Check Out *</label>
+                                <input type="date" name="guest_check_out" id="checkout" class="form-control">
+                            </div>
+
+                            <!-- Summary Payment  -->
                             <div class="card bg-light">
                                 <div class="card-body">
                                     <h6 class="card-title">Summary Payment</h6>
                                     <div class="d-flex justify-content-between mb-2">
                                         <span>Harga Kamar (Per malam)</span>
                                         <span id="roomRate">Rp.0</span>
+                                        <input type="hidden" name="roomRate" id="roomRateVal">
                                     </div>
                                     <div class="d-flex justify-content-between mb-2">
                                         <span>Berapa Malam</span>
                                         <span id="totalNight">0</span>
+                                        <input type="hidden" name="totalNight" id="totalNightVal">
                                     </div>
                                     <div class="d-flex justify-content-between mb-2">
                                         <span>Subtotal</span>
                                         <span id="sub_total">Rp.0</span>
+                                        <input type="hidden" name="sub_total" id="sub_totalVal">
+
                                     </div>
                                     <div class="d-flex justify-content-between mb-2">
                                         <span>Tax (10%)</span>
                                         <span id="tax">Rp.0</span>
+                                        <input type="hidden" name="tax" id="taxVal">
+
                                     </div>
                                     <hr>
                                     <div class="d-flex justify-content-between">
                                         <span>Grand Total</span>
                                         <span id="total_amount">Rp.0</span>
+                                        <input type="hidden" name="total_amount" id="total_amountVal">
+
                                     </div>
                                 </div>
                             </div>
@@ -131,7 +150,7 @@
                         <input type="file" name="image_cover" required>
                     </div> -->
                     <div class="mb-3">
-                        <button class="btn btn-primary">Simpan</button>
+                        <button type="button" class="btn btn-primary" id="save">Simpan</button>
                         <a href="{{ url()->previous() }}" class="text-muted">Kembali</a>
                     </div>
                 </form>
