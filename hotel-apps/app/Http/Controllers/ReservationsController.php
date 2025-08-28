@@ -5,16 +5,40 @@ namespace App\Http\Controllers;
 use App\Models\Categories;
 use App\Models\Reservations;
 use App\Models\Rooms;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ReservationsController extends Controller
 {
+
+    public function createReservationNumber()
+    {
+        // RSV-TODAY-001
+        $code_format = "RSV";
+        $today       = Carbon::now()->format('Ymd'); //20250828
+        $prefix      = $code_format . "-" . $today . "-";
+
+        $lastReservation = Reservations::whereDate('created_at', Carbon::today())
+            ->orderBy('id', 'desc')->first();
+
+        if ($lastReservation) {
+            $lastNumber = substr($lastReservation->reservation_number, -3); //rsv-0001
+            // $lastNumber = $lastReservation->id; //4
+            $newNumber  = str_pad($lastNumber + 1,  3, "0", STR_PAD_LEFT); //004
+        } else {
+            $newNumber = "001";
+        }
+
+        $reservation_number = $prefix . $newNumber;
+
+        return $reservation_number;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $datas = Reservations::orderByDesc('id')->get();
+        $datas = Reservations::with('room')->orderBy('id', 'desc')->get();
         $title = 'Data Reservasi';
         return view('layout.reservation.index',compact('title','datas'));
     }
@@ -24,10 +48,12 @@ class ReservationsController extends Controller
      */
     public function create()
     {
+        $reservation_number = $this->createReservationNumber();
+
         $categories = Categories::get();
 
         $title = 'Reservasi Baru';
-        return view('layout.reservation.create', compact('title','categories'));
+        return view('layout.reservation.create', compact('title','categories', 'reservation_number'));
     }
 
     /**
@@ -54,7 +80,10 @@ class ReservationsController extends Controller
                 'sub_total' => 'required',
                 'tax' => 'required',
                 'total_amount' => 'required',
+                'isReserve' => 'nullable|in:0,1,2',
             ]);
+            $data['isReserve'] = $data['isReserve'] ?? 1;
+            
             $create = Reservations::create($data);
             return response()->json(['status'=>'success', "message"=>"Reservasi Create Success", 'data'=>$create], 201);
         } catch (\Illuminate\Validation\ValidationException $err) {

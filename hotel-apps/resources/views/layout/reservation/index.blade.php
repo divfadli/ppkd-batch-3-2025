@@ -42,7 +42,7 @@
                         @forelse ($datas as $index => $val)
                         <tr>
                             <td>{{ $index + 1 }}</td>
-                            <td>{{ $val->guest_name }}</td>
+                            <td>{{ $val->room->name }}</td>
                             <td>{{ $val->reservation_number }}</td>
                             <td>
                                 <small>
@@ -55,7 +55,7 @@
                             </td>
                             <td>{{ $val->guest_check_in }}</td>
                             <td>{{ $val->guest_check_out }}</td>
-                            <td>{{ $val->isReserve }}</td>
+                            <td><span class="{{ $val->isReserved_class }}">{{ $val->isReserved_text }}</span></td>
                             <td class="text-center">
                                 <a href="{{ route('reservation.edit', $val->id) }}" class="btn btn-sm btn-success me-1">
                                     Edit
