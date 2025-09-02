@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\AnggotaController;
+use App\Http\Controllers\BooksController;
+use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LocationsController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,6 +19,8 @@ Route::post('login', [LoginController::class,'actionLogin'])-> name('login');
 Route::middleware(['auth'])->group(function(){
     Route::get('dashboard', [HomeController::class, 'index']);
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+    
+    // Anggota
     // Route::resource('anggota',AnggotaController::class);
     Route::get('anggota',[AnggotaController::class,'index'])->name('anggota.index');
     Route::get('anggota/create',[AnggotaController::class, 'create'])->name('anggota.create');
@@ -26,4 +31,13 @@ Route::middleware(['auth'])->group(function(){
     Route::delete('anggota/soft-delete/{id}',[AnggotaController::class,'softDelete'])->name('anggota.soft-deleted');
     Route::get('anggota/restore',[AnggotaController::class,'indexRestore'])->name('anggota.index-restore');
     Route::get('anggota/restore/{id}',[AnggotaController::class,'restore'])->name('anggota.restore');
+
+    // Lokasi Buku
+    Route::resource('lokasi', LocationsController::class);
+
+    // Kategori Buku
+    Route::resource('kategori', CategoriesController::class);
+
+    // Buku
+    Route::resource('buku',BooksController::class);
 });

@@ -16,23 +16,23 @@
              </a>
              <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                  <li>
-                     <a href="{{ route('anggota.index') }}">
+                     <a href="{{ url('anggota') }}">
                          <i class="bi bi-circle"></i><span>Anggota</span>
                      </a>
                  </li>
                  <li>
-                     <a href="">
-                         <i class="bi bi-circle"></i><span>Pelanggan</span>
+                     <a href="{{ route('lokasi.index') }}">
+                         <i class="bi bi-circle"></i><span>Lokasi Buku</span>
                      </a>
                  </li>
                  <li>
-                     <a href="">
-                         <i class="bi bi-circle"></i><span>Level</span>
+                     <a href="{{ url('kategori') }}">
+                         <i class="bi bi-circle"></i><span>Kategori Buku</span>
                      </a>
                  </li>
                  <li>
-                     <a href="">
-                         <i class="bi bi-circle"></i><span>User</span>
+                     <a href="{{ url('buku') }}">
+                         <i class="bi bi-circle"></i><span>Buku</span>
                      </a>
                  </li>
 
