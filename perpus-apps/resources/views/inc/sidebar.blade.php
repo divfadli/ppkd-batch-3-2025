@@ -26,33 +26,26 @@
                      </a>
                  </li>
                  <li>
-                     <a href="{{ url('kategori') }}">
+                     <a href="{{ route('kategori.index') }}">
                          <i class="bi bi-circle"></i><span>Kategori Buku</span>
                      </a>
                  </li>
                  <li>
-                     <a href="{{ url('buku') }}">
+                     <a href="{{ route('buku.index') }}">
                          <i class="bi bi-circle"></i><span>Buku</span>
                      </a>
                  </li>
-
              </ul>
          </li><!-- End Components Nav -->
 
          <li class="nav-item">
-             <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-                 <i class="bi bi-journal-text"></i><span>Transaksi</span><i class="bi bi-chevron-down ms-auto"></i>
+             <a class="nav-link collapsed" href="{{ route('transaction.index') }}">
+                 <i class="bi bi-journal-text"></i>
+                 <span>Pinjam Buku</span>
              </a>
-             <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                 <li>
-                     <a href="">
-                         <i class="bi bi-circle"></i><span>Trans Order</span>
-                     </a>
-                 </li>
-             </ul>
          </li><!-- End Forms Nav -->
 
-         <li class="nav-item">
+         {{-- <li class="nav-item">
              <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
                  <i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i
                      class="bi bi-chevron-down ms-auto"></i>
@@ -166,7 +159,7 @@
                  <i class="bi bi-file-earmark"></i>
                  <span>Blank</span>
              </a>
-         </li><!-- End Blank Page Nav -->
+         </li><!-- End Blank Page Nav --> --}}
 
      </ul>
 

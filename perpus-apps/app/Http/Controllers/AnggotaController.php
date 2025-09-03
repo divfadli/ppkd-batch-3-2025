@@ -24,7 +24,7 @@ class AnggotaController extends Controller
         ];
 
         $datas = Members::orderByDesc('id')->get();
-        return view('anggota.index', compact('title', 'subtitle','thirdtitle', 'breadcrumbs','datas'));
+        return view('anggota.index', compact('title', 'subtitle', 'thirdtitle', 'breadcrumbs', 'datas'));
     }
 
     /**
@@ -45,8 +45,8 @@ class AnggotaController extends Controller
         $countDay = Members::whereDate('created_at', now()->toDateString())->count() + 1;
         $runningNumber  = str_pad($countDay, 5, '0', STR_PAD_LEFT);
         $memberCode = $pref . $today . "-" . $runningNumber;
-        
-        return view('anggota.create', compact('memberCode','title', 'subtitle', 'thirdtitle','breadcrumbs'));
+
+        return view('anggota.create', compact('memberCode', 'title', 'subtitle', 'thirdtitle', 'breadcrumbs'));
     }
 
     /**
@@ -68,12 +68,12 @@ class AnggotaController extends Controller
             return back()->withErrors($validators)->withInput();
         }
 
-        Members::create([ 
-            'nomor_anggota' => $request->nomor_anggota, 
-            'nik' => $request->nik, 
-            'nama_anggota' => $request->nama_anggota, 
-            'no_hp' => $request->no_hp, 
-            'email' => $request->email, 
+        Members::create([
+            'nomor_anggota' => $request->nomor_anggota,
+            'nik' => $request->nik,
+            'nama_anggota' => $request->nama_anggota,
+            'no_hp' => $request->no_hp,
+            'email' => $request->email,
         ]);
 
         // $validated = $request->validate([
@@ -114,7 +114,7 @@ class AnggotaController extends Controller
             ['label' => 'Edit', 'url' => null]
         ];
 
-        return view('anggota.edit', compact('edit','title', 'subtitle', 'thirdtitle','breadcrumbs'));
+        return view('anggota.edit', compact('edit', 'title', 'subtitle', 'thirdtitle', 'breadcrumbs'));
     }
 
     /**
@@ -152,7 +152,7 @@ class AnggotaController extends Controller
         }
 
         $member->update($validator->validated());
-        
+
         // $validated = $request->validate([
         //     'nomor_anggota' => 'required|string|max:50',
         //     'nik'           => 'required|string|max:20',
@@ -189,7 +189,8 @@ class AnggotaController extends Controller
         return redirect()->to('anggota')->with('success', 'Data Anggota Berhasil dihapus');
     }
 
-    public function indexRestore(){
+    public function indexRestore()
+    {
         $title = 'Restore Anggota | Perpustakaan';
         $subtitle = 'Halaman Restore Anggota';
         $thirdtitle = 'Restore Anggota';
@@ -198,9 +199,10 @@ class AnggotaController extends Controller
             ['label' => 'Restore', 'url' => null]
         ];
         $member_r = Members::onlyTrashed()->get();
-        return view('anggota.restore',compact('member_r', 'title','subtitle', 'thirdtitle', 'breadcrumbs'));
+        return view('anggota.restore', compact('member_r', 'title', 'subtitle', 'thirdtitle', 'breadcrumbs'));
     }
-    public function restore(string $id){
+    public function restore(string $id)
+    {
         $member = Members::withTrashed()->find($id);
         $member->restore();
 

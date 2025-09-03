@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Members extends Model
 {
     use SoftDeletes; //Terhapus, tetapi di dalam database masih ada
-    protected $fillable=[
+    protected $fillable = [
         'nomor_anggota',
         'nik',
         'nama_anggota',

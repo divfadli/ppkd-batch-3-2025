@@ -21,7 +21,7 @@ class CategoriesController extends Controller
         ];
 
         $datas = Categories::orderByDesc('id')->get();
-        return view('kategori_buku.index', compact('title', 'subtitle','thirdtitle', 'breadcrumbs','datas'));
+        return view('kategori_buku.index', compact('title', 'subtitle', 'thirdtitle', 'breadcrumbs', 'datas'));
     }
 
     /**
@@ -36,8 +36,8 @@ class CategoriesController extends Controller
             ['label' => 'Kategori Buku', 'url' => url('kategori')],
             ['label' => 'Create', 'url' => null]
         ];
-        
-        return view('kategori_buku.create', compact('title', 'subtitle', 'thirdtitle','breadcrumbs'));
+
+        return view('kategori_buku.create', compact('title', 'subtitle', 'thirdtitle', 'breadcrumbs'));
     }
 
     /**
@@ -45,7 +45,7 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-         $rules = [
+        $rules = [
             'name_category' => ['required']
         ];
 
@@ -55,8 +55,8 @@ class CategoriesController extends Controller
             return back()->withErrors($validators)->withInput();
         }
 
-        Categories::create([ 
-            'name_category' => $request->name_category, 
+        Categories::create([
+            'name_category' => $request->name_category,
         ]);
 
         return redirect()->to('kategori')->with('success', 'Data berhasil ditambahkan');
@@ -84,7 +84,7 @@ class CategoriesController extends Controller
             ['label' => 'Edit', 'url' => null]
         ];
 
-        return view('kategori_buku.edit', compact('edit','title', 'subtitle', 'thirdtitle','breadcrumbs'));
+        return view('kategori_buku.edit', compact('edit', 'title', 'subtitle', 'thirdtitle', 'breadcrumbs'));
     }
 
     /**

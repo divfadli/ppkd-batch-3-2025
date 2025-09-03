@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Locations extends Model
 {
-    protected $fillable =[
+    protected $fillable = [
         'code_location',
         'label',
         'bookshelf'

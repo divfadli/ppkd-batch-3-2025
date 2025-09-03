@@ -24,7 +24,7 @@ class BooksController extends Controller
         $datas = Books::with(['location', 'category'])
             ->latest('id')
             ->get();
-        return view('buku.index', compact('title', 'subtitle','thirdtitle', 'breadcrumbs','datas'));
+        return view('buku.index', compact('title', 'subtitle', 'thirdtitle', 'breadcrumbs', 'datas'));
     }
 
     /**

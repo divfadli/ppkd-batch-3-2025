@@ -25,7 +25,7 @@ class LocationsController extends Controller
         ];
 
         $datas = Locations::orderByDesc('id')->get();
-        return view('lokasi.index', compact('title', 'subtitle','thirdtitle', 'breadcrumbs','datas'));
+        return view('lokasi.index', compact('title', 'subtitle', 'thirdtitle', 'breadcrumbs', 'datas'));
     }
 
     /**
@@ -53,8 +53,8 @@ class LocationsController extends Controller
         $nextNumber = str_pad($totalLocations, 1, '0', STR_PAD_LEFT);
         $bookshelf = "Rak-{$nextNumber}, Lantai-{$nextNumber}";
 
-        
-        return view('lokasi.create', compact('codeLocation','bookshelf','title', 'subtitle', 'thirdtitle','breadcrumbs'));
+
+        return view('lokasi.create', compact('codeLocation', 'bookshelf', 'title', 'subtitle', 'thirdtitle', 'breadcrumbs'));
     }
 
     /**
@@ -74,9 +74,9 @@ class LocationsController extends Controller
             return back()->withErrors($validators)->withInput();
         }
 
-        Locations::create([ 
-            'code_location' => $request->code_location, 
-            'label' => $request->label, 
+        Locations::create([
+            'code_location' => $request->code_location,
+            'label' => $request->label,
             'bookshelf' => $request->bookshelf,
         ]);
 
@@ -106,7 +106,7 @@ class LocationsController extends Controller
             ['label' => 'Edit', 'url' => null]
         ];
 
-        return view('lokasi.edit', compact('edit','title', 'subtitle', 'thirdtitle','breadcrumbs'));
+        return view('lokasi.edit', compact('edit', 'title', 'subtitle', 'thirdtitle', 'breadcrumbs'));
     }
 
     /**

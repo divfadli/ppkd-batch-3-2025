@@ -23,20 +23,20 @@
         <div class="pagetitle">
             <h1>{{ $subtitle ?? 'Blank Page' }}</h1>
             <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ url('dashboard') }}">Home</a></li>
-                @if(!empty($breadcrumbs))
-                    @foreach($breadcrumbs as $breadcrumb)
-                        @if($breadcrumb['url'])
-                            <li class="breadcrumb-item">
-                                <a href="{{ $breadcrumb['url'] }}">{{ $breadcrumb['label'] }}</a>
-                            </li>
-                        @else
-                            <li class="breadcrumb-item active">{{ $breadcrumb['label'] }}</li>
-                        @endif
-                    @endforeach
-                @endif
-            </ol>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url('dashboard') }}">Home</a></li>
+                    @if (!empty($breadcrumbs))
+                        @foreach ($breadcrumbs as $breadcrumb)
+                            @if ($breadcrumb['url'])
+                                <li class="breadcrumb-item">
+                                    <a href="{{ $breadcrumb['url'] }}">{{ $breadcrumb['label'] }}</a>
+                                </li>
+                            @else
+                                <li class="breadcrumb-item active">{{ $breadcrumb['label'] }}</li>
+                            @endif
+                        @endforeach
+                    @endif
+                </ol>
             </nav>
         </div>
 
@@ -53,6 +53,8 @@
     </a>
 
     @include('inc.js')
+
+    @yield('script')
 </body>
 
 </html>
