@@ -45,6 +45,7 @@ Route::middleware(['auth'])->group(function () {
     // Transaksi
     Route::resource('transaction', TransactionController::class);
     Route::get('get-books/{id}', [TransactionController::class, 'getBukuByidCategory']);
+    Route::get('print-trans/{id}', [TransactionController::class, 'print']);
     // Route::prefix('pinjam');
     // Route:prefix('pengembalian');
 });

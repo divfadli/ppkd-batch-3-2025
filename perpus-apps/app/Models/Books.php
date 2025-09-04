@@ -19,11 +19,11 @@ class Books extends Model
 
     public function location()
     {
-        return $this->belongsTo(Locations::class, 'location_id');
+        return $this->belongsTo(Locations::class, 'location_id', 'id');
     }
 
     public function category()
     {
-        return $this->belongsTo(Categories::class, 'category_id');
+        return $this->belongsTo(Categories::class, 'category_id', 'id');
     }
 }

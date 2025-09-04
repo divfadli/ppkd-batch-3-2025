@@ -7,7 +7,9 @@ use App\Models\Borrows;
 use Illuminate\Http\Request;
 use App\Models\Members;
 use App\Models\Categories;
+use App\Models\DetailBorrows;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class TransactionController extends Controller
 {
@@ -23,7 +25,7 @@ class TransactionController extends Controller
             ['label' => 'Peminjaman Buku', 'url' => null]
         ];
 
-        $datas = [];
+        $datas = Borrows::with('member', 'detailBorrows')->orderByDesc('id')->get();
         return view('pinjam_buku.index', compact('title', 'subtitle', 'thirdtitle', 'breadcrumbs', 'datas'));
     }
 
@@ -65,7 +67,28 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $insertBorrow = Borrows::create(
+                [
+                    'anggota_id' => $request->anggota_id,
+                    'trans_number' => $request->trans_number,
+                    'return_date' => $request->return_date,
+                    'note' => $request->note,
+                ]
+            );
+            foreach ($request->books_id as $key => $val) {
+                DetailBorrows::create([
+                    'borrows_id' => $insertBorrow->id,
+                    'books_id' => $request->books_id[$key]
+                ]);
+            }
+            DB::commit();
+
+            return redirect()->to('print-trans', $insertBorrow->id);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+        }
     }
 
     /**
@@ -73,7 +96,8 @@ class TransactionController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $borrow = Borrows::with('member', 'detailBorrows.book')->find($id);
+        return view('pinjam_buku.show', compact('borrow'));
     }
 
     /**
@@ -115,5 +139,11 @@ class TransactionController extends Controller
                 'message' => $th->getMessage()
             ], 500);
         }
+    }
+
+    public function print($id)
+    {
+        $borrow = Borrows::with('member', 'detailBorrows')->find($id);
+        return view('pinjam_buku.print', compact('borrow'));
     }
 }

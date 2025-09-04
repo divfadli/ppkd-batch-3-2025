@@ -7,10 +7,10 @@
                 <a href="{{ route('transaction.index') }}" class="btn btn-secondary">Kembali</a>
             </div>
 
-            <form action="" method="post">
+            <form action="{{ route('transaction.store') }}" method="post">
                 @csrf
                 <div class="row">
-                    {{-- Kolom Transaksi --}}
+                    {{-- Kolom Transaksi Kiri --}}
                     <div class="col-sm-6">
                         {{-- No Transaksi --}}
                         <div class="mb-3 row">
@@ -91,6 +91,40 @@
                         </div>
                     </div>
 
+                    {{-- Kolom Transaksi Kanan --}}
+                    <div class="col-sm-6">
+                        {{-- Tgl Pengembalian --}}
+                        <div class="mb-3 row">
+                            <div class="col-sm-3">
+                                <label for="" class="form-label">Tanggal Pengembalian</label>
+                            </div>
+                            <div class="col-sm-7">
+                                <input type="date" class="form-control" name="return_date" id=""
+                                    @error('return_date') is-invalid @enderror>
+                            </div>
+                            <div class="col-sm-12">
+                                @error('return_date')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        {{-- Note --}}
+                        <div class="mb-3 row">
+                            <div class="col-sm-3">
+                                <label for="" class="form-label">Catatan</label>
+                            </div>
+                            <div class="col-sm-7">
+                                <textarea name="note" id="" cols="30" rows="10" class="form-control"
+                                    @error('note') is-invalid @enderror></textarea>
+                            </div>
+                            <div class="col-sm-12">
+                                @error('note')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
                     {{-- Kolom Table Keranjang Buku --}}
                     <div class="col-sm-12 mt-5">
                         <div align="right" class="mb-3">
@@ -111,6 +145,7 @@
                         </table>
                     </div>
                 </div>
+                <button class="mt-3 btn btn-success">Simpan</button>
             </form>
         </div>
     </div>
@@ -203,10 +238,25 @@
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td>${no}</td>
-                <td>${nameBook}</td>
-                <td><button class="btn btn-sm btn-danger"> Delete </button></td>
+                <td>${nameBook} <input type='hidden' name='books_id[]' value=${idBook}></td>
+                <td><button type='button' class="btn btn-sm btn-danger delete-row"> Delete </button></td>
             `
             tbody.appendChild(tr);
+            updateRowNumbers();
         });
+
+        document.querySelector('#tableTrans tbody').addEventListener('click', function(e) {
+            if (e.target.classList.contains('delete-row')) {
+                e.target.closest('tr').remove();
+                updateRowNumbers();
+            }
+        });
+
+        function updateRowNumbers() {
+            const rows = document.querySelectorAll('#tableTrans tbody tr');
+            rows.forEach((row, index) => {
+                row.querySelector('td:first-child').textContent = index + 1;
+            });
+        }
     </script>
 @endsection
