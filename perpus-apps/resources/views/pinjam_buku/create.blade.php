@@ -242,7 +242,6 @@
                 <td><button type='button' class="btn btn-sm btn-danger delete-row"> Delete </button></td>
             `
             tbody.appendChild(tr);
-            updateRowNumbers();
         });
 
         document.querySelector('#tableTrans tbody').addEventListener('click', function(e) {

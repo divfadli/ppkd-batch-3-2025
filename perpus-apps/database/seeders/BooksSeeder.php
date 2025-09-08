@@ -61,8 +61,8 @@ class BooksSeeder extends Seeder
 
         foreach ($sastra as $book) {
             Books::create(array_merge($book, [
-                'category_id' => 12,
-                'location_id' => 11,
+                'category_id' => 9,
+                'location_id' => 1,
             ]));
         }
 
@@ -112,8 +112,8 @@ class BooksSeeder extends Seeder
 
         foreach ($fiksi as $book) {
             Books::create(array_merge($book, [
-                'category_id' => 4,
-                'location_id' => 15,
+                'category_id' => 1,
+                'location_id' => 2,
             ]));
         }
 
@@ -163,8 +163,8 @@ class BooksSeeder extends Seeder
 
         foreach ($nonFiksi as $book) {
             Books::create(array_merge($book, [
-                'category_id' => 5,
-                'location_id' => 8,
+                'category_id' => 2,
+                'location_id' => 3,
             ]));
         }
     }
