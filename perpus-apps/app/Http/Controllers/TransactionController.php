@@ -19,6 +19,7 @@ class TransactionController extends Controller
      */
     public function index()
     {
+
         $title = 'Manage Books Borrow | Perpustakaan';
         $subtitle = 'Halaman Manajemen Peminjaman Buku Perpustakaan';
         $thirdtitle = 'List Peminjaman Buku Perpustakaan';
@@ -27,6 +28,10 @@ class TransactionController extends Controller
         ];
 
         $datas = Borrows::with('member', 'detailBorrows')->orderByDesc('id')->get();
+
+        $titleDelete = "Hapus Transaksi";
+        $text = "Yakin ingin menghapus transaksi ini?";
+        confirmDelete($titleDelete, $text);
         return view('pinjam_buku.index', compact('title', 'subtitle', 'thirdtitle', 'breadcrumbs', 'datas'));
     }
 
@@ -78,10 +83,20 @@ class TransactionController extends Controller
                     'note' => $request->note,
                 ]
             );
-            foreach ($request->books_id as $key => $val) {
+            foreach ($request->books_id as $val) {
+                $book = Books::find($val);
+
+                if (!$book || $book->stock <= 0) {
+                    throw new \Exception("Stok buku '{$book->title}' habis!");
+                }
+
+                // Kurangi stok
+                $book->decrement('stock', 1);
+
+                // Baru simpan detail peminjaman
                 DetailBorrows::create([
                     'borrows_id' => $insertBorrow->id,
-                    'books_id' => $request->books_id[$key]
+                    'books_id'   => $val
                 ]);
             }
             DB::commit();
@@ -126,16 +141,36 @@ class TransactionController extends Controller
      */
     public function destroy(string $id)
     {
-        $borrow = Borrows::find($id);
-        $borrow->detailBorrows()->delete();
-        $borrow->delete();
-        return redirect()->to('transaction');
+        DB::beginTransaction();
+        try {
+            $borrow = Borrows::findOrFail($id);
+
+            // Kembalikan stok buku sebelum hapus
+            foreach ($borrow->detailBorrows as $detail) {
+                $book = $detail->book;
+                if ($book) {
+                    $book->increment('stock', 1); // langsung simpan di DB
+                }
+            }
+
+            $borrow->detailBorrows()->delete();
+            $borrow->delete();
+
+            DB::commit();
+            Alert::success('Berhasil!', 'Transaksi berhasil dihapus');
+            return redirect()->route('transaction.index');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            Alert::error('Error!', 'Gagal menghapus transaksi: ' . $th->getMessage());
+            return redirect()->route('transaction.index');
+        }
     }
+
 
     public function getBukuByidCategory($id)
     {
         try {
-            $books = Books::where('category_id', $id)->get();
+            $books = Books::where('category_id', $id)->where('stock', '>', 0)->get();
             return response()->json([
                 'status' => 'success',
                 'message' => 'fetch book success',
@@ -152,31 +187,51 @@ class TransactionController extends Controller
     public function print($id)
     {
         $borrow = Borrows::with('member', 'detailBorrows')->find($id);
+
+        session()->reflash(); // biar alert ikut sampai ke index
+
         return view('pinjam_buku.print', compact('borrow'));
     }
 
+
     public function returnBook(Request $request, $id)
     {
-        $borrow = Borrows::findOrFail($id); // 404
-        // $borrow = Borrows::find($id); // Blank
+        DB::beginTransaction();
+        try {
+            $borrow = Borrows::findOrFail($id);
 
-        if (!$borrow->actual_return_date) {
-            $borrow->actual_return_date = Carbon::now();
+            if (!$borrow->actual_return_date) {
+                $borrow->actual_return_date = Carbon::now();
+            }
+
+            $returnDate = Carbon::parse($borrow->return_date)->startOfDay();
+            $actualReturnDate = Carbon::parse($borrow->actual_return_date)->startOfDay();
+
+            $fine = 0;
+            if ($actualReturnDate->greaterThan($returnDate)) {
+                $late = $returnDate->diffInDays($actualReturnDate);
+                $fine = $late * 10000;
+            }
+
+            // Tambah stok buku kembali dan tersimpan ke DB
+            foreach ($borrow->detailBorrows as $detail) {
+                $book = $detail->book;
+                if ($book) {
+                    $book->increment('stock', 1); // langsung UPDATE ke DB
+                }
+            }
+
+            $borrow->fine = $fine;
+            $borrow->status = 0; // status: sudah dikembalikan
+            $borrow->save();
+
+            DB::commit();
+            Alert::success('Berhasil', 'Buku Berhasil dikembalikan');
+            return redirect()->to('transaction');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            Alert::error('Error!', 'Gagal mengembalikan buku: ' . $th->getMessage());
+            return redirect()->to('transaction');
         }
-        $returnDate = \Carbon\Carbon::parse($borrow->return_date)->startOfDay();
-        $actualReturnDate = \Carbon\Carbon::parse($borrow->actual_return_date)->startOfDay();
-
-        $fine = 0;
-        if ($actualReturnDate->greaterThan($returnDate)) {
-            $late = $returnDate->diffInDays($actualReturnDate);
-            $fine = $late * 10000;
-        }
-
-        // $borrow->actual_return_date = Carbon::now();
-        $borrow->fine = $fine;
-        $borrow->status = 0;
-        $borrow->save();
-        Alert::success('Berhasil', 'Buku Berhasil dikembalikan');
-        return redirect()->to('transaction');
     }
 }

@@ -23,6 +23,26 @@ class User extends Authenticatable
         'password',
     ];
 
+    // Banyak user punya banyak roles
+    public function roles()
+    {
+        return $this->belongsToMany(Roles::class, 'user_roles', 'user_id', 'role_id');
+    }
+
+    // cek Memiliki role tertentu
+    public function hasRole($role)
+    {
+        return $this->roles()->where('name', $role)->exists();
+    }
+
+    public function hasAnyRole($role)
+    {
+        // return $this->roles()->whereIn('name', (array) $role)->get()->isNotEmpty();
+        return $this->roles()->whereIn('name',  $role)->exists();
+    }
+
+
+
     /**
      * The attributes that should be hidden for serialization.
      *

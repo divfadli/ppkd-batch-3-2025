@@ -6,7 +6,9 @@ use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LocationsController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -43,10 +45,18 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('buku', BooksController::class);
 
     // Transaksi
-    Route::resource('transaction', TransactionController::class);
+    Route::resource('transaction', TransactionController::class)->middleware('role:User');
     Route::get('get-books/{id}', [TransactionController::class, 'getBukuByidCategory']);
     Route::get('print-trans/{id}', [TransactionController::class, 'print'])->name('print-trans');
     Route::post('transaction/{id}/return', [TransactionController::class, 'returnBook'])->name('transaction.return');
     // Route::prefix('pinjam');
     // Route:prefix('pengembalian');
+
+    // Roles
+    Route::resource('role', RoleController::class);
+
+    // user
+    Route::resource('user', UserController::class);
+    Route::get('/user/{id}/roles', [UserController::class, 'editRole'])->name('user.roles');
+    Route::post('/user/{id}/updateRoles', [UserController::class, 'updateRoles'])->name('user.updateRoles');
 });

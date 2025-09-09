@@ -14,7 +14,6 @@
 
 <body>
     @include('sweetalert::alert')
-
     <!-- ======= Header ======= -->
     @include('inc.header')
 
@@ -55,7 +54,9 @@
     </a>
 
     @include('inc.js')
+
     @include('sweetalert::alert', ['cdn' => 'https://cdn.jsdelivr.net/npm/sweetalert2@9'])
+
     @yield('script')
 </body>
 

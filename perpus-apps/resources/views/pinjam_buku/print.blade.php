@@ -18,16 +18,10 @@
             margin: 0;
             line-height: 1.4;
             background: #f7f7f7;
-            /* preview layar lebih enak */
         }
 
         .receipt {
-            /* max-width: 80mm; */
-            /* margin: 10px auto; */
             padding: 12px;
-            /* background: #fff; */
-            /* border-radius: 6px; */
-            /* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); */
         }
 
         .text-center {
@@ -58,7 +52,6 @@
             margin: 12px 0;
         }
 
-        /* Table */
         .table {
             width: 100%;
             border-collapse: collapse;
@@ -96,7 +89,6 @@
             color: #444;
         }
 
-        /* Mode Print */
         @media print {
             body {
                 background: none;
@@ -106,7 +98,6 @@
             }
 
             .receipt {
-                /* kuning soft */
                 background-color: #fff8d6;
                 box-shadow: none;
                 margin: 0 auto;
@@ -121,7 +112,7 @@
     </style>
 </head>
 
-<body onload="window.print(); setTimeout(()=>window.close(),500);">
+<body onload="printAndRedirect()">
     <div class="receipt">
         <h3 class="text-center">📚 Perpustakaan PPKD Jakpus</h3>
         <div class="text-center small">Jl. Karet Baru Benhill, Jakarta Pusat</div>
@@ -183,6 +174,15 @@
             </div>
         </footer>
     </div>
+
+    <script>
+        function printAndRedirect() {
+            window.print();
+            setTimeout(() => {
+                window.location.href = "{{ route('transaction.index') }}";
+            }, 500);
+        }
+    </script>
 </body>
 
 </html>
