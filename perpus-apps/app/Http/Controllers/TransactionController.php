@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Traits\withSuccessErrorDeleteMessage;
 use App\Models\Books;
 use App\Models\Borrows;
 use Illuminate\Http\Request;
@@ -10,15 +11,16 @@ use App\Models\Categories;
 use App\Models\DetailBorrows;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-use RealRashid\SweetAlert\Facades\Alert;
 
 class TransactionController extends Controller
 {
+    use withSuccessErrorDeleteMessage;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        $this->confirmDeleteGlobal("Hapus Transaksi", "Yakin ingin menghapus transaksi ini?");
 
         $title = 'Manage Books Borrow | Perpustakaan';
         $subtitle = 'Halaman Manajemen Peminjaman Buku Perpustakaan';
@@ -29,9 +31,6 @@ class TransactionController extends Controller
 
         $datas = Borrows::with('member', 'detailBorrows')->orderByDesc('id')->get();
 
-        $titleDelete = "Hapus Transaksi";
-        $text = "Yakin ingin menghapus transaksi ini?";
-        confirmDelete($titleDelete, $text);
         return view('pinjam_buku.index', compact('title', 'subtitle', 'thirdtitle', 'breadcrumbs', 'datas'));
     }
 
@@ -100,14 +99,14 @@ class TransactionController extends Controller
                 ]);
             }
             DB::commit();
-            Alert::success('Berhasil!!', 'Transaksi berhasil dibuat');
+            // Alert::success('Berhasil!!', 'Transaksi berhasil dibuat');
 
             // return redirect()->to("print-trans/{$insertBorrow->id}");
-            return redirect()->route("print-trans", ['id' => $insertBorrow->id]);
+            return redirect()->route("print-trans", ['id' => $insertBorrow->id])->withSuccessMessage('Transaksi berhasil dibuat');
         } catch (\Throwable $th) {
             DB::rollBack();
-            Alert::error('Error!!', $th->getMessage());
-            return redirect()->to('transaction');
+            // Alert::error('Error!!', $th->getMessage());
+            return redirect()->to('transaction')->withErrorMessage($th->getMessage());
         }
     }
 
@@ -157,12 +156,12 @@ class TransactionController extends Controller
             $borrow->delete();
 
             DB::commit();
-            Alert::success('Berhasil!', 'Transaksi berhasil dihapus');
-            return redirect()->route('transaction.index');
+            // Alert::success('Berhasil!', 'Transaksi berhasil dihapus');
+            return redirect()->route('transaction.index')->withSuccessMessage('Transaksi berhasil dihapus');
         } catch (\Throwable $th) {
             DB::rollBack();
-            Alert::error('Error!', 'Gagal menghapus transaksi: ' . $th->getMessage());
-            return redirect()->route('transaction.index');
+            // Alert::error('Error!', 'Gagal menghapus transaksi: ' . $th->getMessage());
+            return redirect()->route('transaction.index')->withErrorMessage('Gagal menghapus transaksi:' . $th->getMessage());
         }
     }
 
@@ -226,12 +225,12 @@ class TransactionController extends Controller
             $borrow->save();
 
             DB::commit();
-            Alert::success('Berhasil', 'Buku Berhasil dikembalikan');
-            return redirect()->to('transaction');
+            // Alert::success('Berhasil', 'Buku Berhasil dikembalikan');
+            return redirect()->to('transaction')->withSuccessMessage('Buku Berhasil dikembalikan');
         } catch (\Throwable $th) {
             DB::rollBack();
-            Alert::error('Error!', 'Gagal mengembalikan buku: ' . $th->getMessage());
-            return redirect()->to('transaction');
+            // Alert::error('Error!', 'Gagal mengembalikan buku: ' . $th->getMessage());
+            return redirect()->to('transaction')->withErrorMessage('Gagal mengembalikan buku:' . $th->getMessage());
         }
     }
 }
