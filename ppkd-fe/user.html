@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Bootstrap demo</title>
+    <title>List User</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
 
@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <div class="container mt-3">
+    <div class="container mt-5">
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -26,6 +26,9 @@
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#createModal">
                                 Tambah User
+                            </button>
+                            <button type="button" class="btn btn-warning" id="logoutBtn">
+                                Keluar
                             </button>
                         </div>
                         <table class="table table-bordered">
@@ -122,9 +125,47 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
+    <script src="middleware.js"></script>
 
     <script>
         const baseURL = "http://localhost:8000/api/";
+        const token = localStorage.getItem('token');
+
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            try {
+                const res = await fetch(baseURL + 'logout', {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': "application/json",
+                        'Accept': "application/json",
+                        "Authorization": `Bearer ${token}`
+                    }
+                })
+
+                const result = await res.json();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Logout',
+                    text: result.message,
+                    timer: 2000,
+                    showConfirmButton: false
+
+                })
+            } catch (error) {
+                console.log("error:", error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Opss..!!',
+                    text: error.message,
+                });
+            } finally {
+                localStorage.removeItem('token');
+                setTimeout(() => {
+                    window.location.href = '/login.html';
+                }, 2000)
+            }
+        })
+
         function resetForm() {
             document.getElementById('name').value = "";
             document.getElementById('email').value = "";
@@ -133,7 +174,11 @@
         async function getUser() {
             // fetch(); ajax; axios()
             try {
-                const res = await fetch(baseURL + "user");
+                const res = await fetch(baseURL + "user", {
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
+                });
                 const users = await res.json();
                 let tbody = document.getElementById("userTable");
                 // let tbody = document.querySelector('#userTable');
@@ -165,7 +210,11 @@
 
         async function openEditModal(id) {
             try {
-                const res = await fetch(baseURL + `user/${id}`);
+                const res = await fetch(baseURL + `user/${id}`, {
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
+                });
                 const edit = await res.json();
 
                 document.getElementById('id_user').value = edit.data.id;
@@ -201,7 +250,8 @@
                     method: "DELETE",
                     headers: {
                         'Content-Type': "application/json",
-                        'Accept': "application/json"
+                        'Accept': "application/json",
+                        "Authorization": `Bearer ${token}`
                     }
                 });
                 const result = await res.json();
@@ -234,7 +284,8 @@
                     method: 'POST',
                     headers: {
                         "Content-Type": "application/json",
-                        "Acept": "application/json",
+                        "Accept": "application/json",
+                        "Authorization": `Bearer ${token}`
                     },
                     body: JSON.stringify({
                         name: name,
@@ -279,7 +330,8 @@
                     method: 'PUT',
                     headers: {
                         "Content-Type": "application/json",
-                        "Acept": "application/json",
+                        "Accept": "application/json",
+                        "Authorization": `Bearer ${token}`
                     },
                     body: JSON.stringify({
                         name,
