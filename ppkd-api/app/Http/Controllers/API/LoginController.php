@@ -35,12 +35,19 @@ class LoginController extends Controller
             }
 
             $user = Auth::user();
-            $token = $user->createToken('api-token')->plainTextToken;
+            $tokenResult = $user->createToken('api-token');
+            $token = $tokenResult->plainTextToken;
+
+            // update expired_at manual
+            $tokenResult->accessToken->update([
+                'expires_at' => now()->addMinutes(60) // expired 1 jam
+            ]);
 
             return response()->json([
                 'status' => true,
                 'message' => 'Login Success',
                 'token' => $token,
+                'expired_at' => $tokenResult->accessToken->expires_at,
                 'user' => $user
             ]);
         } catch (\Throwable $th) {
@@ -49,6 +56,16 @@ class LoginController extends Controller
                 'message' => $th->getMessage(),
             ], 500);
         }
+    }
+
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Logout berhasil'
+        ]);
     }
 
     // User Profile
